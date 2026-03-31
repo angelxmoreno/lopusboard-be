@@ -1,0 +1,41 @@
+<?php
+declare(strict_types=1);
+
+namespace App\Model\Entity;
+
+use Cake\ORM\Entity;
+
+/**
+ * WikiPageRevision Entity
+ *
+ * @property int $id
+ * @property int $wiki_page_id
+ * @property string $body
+ * @property int $revision_number
+ * @property int $edited_by
+ * @property \Cake\I18n\DateTime $created
+ * @property \Cake\I18n\DateTime $modified
+ *
+ * @property \App\Model\Entity\WikiPage $wiki_page
+ */
+class WikiPageRevision extends Entity
+{
+    /**
+     * Fields that can be mass assigned using newEntity() or patchEntity().
+     *
+     * Note that when '*' is set to true, this allows all unspecified fields to
+     * be mass assigned. For security purposes, it is advised to set '*' to false
+     * (or remove it), and explicitly make individual fields accessible as needed.
+     *
+     * @var array<string, bool>
+     */
+    protected array $_accessible = [
+        'wiki_page_id' => true,
+        'body' => true,
+        'revision_number' => true,
+        'edited_by' => true,
+        'created' => true,
+        'modified' => true,
+        'wiki_page' => true,
+    ];
+}
