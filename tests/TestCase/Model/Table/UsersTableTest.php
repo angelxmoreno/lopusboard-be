@@ -19,17 +19,6 @@ class UsersTableTest extends TestCase
     protected $Users;
 
     /**
-     * Fixtures
-     *
-     * @var array<string>
-     */
-    protected array $fixtures = [
-        'app.Users',
-        'app.Comments',
-        'app.ProjectMembers',
-    ];
-
-    /**
      * setUp method
      *
      * @return void
@@ -59,19 +48,13 @@ class UsersTableTest extends TestCase
      * @return void
      * @link \App\Model\Table\UsersTable::validationDefault()
      */
-    public function testValidationDefault(): void
+    public function testInitializeAssociations(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test buildRules method
-     *
-     * @return void
-     * @link \App\Model\Table\UsersTable::buildRules()
-     */
-    public function testBuildRules(): void
-    {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->assertSame('created_by', $this->Users->getAssociation('Projects')->getForeignKey());
+        $this->assertSame('created_by', $this->Users->getAssociation('Issues')->getForeignKey());
+        $this->assertSame('Issues', $this->Users->getAssociation('AssignedIssues')->getClassName());
+        $this->assertSame('assignee_id', $this->Users->getAssociation('AssignedIssues')->getForeignKey());
+        $this->assertSame('created_by', $this->Users->getAssociation('WikiPages')->getForeignKey());
+        $this->assertSame('actor_id', $this->Users->getAssociation('ActivityLog')->getForeignKey());
     }
 }

@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -11,8 +10,13 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
+ * @property \App\Model\Table\ActivityLogTable&\Cake\ORM\Association\HasMany $ActivityLog
+ * @property \App\Model\Table\IssuesTable&\Cake\ORM\Association\HasMany $AssignedIssues
  * @property \App\Model\Table\CommentsTable&\Cake\ORM\Association\HasMany $Comments
+ * @property \App\Model\Table\IssuesTable&\Cake\ORM\Association\HasMany $Issues
  * @property \App\Model\Table\ProjectMembersTable&\Cake\ORM\Association\HasMany $ProjectMembers
+ * @property \App\Model\Table\ProjectsTable&\Cake\ORM\Association\HasMany $Projects
+ * @property \App\Model\Table\WikiPagesTable&\Cake\ORM\Association\HasMany $WikiPages
  *
  * @method \App\Model\Entity\User newEmptyEntity()
  * @method \App\Model\Entity\User newEntity(array $data, array $options = [])
@@ -48,11 +52,27 @@ class UsersTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->hasMany('ActivityLog', [
+            'foreignKey' => 'actor_id',
+        ]);
+        $this->hasMany('AssignedIssues', [
+            'className' => 'Issues',
+            'foreignKey' => 'assignee_id',
+        ]);
         $this->hasMany('Comments', [
             'foreignKey' => 'user_id',
         ]);
+        $this->hasMany('Issues', [
+            'foreignKey' => 'created_by',
+        ]);
         $this->hasMany('ProjectMembers', [
             'foreignKey' => 'user_id',
+        ]);
+        $this->hasMany('Projects', [
+            'foreignKey' => 'created_by',
+        ]);
+        $this->hasMany('WikiPages', [
+            'foreignKey' => 'created_by',
         ]);
     }
 

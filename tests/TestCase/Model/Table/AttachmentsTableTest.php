@@ -19,17 +19,6 @@ class AttachmentsTableTest extends TestCase
     protected $Attachments;
 
     /**
-     * Fixtures
-     *
-     * @var array<string>
-     */
-    protected array $fixtures = [
-        'app.Attachments',
-        'app.Projects',
-        'app.AttachmentLinks',
-    ];
-
-    /**
      * setUp method
      *
      * @return void
@@ -59,19 +48,9 @@ class AttachmentsTableTest extends TestCase
      * @return void
      * @link \App\Model\Table\AttachmentsTable::validationDefault()
      */
-    public function testValidationDefault(): void
+    public function testInitializeAssociations(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test buildRules method
-     *
-     * @return void
-     * @link \App\Model\Table\AttachmentsTable::buildRules()
-     */
-    public function testBuildRules(): void
-    {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->assertSame('Users', $this->Attachments->getAssociation('Uploaders')->getClassName());
+        $this->assertSame('uploaded_by', $this->Attachments->getAssociation('Uploaders')->getForeignKey());
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\IssuesTable;
+use Cake\Database\ValueBinder;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -19,21 +20,6 @@ class IssuesTableTest extends TestCase
     protected $Issues;
 
     /**
-     * Fixtures
-     *
-     * @var array<string>
-     */
-    protected array $fixtures = [
-        'app.Issues',
-        'app.Projects',
-        'app.Statuses',
-        'app.Assignees',
-        'app.Departments',
-        'app.Comments',
-        'app.IssueRelations',
-    ];
-
-    /**
      * setUp method
      *
      * @return void
@@ -43,6 +29,28 @@ class IssuesTableTest extends TestCase
         parent::setUp();
         $config = $this->getTableLocator()->exists('Issues') ? [] : ['className' => IssuesTable::class];
         $this->Issues = $this->getTableLocator()->get('Issues', $config);
+        $this->Issues->setSchema([
+            'id' => ['type' => 'integer'],
+            'project_id' => ['type' => 'integer'],
+            'type' => ['type' => 'string'],
+            'status_id' => ['type' => 'integer'],
+            'position' => ['type' => 'decimal'],
+            'assignee_id' => ['type' => 'integer', 'null' => true],
+            'department_id' => ['type' => 'integer', 'null' => true],
+        ]);
+        $this->Issues->getAssociation('Statuses')->getTarget()->setSchema([
+            'id' => ['type' => 'integer'],
+            'name' => ['type' => 'string'],
+        ]);
+        $this->Issues->getAssociation('Assignees')->getTarget()->setSchema([
+            'id' => ['type' => 'integer'],
+            'name' => ['type' => 'string'],
+            'email' => ['type' => 'string'],
+        ]);
+        $this->Issues->getAssociation('Departments')->getTarget()->setSchema([
+            'id' => ['type' => 'integer'],
+            'name' => ['type' => 'string'],
+        ]);
     }
 
     /**
@@ -63,19 +71,34 @@ class IssuesTableTest extends TestCase
      * @return void
      * @link \App\Model\Table\IssuesTable::validationDefault()
      */
-    public function testValidationDefault(): void
+    public function testInitializeAssociations(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->assertSame('Users', $this->Issues->getAssociation('Creators')->getClassName());
+        $this->assertSame('created_by', $this->Issues->getAssociation('Creators')->getForeignKey());
+        $this->assertSame('Issues', $this->Issues->getAssociation('Tasks')->getClassName());
+        $this->assertSame('parent_id', $this->Issues->getAssociation('Tasks')->getForeignKey());
+        $this->assertSame('subject_id', $this->Issues->getAssociation('ActivityLog')->getForeignKey());
     }
 
     /**
-     * Test buildRules method
+     * Test findForKanban method
      *
      * @return void
-     * @link \App\Model\Table\IssuesTable::buildRules()
+     * @link \App\Model\Table\IssuesTable::findForKanban()
      */
-    public function testBuildRules(): void
+    public function testFindForKanban(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $query = $this->Issues->findForKanban($this->Issues->find(), ['project_id' => 1]);
+        $where = $query->clause('where')->sql(new ValueBinder());
+        $order = $query->clause('order')->sql(new ValueBinder());
+        $contain = $query->getContain();
+
+        $this->assertStringContainsString('Issues.project_id', $where);
+        $this->assertStringContainsString('Issues.type', $where);
+        $this->assertStringContainsString('Issues.status_id', $order);
+        $this->assertStringContainsString('Issues.position', $order);
+        $this->assertArrayHasKey('Statuses', $contain);
+        $this->assertArrayHasKey('Assignees', $contain);
+        $this->assertArrayHasKey('Departments', $contain);
     }
 }

@@ -12,13 +12,15 @@ use Cake\Validation\Validator;
  * Issues Model
  *
  * @property \App\Model\Table\ProjectsTable&\Cake\ORM\Association\BelongsTo $Projects
+ * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Creators
  * @property \App\Model\Table\IssuesTable&\Cake\ORM\Association\BelongsTo $ParentIssues
  * @property \App\Model\Table\StatusesTable&\Cake\ORM\Association\BelongsTo $Statuses
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Assignees
  * @property \App\Model\Table\DepartmentsTable&\Cake\ORM\Association\BelongsTo $Departments
+ * @property \App\Model\Table\ActivityLogTable&\Cake\ORM\Association\HasMany $ActivityLog
  * @property \App\Model\Table\CommentsTable&\Cake\ORM\Association\HasMany $Comments
  * @property \App\Model\Table\IssueRelationsTable&\Cake\ORM\Association\HasMany $IssueRelations
- * @property \App\Model\Table\IssuesTable&\Cake\ORM\Association\HasMany $ChildIssues
+ * @property \App\Model\Table\IssuesTable&\Cake\ORM\Association\HasMany $Tasks
  *
  * @method \App\Model\Entity\Issue newEmptyEntity()
  * @method \App\Model\Entity\Issue newEntity(array $data, array $options = [])
@@ -58,6 +60,11 @@ class IssuesTable extends Table
             'foreignKey' => 'project_id',
             'joinType' => 'INNER',
         ]);
+        $this->belongsTo('Creators', [
+            'className' => 'Users',
+            'foreignKey' => 'created_by',
+            'joinType' => 'INNER',
+        ]);
         $this->belongsTo('ParentIssues', [
             'className' => 'Issues',
             'foreignKey' => 'parent_id',
@@ -73,13 +80,17 @@ class IssuesTable extends Table
         $this->belongsTo('Departments', [
             'foreignKey' => 'department_id',
         ]);
+        $this->hasMany('ActivityLog', [
+            'foreignKey' => 'subject_id',
+            'conditions' => ['ActivityLog.subject_type IN' => ['issue', 'task']],
+        ]);
         $this->hasMany('Comments', [
             'foreignKey' => 'issue_id',
         ]);
         $this->hasMany('IssueRelations', [
             'foreignKey' => 'issue_id',
         ]);
-        $this->hasMany('ChildIssues', [
+        $this->hasMany('Tasks', [
             'className' => 'Issues',
             'foreignKey' => 'parent_id',
         ]);
@@ -158,11 +169,26 @@ class IssuesTable extends Table
     public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->existsIn(['project_id'], 'Projects'), ['errorField' => 'project_id']);
+        $rules->add($rules->existsIn(['created_by'], 'Creators'), ['errorField' => 'created_by']);
         $rules->add($rules->existsIn(['parent_id'], 'ParentIssues'), ['errorField' => 'parent_id']);
         $rules->add($rules->existsIn(['status_id'], 'Statuses'), ['errorField' => 'status_id']);
         $rules->add($rules->existsIn(['assignee_id'], 'Assignees'), ['errorField' => 'assignee_id']);
         $rules->add($rules->existsIn(['department_id'], 'Departments'), ['errorField' => 'department_id']);
 
         return $rules;
+    }
+
+    public function findForKanban(SelectQuery $query, array $options): SelectQuery
+    {
+        return $query
+            ->where([
+                'Issues.project_id' => $options['project_id'],
+                'Issues.type' => 'issue',
+            ])
+            ->contain(['Statuses', 'Assignees', 'Departments'])
+            ->orderBy([
+                'Issues.status_id' => 'ASC',
+                'Issues.position' => 'ASC',
+            ]);
     }
 }

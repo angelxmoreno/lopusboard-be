@@ -19,16 +19,6 @@ class WikiPageRevisionsTableTest extends TestCase
     protected $WikiPageRevisions;
 
     /**
-     * Fixtures
-     *
-     * @var array<string>
-     */
-    protected array $fixtures = [
-        'app.WikiPageRevisions',
-        'app.WikiPages',
-    ];
-
-    /**
      * setUp method
      *
      * @return void
@@ -58,19 +48,9 @@ class WikiPageRevisionsTableTest extends TestCase
      * @return void
      * @link \App\Model\Table\WikiPageRevisionsTable::validationDefault()
      */
-    public function testValidationDefault(): void
+    public function testInitializeAssociations(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test buildRules method
-     *
-     * @return void
-     * @link \App\Model\Table\WikiPageRevisionsTable::buildRules()
-     */
-    public function testBuildRules(): void
-    {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->assertSame('Users', $this->WikiPageRevisions->getAssociation('Editors')->getClassName());
+        $this->assertSame('edited_by', $this->WikiPageRevisions->getAssociation('Editors')->getForeignKey());
     }
 }

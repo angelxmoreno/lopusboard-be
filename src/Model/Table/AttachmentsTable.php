@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -12,6 +11,7 @@ use Cake\Validation\Validator;
  * Attachments Model
  *
  * @property \App\Model\Table\ProjectsTable&\Cake\ORM\Association\BelongsTo $Projects
+ * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Uploaders
  * @property \App\Model\Table\AttachmentLinksTable&\Cake\ORM\Association\HasMany $AttachmentLinks
  *
  * @method \App\Model\Entity\Attachment newEmptyEntity()
@@ -50,6 +50,11 @@ class AttachmentsTable extends Table
 
         $this->belongsTo('Projects', [
             'foreignKey' => 'project_id',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('Uploaders', [
+            'className' => 'Users',
+            'foreignKey' => 'uploaded_by',
             'joinType' => 'INNER',
         ]);
         $this->hasMany('AttachmentLinks', [
@@ -120,6 +125,7 @@ class AttachmentsTable extends Table
     public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->existsIn(['project_id'], 'Projects'), ['errorField' => 'project_id']);
+        $rules->add($rules->existsIn(['uploaded_by'], 'Uploaders'), ['errorField' => 'uploaded_by']);
 
         return $rules;
     }

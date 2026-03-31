@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -11,6 +10,7 @@ use Cake\Validation\Validator;
 /**
  * Projects Model
  *
+ * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Creators
  * @property \App\Model\Table\ActivityLogTable&\Cake\ORM\Association\HasMany $ActivityLog
  * @property \App\Model\Table\AttachmentsTable&\Cake\ORM\Association\HasMany $Attachments
  * @property \App\Model\Table\DepartmentsTable&\Cake\ORM\Association\HasMany $Departments
@@ -53,6 +53,11 @@ class ProjectsTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->belongsTo('Creators', [
+            'className' => 'Users',
+            'foreignKey' => 'created_by',
+            'joinType' => 'INNER',
+        ]);
         $this->hasMany('ActivityLog', [
             'foreignKey' => 'project_id',
         ]);

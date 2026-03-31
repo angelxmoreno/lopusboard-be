@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -11,6 +10,7 @@ use Cake\Validation\Validator;
 /**
  * WikiPageRevisions Model
  *
+ * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Editors
  * @property \App\Model\Table\WikiPagesTable&\Cake\ORM\Association\BelongsTo $WikiPages
  *
  * @method \App\Model\Entity\WikiPageRevision newEmptyEntity()
@@ -47,6 +47,11 @@ class WikiPageRevisionsTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->belongsTo('Editors', [
+            'className' => 'Users',
+            'foreignKey' => 'edited_by',
+            'joinType' => 'INNER',
+        ]);
         $this->belongsTo('WikiPages', [
             'foreignKey' => 'wiki_page_id',
             'joinType' => 'INNER',
@@ -93,6 +98,7 @@ class WikiPageRevisionsTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
+        $rules->add($rules->existsIn(['edited_by'], 'Editors'), ['errorField' => 'edited_by']);
         $rules->add($rules->existsIn(['wiki_page_id'], 'WikiPages'), ['errorField' => 'wiki_page_id']);
 
         return $rules;

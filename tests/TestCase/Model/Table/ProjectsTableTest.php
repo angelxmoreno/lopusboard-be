@@ -19,22 +19,6 @@ class ProjectsTableTest extends TestCase
     protected $Projects;
 
     /**
-     * Fixtures
-     *
-     * @var array<string>
-     */
-    protected array $fixtures = [
-        'app.Projects',
-        'app.ActivityLog',
-        'app.Attachments',
-        'app.Departments',
-        'app.Issues',
-        'app.ProjectMembers',
-        'app.Statuses',
-        'app.WikiPages',
-    ];
-
-    /**
      * setUp method
      *
      * @return void
@@ -64,19 +48,9 @@ class ProjectsTableTest extends TestCase
      * @return void
      * @link \App\Model\Table\ProjectsTable::validationDefault()
      */
-    public function testValidationDefault(): void
+    public function testInitializeAssociations(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test buildRules method
-     *
-     * @return void
-     * @link \App\Model\Table\ProjectsTable::buildRules()
-     */
-    public function testBuildRules(): void
-    {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->assertSame('Users', $this->Projects->getAssociation('Creators')->getClassName());
+        $this->assertSame('created_by', $this->Projects->getAssociation('Creators')->getForeignKey());
     }
 }

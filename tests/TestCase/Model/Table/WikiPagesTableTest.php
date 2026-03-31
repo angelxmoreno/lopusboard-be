@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\WikiPagesTable;
+use Cake\Database\ValueBinder;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -19,17 +20,6 @@ class WikiPagesTableTest extends TestCase
     protected $WikiPages;
 
     /**
-     * Fixtures
-     *
-     * @var array<string>
-     */
-    protected array $fixtures = [
-        'app.WikiPages',
-        'app.Projects',
-        'app.WikiPageRevisions',
-    ];
-
-    /**
      * setUp method
      *
      * @return void
@@ -39,6 +29,11 @@ class WikiPagesTableTest extends TestCase
         parent::setUp();
         $config = $this->getTableLocator()->exists('WikiPages') ? [] : ['className' => WikiPagesTable::class];
         $this->WikiPages = $this->getTableLocator()->get('WikiPages', $config);
+        $this->WikiPages->setSchema([
+            'id' => ['type' => 'integer'],
+            'project_id' => ['type' => 'integer'],
+            'position' => ['type' => 'decimal'],
+        ]);
     }
 
     /**
@@ -59,19 +54,30 @@ class WikiPagesTableTest extends TestCase
      * @return void
      * @link \App\Model\Table\WikiPagesTable::validationDefault()
      */
-    public function testValidationDefault(): void
+    public function testInitializeAssociations(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->assertSame('Users', $this->WikiPages->getAssociation('Creators')->getClassName());
+        $this->assertSame('created_by', $this->WikiPages->getAssociation('Creators')->getForeignKey());
+        $this->assertSame('Users', $this->WikiPages->getAssociation('LastEditors')->getClassName());
+        $this->assertSame('last_edited_by', $this->WikiPages->getAssociation('LastEditors')->getForeignKey());
+        $this->assertSame('WikiPages', $this->WikiPages->getAssociation('ParentPages')->getClassName());
+        $this->assertSame('WikiPages', $this->WikiPages->getAssociation('ChildPages')->getClassName());
+        $this->assertSame('source_page_id', $this->WikiPages->getAssociation('WikiPageLinks')->getForeignKey());
     }
 
     /**
-     * Test buildRules method
+     * Test findTree method
      *
      * @return void
-     * @link \App\Model\Table\WikiPagesTable::buildRules()
+     * @link \App\Model\Table\WikiPagesTable::findTree()
      */
-    public function testBuildRules(): void
+    public function testFindTree(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $query = $this->WikiPages->findTree($this->WikiPages->find(), ['project_id' => 1]);
+        $where = $query->clause('where')->sql(new ValueBinder());
+        $order = $query->clause('order')->sql(new ValueBinder());
+
+        $this->assertStringContainsString('WikiPages.project_id', $where);
+        $this->assertStringContainsString('WikiPages.position', $order);
     }
 }

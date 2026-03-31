@@ -12,9 +12,12 @@ use Cake\Validation\Validator;
  * WikiPages Model
  *
  * @property \App\Model\Table\ProjectsTable&\Cake\ORM\Association\BelongsTo $Projects
- * @property \App\Model\Table\WikiPagesTable&\Cake\ORM\Association\BelongsTo $ParentWikiPages
+ * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Creators
+ * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $LastEditors
+ * @property \App\Model\Table\WikiPagesTable&\Cake\ORM\Association\BelongsTo $ParentPages
+ * @property \App\Model\Table\WikiPagesTable&\Cake\ORM\Association\HasMany $ChildPages
+ * @property \App\Model\Table\WikiPageLinksTable&\Cake\ORM\Association\HasMany $WikiPageLinks
  * @property \App\Model\Table\WikiPageRevisionsTable&\Cake\ORM\Association\HasMany $WikiPageRevisions
- * @property \App\Model\Table\WikiPagesTable&\Cake\ORM\Association\HasMany $ChildWikiPages
  *
  * @method \App\Model\Entity\WikiPage newEmptyEntity()
  * @method \App\Model\Entity\WikiPage newEntity(array $data, array $options = [])
@@ -54,16 +57,28 @@ class WikiPagesTable extends Table
             'foreignKey' => 'project_id',
             'joinType' => 'INNER',
         ]);
-        $this->belongsTo('ParentWikiPages', [
+        $this->belongsTo('Creators', [
+            'className' => 'Users',
+            'foreignKey' => 'created_by',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('LastEditors', [
+            'className' => 'Users',
+            'foreignKey' => 'last_edited_by',
+        ]);
+        $this->belongsTo('ParentPages', [
             'className' => 'WikiPages',
             'foreignKey' => 'parent_id',
+        ]);
+        $this->hasMany('ChildPages', [
+            'className' => 'WikiPages',
+            'foreignKey' => 'parent_id',
+        ]);
+        $this->hasMany('WikiPageLinks', [
+            'foreignKey' => 'source_page_id',
         ]);
         $this->hasMany('WikiPageRevisions', [
             'foreignKey' => 'wiki_page_id',
-        ]);
-        $this->hasMany('ChildWikiPages', [
-            'className' => 'WikiPages',
-            'foreignKey' => 'parent_id',
         ]);
     }
 
@@ -127,8 +142,17 @@ class WikiPagesTable extends Table
     {
         $rules->add($rules->isUnique(['project_id', 'slug']), ['errorField' => 'project_id', 'message' => __('This combination of project_id and slug already exists')]);
         $rules->add($rules->existsIn(['project_id'], 'Projects'), ['errorField' => 'project_id']);
-        $rules->add($rules->existsIn(['parent_id'], 'ParentWikiPages'), ['errorField' => 'parent_id']);
+        $rules->add($rules->existsIn(['created_by'], 'Creators'), ['errorField' => 'created_by']);
+        $rules->add($rules->existsIn(['last_edited_by'], 'LastEditors'), ['errorField' => 'last_edited_by']);
+        $rules->add($rules->existsIn(['parent_id'], 'ParentPages'), ['errorField' => 'parent_id']);
 
         return $rules;
+    }
+
+    public function findTree(SelectQuery $query, array $options): SelectQuery
+    {
+        return $query
+            ->where(['WikiPages.project_id' => $options['project_id']])
+            ->orderBy(['WikiPages.position' => 'ASC']);
     }
 }
