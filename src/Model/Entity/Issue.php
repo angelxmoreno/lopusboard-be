@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use Cake\ORM\Entity;
-
 /**
  * Issue Entity
  *
@@ -33,7 +31,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\IssueRelation[] $issue_relations
  * @property \App\Model\Entity\ChildIssue[] $child_issues
  */
-class Issue extends Entity
+class Issue extends AppEntity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().

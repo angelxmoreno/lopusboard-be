@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use Cake\ORM\Entity;
-
 /**
  * Comment Entity
  *
@@ -18,7 +16,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Issue $issue
  * @property \App\Model\Entity\User $user
  */
-class Comment extends Entity
+class Comment extends AppEntity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().

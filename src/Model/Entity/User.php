@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use Cake\ORM\Entity;
-
 /**
  * User Entity
  *
@@ -19,7 +17,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Comment[] $comments
  * @property \App\Model\Entity\ProjectMember[] $project_members
  */
-class User extends Entity
+class User extends AppEntity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().

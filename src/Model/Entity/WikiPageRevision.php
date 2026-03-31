@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use Cake\ORM\Entity;
-
 /**
  * WikiPageRevision Entity
  *
@@ -18,7 +16,7 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\WikiPage $wiki_page
  */
-class WikiPageRevision extends Entity
+class WikiPageRevision extends AppEntity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().

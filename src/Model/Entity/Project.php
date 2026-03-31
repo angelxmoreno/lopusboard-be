@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use Cake\ORM\Entity;
-
 /**
  * Project Entity
  *
@@ -24,7 +22,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Status[] $statuses
  * @property \App\Model\Entity\WikiPage[] $wiki_pages
  */
-class Project extends Entity
+class Project extends AppEntity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().

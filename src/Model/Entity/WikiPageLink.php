@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use Cake\ORM\Entity;
-
 /**
  * WikiPageLink Entity
  *
@@ -17,7 +15,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\SourcePage $source_page
  * @property \App\Model\Entity\TargetPage $target_page
  */
-class WikiPageLink extends Entity
+class WikiPageLink extends AppEntity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().

@@ -5,7 +5,6 @@ namespace App\Model\Table;
 
 use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
@@ -35,7 +34,7 @@ use Cake\Validation\Validator;
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class WikiPagesTable extends Table
+class WikiPagesTable extends AppTable
 {
     /**
      * Initialize method

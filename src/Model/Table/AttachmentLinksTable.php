@@ -5,7 +5,6 @@ namespace App\Model\Table;
 
 use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
@@ -29,7 +28,7 @@ use Cake\Validation\Validator;
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class AttachmentLinksTable extends Table
+class AttachmentLinksTable extends AppTable
 {
     /**
      * Initialize method

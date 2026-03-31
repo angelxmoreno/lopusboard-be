@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use Cake\ORM\Entity;
-
 /**
  * AttachmentLink Entity
  *
@@ -17,7 +15,7 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\Attachment $attachment
  */
-class AttachmentLink extends Entity
+class AttachmentLink extends AppEntity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().

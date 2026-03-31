@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use Cake\ORM\Entity;
-
 /**
  * Status Entity
  *
@@ -21,7 +19,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Project $project
  * @property \App\Model\Entity\Issue[] $issues
  */
-class Status extends Entity
+class Status extends AppEntity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
