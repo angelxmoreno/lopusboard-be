@@ -2,6 +2,7 @@
 ##########################
 /config/app_local.php
 /config/.env
+.env
 /logs/*
 /tmp/*
 /vendor/*
@@ -14,7 +15,8 @@
 .Spotlight-V100
 .Trashes
 # Icon must end with two \r
-Icon
+Icon
+
 ehthumbs.db
 Thumbs.db
 .directory
