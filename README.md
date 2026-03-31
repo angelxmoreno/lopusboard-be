@@ -1,58 +1,110 @@
-# CakePHP Application Skeleton
+# LopusBoard — Backend API
 
-![Build Status](https://github.com/cakephp/app/actions/workflows/ci.yml/badge.svg?branch=5.x)
-[![Total Downloads](https://img.shields.io/packagist/dt/cakephp/app.svg?style=flat-square)](https://packagist.org/packages/cakephp/app)
-[![PHPStan](https://img.shields.io/badge/PHPStan-level%208-brightgreen.svg?style=flat-square)](https://github.com/phpstan/phpstan)
+> *The headless REST API powering the LopusBoard workspace.*
 
-A skeleton for creating applications with [CakePHP](https://cakephp.org) 5.x.
+LopusBoard Backend is a robust, project-isolated API-first application built with CakePHP 5. It serves as the single source of truth for all project data, including issues, wiki pages, team memberships, and activity logs.
 
-The framework source code can be found here: [cakephp/cakephp](https://github.com/cakephp/cakephp).
+---
 
-## Installation
+## Overview
 
-1. Download [Composer](https://getcomposer.org/doc/00-intro.md) or update `composer self-update`.
-2. Run `php composer.phar create-project --prefer-dist cakephp/app [app_name]`.
+The LopusBoard backend is designed as a **pure REST API**. It does not serve HTML or manage CSS/styling. It is responsible for data integrity, business logic enforcement (e.g., nesting limits, project isolation), and secure identity verification via Appwrite.
 
-If Composer is installed globally, run
+### Key Responsibilities
+- **JWT Verification:** Custom middleware verifies Appwrite JWTs on every request via the Appwrite PHP SDK.
+- **User Sync:** Automatically synchronizes local `users` records from Appwrite identity data on first login.
+- **Project Isolation:** Enforces strict boundaries between projects; users can only access data within projects they are members of.
+- **Wiki Revisioning:** Automatically snapshots wiki page bodies on every save to provide version history.
+- **Activity Logging:** Records field-level diffs for every mutation to drive the project-wide audit trail.
+- **Headless Architecture:** Provides a standardized JSON interface for any client (React frontend, mobile apps, or AI agents).
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| **Framework** | [CakePHP 5](https://cakephp.org/) |
+| **Language** | [PHP 8.5.4](https://www.php.net/) |
+| **Database** | [MySQL 8](https://www.mysql.com/) |
+| **Auth Verification** | [Appwrite PHP SDK](https://appwrite.io/docs/sdks#php) |
+| **Dependency Management** | [Composer](https://getcomposer.org/) |
+| **Standardization** | PSR-12 / Biome |
+
+---
+
+## Getting Started
+
+### 1. Prerequisites
+- PHP 8.5.4 or higher
+- MySQL 8.0 or higher
+- Composer
+
+### 2. Environment Variables
+Create a `.env` file in the root of this directory. You can use the `be.env` template provided in the project root:
 
 ```bash
-composer create-project --prefer-dist cakephp/app
+cp ../be.env .env
 ```
 
-In case you want to use a custom app dir name (e.g. `/myapp/`):
+Ensure you generate a unique `SECURITY_SALT` as per the CakePHP requirements.
+
+### 3. Installation
+```bash
+composer install
+```
+
+### 4. Database Setup
+Run the migrations to set up the 14-table schema (see `wiki/03-schema.md` for details):
 
 ```bash
-composer create-project --prefer-dist cakephp/app myapp
+bin/cake migrations migrate
 ```
 
-You can now either use your machine's webserver to view the default home page, or start
-up the built-in webserver with:
-
+### 5. Running the Server
 ```bash
-bin/cake server -p 8765
+bin/cake server -p 8080
 ```
 
-Then visit `http://localhost:8765` to see the welcome page.
+The API will be available at `http://localhost:8080/api`.
 
-## Demo app
+---
 
-Check out the [5.x-demo branch](https://github.com/cakephp/app/tree/5.x-demo), which contains demo migrations and a seeder.
-See the [README](https://github.com/cakephp/app/blob/5.x-demo/README.md) on how to get it running.
+## Core Architecture
 
-## Update
+### Auth Flow
+The backend never issues tokens. It expects a `Bearer` token in the `Authorization` header.
+- **Middleware:** `src/Middleware/AppwriteAuthMiddleware.php` intercepts requests.
+- **Verification:** Calls Appwrite API to confirm token validity.
+- **Identity:** Resolves the local `User` entity and attaches it to the request.
 
-Since this skeleton is a starting point for your application and various files
-would have been modified as per your needs, there isn't a way to provide
-automated upgrades, so you have to do any updates manually.
+### Model Associations
+We use CakePHP's ORM with several aliased associations to handle complex relationships like `created_by` and `assignee_id` pointing to the same `Users` table. See `wiki/09-cake-models.md` for the association map.
 
-## Configuration
+---
 
-Read and edit the environment specific `config/app_local.php` and set up the
-`'Datasources'` and any other configuration relevant for your application.
-Other environment agnostic settings can be changed in `config/app.php`.
+## API Endpoints
+All endpoints return JSON and follow RESTful conventions.
+- `GET /api/projects` — List user's projects
+- `POST /api/projects/:id/issues` — Create a new issue
+- `GET /api/health` — Public health check
 
-## Layout
+For a full list of endpoints and request/response shapes, refer to [08-api-endpoints.md](../wiki/08-api-endpoints.md).
 
-The app skeleton uses [Milligram](https://milligram.io/) (v1.3) minimalist CSS
-framework by default. You can, however, replace it with any other library or
-custom styles.
+---
+
+## Scripts & Tooling
+
+| Command | Description |
+|---|---|
+| `bin/cake bake all <Table>` | Generate Model, Controller, and Templates |
+| `bin/cake migrations migrate` | Run database migrations |
+| `vendor/bin/phpunit` | Run the test suite |
+| `vendor/bin/phpstan` | Static analysis (Level 8) |
+
+---
+
+## Documentation Links
+- [LopusBoard Project Wiki](../wiki/README.md)
+- [CakePHP Documentation](https://book.cakephp.org/5/en/index.html)
+- [Appwrite SDK Reference](https://appwrite.io/docs/references/cloud/server-php/account)
