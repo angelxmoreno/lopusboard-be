@@ -22,7 +22,7 @@ class IssueRelationsFixture extends TestFixture
                 'id' => 1,
                 'issue_id' => 1,
                 'related_issue_id' => 1,
-                'type' => 'Lorem ipsum dolor sit amet',
+                'type' => 'blocks',
                 'created' => '2026-03-31 05:06:15',
                 'modified' => '2026-03-31 05:06:15',
             ],

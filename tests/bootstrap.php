@@ -17,7 +17,10 @@ declare(strict_types=1);
 
 use Cake\Chronos\Chronos;
 use Cake\Core\Configure;
+use Cake\Database\Driver\Sqlite;
+use Cake\Datasource\ConnectionManager;
 use Cake\TestSuite\ConnectionHelper;
+use Cake\TestSuite\Fixture\SchemaLoader;
 use Migrations\TestSuite\Migrator;
 
 /**
@@ -46,15 +49,10 @@ session_id('cli');
 // Otherwise, table objects inside migrations would use the default datasource
 ConnectionHelper::addTestAliases();
 
-// Use migrations to build test database schema.
-//
-// Will rebuild the database if the migration state differs
-// from the migration history in files.
-//
-// If you are not using CakePHP's migrations you can
-// hook into your migration tool of choice here or
-// load schema from a SQL dump file with
-// use Cake\TestSuite\Fixture\SchemaLoader;
-// (new SchemaLoader())->loadSqlFiles('./tests/schema.sql', 'test');
+$testConnection = ConnectionManager::get('test');
 
-(new Migrator())->run();
+if ($testConnection->getDriver() instanceof Sqlite) {
+    (new SchemaLoader())->loadSqlFiles([dirname(__DIR__) . '/tests/schema.sql'], 'test');
+} else {
+    (new Migrator())->run();
+}

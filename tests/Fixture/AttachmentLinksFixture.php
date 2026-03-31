@@ -21,7 +21,7 @@ class AttachmentLinksFixture extends TestFixture
             [
                 'id' => 1,
                 'attachment_id' => 1,
-                'linkable_type' => 'Lorem ipsum dolor sit amet',
+                'linkable_type' => 'issue',
                 'linkable_id' => 1,
                 'created' => '2026-03-31 05:06:15',
                 'modified' => '2026-03-31 05:06:15',

@@ -26,7 +26,7 @@ class ActivityLogTableTest extends TestCase
     protected array $fixtures = [
         'app.ActivityLog',
         'app.Projects',
-        'app.Actors',
+        'app.Users',
     ];
 
     /**

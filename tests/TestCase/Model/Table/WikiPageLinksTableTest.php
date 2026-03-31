@@ -25,8 +25,7 @@ class WikiPageLinksTableTest extends TestCase
      */
     protected array $fixtures = [
         'app.WikiPageLinks',
-        'app.SourcePages',
-        'app.TargetPages',
+        'app.WikiPages',
     ];
 
     /**

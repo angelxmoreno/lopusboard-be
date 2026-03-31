@@ -22,7 +22,7 @@ class ProjectMembersFixture extends TestFixture
                 'id' => 1,
                 'project_id' => 1,
                 'user_id' => 1,
-                'role' => 'Lorem ipsum dolor sit amet',
+                'role' => 'admin',
                 'created' => '2026-03-31 05:06:16',
                 'modified' => '2026-03-31 05:06:16',
             ],
