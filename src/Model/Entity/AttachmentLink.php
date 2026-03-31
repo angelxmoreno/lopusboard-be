@@ -29,11 +29,7 @@ class AttachmentLink extends Entity
      * @var array<string, bool>
      */
     protected array $_accessible = [
-        'attachment_id' => true,
         'linkable_type' => true,
         'linkable_id' => true,
-        'created' => true,
-        'modified' => true,
-        'attachment' => true,
     ];
 }

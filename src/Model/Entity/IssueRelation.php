@@ -30,12 +30,7 @@ class IssueRelation extends Entity
      * @var array<string, bool>
      */
     protected array $_accessible = [
-        'issue_id' => true,
         'related_issue_id' => true,
         'type' => true,
-        'created' => true,
-        'modified' => true,
-        'issue' => true,
-        'related_issue' => true,
     ];
 }

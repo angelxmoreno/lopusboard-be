@@ -33,15 +33,10 @@ class Status extends Entity
      * @var array<string, bool>
      */
     protected array $_accessible = [
-        'project_id' => true,
         'name' => true,
         'color' => true,
         'position' => true,
         'is_default' => true,
         'is_done' => true,
-        'created' => true,
-        'modified' => true,
-        'project' => true,
-        'issues' => true,
     ];
 }

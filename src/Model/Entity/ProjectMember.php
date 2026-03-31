@@ -30,12 +30,7 @@ class ProjectMember extends Entity
      * @var array<string, bool>
      */
     protected array $_accessible = [
-        'project_id' => true,
         'user_id' => true,
         'role' => true,
-        'created' => true,
-        'modified' => true,
-        'project' => true,
-        'user' => true,
     ];
 }

@@ -31,13 +31,8 @@ class Department extends Entity
      * @var array<string, bool>
      */
     protected array $_accessible = [
-        'project_id' => true,
         'name' => true,
         'color' => true,
         'position' => true,
-        'created' => true,
-        'modified' => true,
-        'project' => true,
-        'issues' => true,
     ];
 }

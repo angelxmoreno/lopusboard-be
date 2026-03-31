@@ -29,13 +29,5 @@ class WikiPageRevision extends Entity
      *
      * @var array<string, bool>
      */
-    protected array $_accessible = [
-        'wiki_page_id' => true,
-        'body' => true,
-        'revision_number' => true,
-        'edited_by' => true,
-        'created' => true,
-        'modified' => true,
-        'wiki_page' => true,
-    ];
+    protected array $_accessible = [];
 }

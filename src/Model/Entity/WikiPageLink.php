@@ -29,11 +29,6 @@ class WikiPageLink extends Entity
      * @var array<string, bool>
      */
     protected array $_accessible = [
-        'source_page_id' => true,
         'target_page_id' => true,
-        'created' => true,
-        'modified' => true,
-        'source_page' => true,
-        'target_page' => true,
     ];
 }

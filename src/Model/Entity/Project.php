@@ -39,15 +39,5 @@ class Project extends Entity
         'name' => true,
         'slug' => true,
         'description' => true,
-        'created_by' => true,
-        'created' => true,
-        'modified' => true,
-        'activity_log' => true,
-        'attachments' => true,
-        'departments' => true,
-        'issues' => true,
-        'project_members' => true,
-        'statuses' => true,
-        'wiki_pages' => true,
     ];
 }

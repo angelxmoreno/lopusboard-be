@@ -33,17 +33,5 @@ class ActivityLog extends Entity
      *
      * @var array<string, bool>
      */
-    protected array $_accessible = [
-        'project_id' => true,
-        'actor_id' => true,
-        'subject_type' => true,
-        'subject_id' => true,
-        'action' => true,
-        'old_value' => true,
-        'new_value' => true,
-        'created' => true,
-        'modified' => true,
-        'project' => true,
-        'actor' => true,
-    ];
+    protected array $_accessible = [];
 }

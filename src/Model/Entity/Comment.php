@@ -30,12 +30,6 @@ class Comment extends Entity
      * @var array<string, bool>
      */
     protected array $_accessible = [
-        'issue_id' => true,
-        'user_id' => true,
         'body' => true,
-        'created' => true,
-        'modified' => true,
-        'issue' => true,
-        'user' => true,
     ];
 }

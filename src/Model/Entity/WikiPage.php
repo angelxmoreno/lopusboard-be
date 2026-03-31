@@ -37,19 +37,9 @@ class WikiPage extends Entity
      * @var array<string, bool>
      */
     protected array $_accessible = [
-        'project_id' => true,
         'parent_id' => true,
         'title' => true,
-        'slug' => true,
         'body' => true,
         'position' => true,
-        'created_by' => true,
-        'last_edited_by' => true,
-        'created' => true,
-        'modified' => true,
-        'project' => true,
-        'parent_wiki_page' => true,
-        'wiki_page_revisions' => true,
-        'child_wiki_pages' => true,
     ];
 }

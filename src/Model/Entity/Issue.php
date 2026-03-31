@@ -45,7 +45,6 @@ class Issue extends Entity
      * @var array<string, bool>
      */
     protected array $_accessible = [
-        'project_id' => true,
         'parent_id' => true,
         'type' => true,
         'title' => true,
@@ -56,16 +55,5 @@ class Issue extends Entity
         'department_id' => true,
         'due_date' => true,
         'position' => true,
-        'created_by' => true,
-        'created' => true,
-        'modified' => true,
-        'project' => true,
-        'parent_issue' => true,
-        'status' => true,
-        'assignee' => true,
-        'department' => true,
-        'comments' => true,
-        'issue_relations' => true,
-        'child_issues' => true,
     ];
 }

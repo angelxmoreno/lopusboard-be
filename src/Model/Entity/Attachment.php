@@ -36,7 +36,6 @@ class Attachment extends Entity
      * @var array<string, bool>
      */
     protected array $_accessible = [
-        'project_id' => true,
         'storage_provider' => true,
         'filename' => true,
         'mime_type' => true,
@@ -44,10 +43,5 @@ class Attachment extends Entity
         'storage_path' => true,
         'external_url' => true,
         'external_id' => true,
-        'uploaded_by' => true,
-        'created' => true,
-        'modified' => true,
-        'project' => true,
-        'attachment_links' => true,
     ];
 }
