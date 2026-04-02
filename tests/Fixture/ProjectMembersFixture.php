@@ -26,6 +26,14 @@ class ProjectMembersFixture extends TestFixture
                 'created' => '2026-03-31 05:06:16',
                 'modified' => '2026-03-31 05:06:16',
             ],
+            [
+                'id' => 2,
+                'project_id' => 1,
+                'user_id' => 2,
+                'role' => 'member',
+                'created' => '2026-03-31 05:06:16',
+                'modified' => '2026-03-31 05:06:16',
+            ],
         ];
         parent::init();
     }

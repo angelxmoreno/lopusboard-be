@@ -52,6 +52,23 @@ class IssuesFixture extends TestFixture
                 'created' => '2026-03-31 05:06:15',
                 'modified' => '2026-03-31 05:06:15',
             ],
+            [
+                'id' => 3,
+                'project_id' => 1,
+                'parent_id' => 1,
+                'type' => 'task',
+                'title' => 'Task One',
+                'description' => 'Task fixture under Issue One.',
+                'status_id' => 1,
+                'priority' => 'low',
+                'assignee_id' => 1,
+                'department_id' => 1,
+                'due_date' => '2026-04-02',
+                'position' => 3.5,
+                'created_by' => 1,
+                'created' => '2026-03-31 05:06:15',
+                'modified' => '2026-03-31 05:06:15',
+            ],
         ];
         parent::init();
     }

@@ -93,4 +93,27 @@ class ProjectMembersTableTest extends TestCase
         $this->assertFalse($this->ProjectMembers->save($member));
         $this->assertArrayHasKey('project_id', $member->getErrors());
     }
+
+    /**
+     * @return void
+     */
+    public function testBeforeSavePreventsDemotingLastAdmin(): void
+    {
+        $member = $this->ProjectMembers->get(1);
+        $member = $this->ProjectMembers->patchEntity($member, ['role' => 'member']);
+
+        $this->assertFalse($this->ProjectMembers->save($member));
+        $this->assertArrayHasKey('role', $member->getErrors());
+    }
+
+    /**
+     * @return void
+     */
+    public function testBeforeDeletePreventsDeletingLastAdmin(): void
+    {
+        $member = $this->ProjectMembers->get(1);
+
+        $this->assertFalse($this->ProjectMembers->delete($member));
+        $this->assertArrayHasKey('role', $member->getErrors());
+    }
 }

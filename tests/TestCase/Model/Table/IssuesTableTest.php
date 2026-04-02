@@ -139,6 +139,29 @@ class IssuesTableTest extends TestCase
     }
 
     /**
+     * @return void
+     */
+    public function testBuildRulesRejectsTaskAsParent(): void
+    {
+        $issue = $this->Issues->newEntity(
+            [
+                'project_id' => 1,
+                'parent_id' => 3,
+                'type' => 'task',
+                'title' => 'Nested Task',
+                'status_id' => 1,
+                'priority' => 'medium',
+                'position' => 5.0,
+                'created_by' => 1,
+            ],
+            ['accessibleFields' => ['*' => true]],
+        );
+
+        $this->assertFalse($this->Issues->save($issue));
+        $this->assertArrayHasKey('parent_id', $issue->getErrors());
+    }
+
+    /**
      * Test findForKanban method
      *
      * @return void

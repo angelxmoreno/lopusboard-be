@@ -185,6 +185,10 @@ class IssuesTable extends AppTable
             'errorField' => 'parent_id',
             'message' => __('Parent issue must belong to the same project as the issue.'),
         ]);
+        $rules->add([$this, 'parentCanAcceptChildren'], 'parentCanAcceptChildren', [
+            'errorField' => 'parent_id',
+            'message' => __('Tasks cannot have subtasks.'),
+        ]);
 
         return $rules;
     }
@@ -237,6 +241,30 @@ class IssuesTable extends AppTable
             ->first();
 
         return $parentIssue !== null && (int)$parentIssue['project_id'] === (int)$projectId;
+    }
+
+    /**
+     * Checks that the selected parent issue is not a task.
+     *
+     * @param \Cake\Datasource\EntityInterface $entity The entity being validated.
+     * @param array<string, mixed> $options Rule options.
+     * @return bool
+     */
+    public function parentCanAcceptChildren(EntityInterface $entity, array $options): bool
+    {
+        $parentId = $entity->get('parent_id');
+        if ($parentId === null) {
+            return true;
+        }
+
+        $parentIssue = $this->ParentIssues
+            ->find()
+            ->select(['type'])
+            ->where(['ParentIssues.id' => $parentId])
+            ->disableHydration()
+            ->first();
+
+        return $parentIssue === null || $parentIssue['type'] !== IssueType::Task->value;
     }
 
     /**
