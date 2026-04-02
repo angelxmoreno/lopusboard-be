@@ -121,6 +121,7 @@ class ProjectsTable extends AppTable
     public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->isUnique(['slug']), ['errorField' => 'slug']);
+        $rules->add($rules->existsIn(['created_by'], 'Creators'), ['errorField' => 'created_by']);
 
         return $rules;
     }

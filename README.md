@@ -81,6 +81,26 @@ The backend never issues tokens. It expects a `Bearer` token in the `Authorizati
 ### Model Associations
 We use CakePHP's ORM with several aliased associations to handle complex relationships like `created_by` and `assignee_id` pointing to the same `Users` table. See `wiki/09-cake-models.md` for the association map.
 
+### Domain Enums And Validation
+Allowed-value fields are centralized as backed enums under `src/Model/Enum`. This is the source of truth for model-layer value sets such as:
+- issue `type`
+- issue `priority`
+- project member `role`
+- attachment `storage_provider`
+- attachment link `linkable_type`
+- activity log `subject_type` and `action`
+
+Tables should not inline repeated `inList()` arrays for these fields. Instead, use the shared helper in `src/Model/Table/AppTable.php`:
+
+```php
+$this->addEnumValidation($validator, 'priority', IssuePriority::class);
+```
+
+This keeps validators, tests, and future refactors aligned. When adding a new allowed-value field:
+1. create or extend an enum in `src/Model/Enum`
+2. reference that enum from table validation
+3. keep migration and `tests/schema.sql` literals in sync with the enum values
+
 ---
 
 ## API Endpoints

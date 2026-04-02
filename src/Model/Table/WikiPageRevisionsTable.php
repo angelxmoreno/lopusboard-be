@@ -95,6 +95,13 @@ class WikiPageRevisionsTable extends AppTable
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
+        $rules->add(
+            $rules->isUnique(['wiki_page_id', 'revision_number']),
+            [
+                'errorField' => 'wiki_page_id',
+                'message' => __('This revision number already exists for the wiki page.'),
+            ],
+        );
         $rules->add($rules->existsIn(['edited_by'], 'Editors'), ['errorField' => 'edited_by']);
         $rules->add($rules->existsIn(['wiki_page_id'], 'WikiPages'), ['errorField' => 'wiki_page_id']);
 

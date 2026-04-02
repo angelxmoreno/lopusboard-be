@@ -20,6 +20,17 @@ class WikiPagesTableTest extends TestCase
     protected $WikiPages;
 
     /**
+     * Fixtures
+     *
+     * @var array<string>
+     */
+    protected array $fixtures = [
+        'app.WikiPages',
+        'app.Projects',
+        'app.Users',
+    ];
+
+    /**
      * setUp method
      *
      * @return void
@@ -29,11 +40,6 @@ class WikiPagesTableTest extends TestCase
         parent::setUp();
         $config = $this->getTableLocator()->exists('WikiPages') ? [] : ['className' => WikiPagesTable::class];
         $this->WikiPages = $this->getTableLocator()->get('WikiPages', $config);
-        $this->WikiPages->setSchema([
-            'id' => ['type' => 'integer'],
-            'project_id' => ['type' => 'integer'],
-            'position' => ['type' => 'decimal'],
-        ]);
     }
 
     /**
@@ -63,6 +69,44 @@ class WikiPagesTableTest extends TestCase
         $this->assertSame('WikiPages', $this->WikiPages->getAssociation('ParentPages')->getClassName());
         $this->assertSame('WikiPages', $this->WikiPages->getAssociation('ChildPages')->getClassName());
         $this->assertSame('source_page_id', $this->WikiPages->getAssociation('WikiPageLinks')->getForeignKey());
+    }
+
+    /**
+     * @return void
+     */
+    public function testBeforeMarshalGeneratesSlug(): void
+    {
+        $page = $this->WikiPages->newEntity(
+            [
+                'project_id' => 1,
+                'title' => 'Hello World',
+                'created_by' => 1,
+                'position' => 3.0,
+            ],
+            ['accessibleFields' => ['*' => true]],
+        );
+
+        $this->assertSame('hello-world', $page->get('slug'));
+    }
+
+    /**
+     * @return void
+     */
+    public function testBuildRulesRejectParentFromAnotherProject(): void
+    {
+        $page = $this->WikiPages->newEntity(
+            [
+                'project_id' => 1,
+                'parent_id' => 2,
+                'title' => 'Cross Project Child',
+                'created_by' => 1,
+                'position' => 3.0,
+            ],
+            ['accessibleFields' => ['*' => true]],
+        );
+
+        $this->assertFalse($this->WikiPages->save($page));
+        $this->assertArrayHasKey('parent_id', $page->getErrors());
     }
 
     /**

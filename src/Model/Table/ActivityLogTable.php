@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Enum\ActivityAction;
+use App\Model\Enum\ActivitySubjectType;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
 
@@ -75,6 +77,7 @@ class ActivityLogTable extends AppTable
             ->scalar('subject_type')
             ->requirePresence('subject_type', 'create')
             ->notEmptyString('subject_type');
+        $this->addEnumValidation($validator, 'subject_type', ActivitySubjectType::class);
 
         $validator
             ->nonNegativeInteger('subject_id')
@@ -85,11 +88,20 @@ class ActivityLogTable extends AppTable
             ->scalar('action')
             ->requirePresence('action', 'create')
             ->notEmptyString('action');
+        $this->addEnumValidation($validator, 'action', ActivityAction::class);
 
         $validator
+            ->add('old_value', 'validJsonPayload', [
+                'rule' => [$this, 'validateJsonPayload'],
+                'message' => __('Old value must be valid JSON or an array payload.'),
+            ])
             ->allowEmptyString('old_value');
 
         $validator
+            ->add('new_value', 'validJsonPayload', [
+                'rule' => [$this, 'validateJsonPayload'],
+                'message' => __('New value must be valid JSON or an array payload.'),
+            ])
             ->allowEmptyString('new_value');
 
         return $validator;
@@ -108,5 +120,29 @@ class ActivityLogTable extends AppTable
         $rules->add($rules->existsIn(['actor_id'], 'Actors'), ['errorField' => 'actor_id']);
 
         return $rules;
+    }
+
+    /**
+     * Validates JSON payload fields used for activity snapshots.
+     *
+     * @param mixed $value The field value.
+     * @param array<string, mixed> $context Validation context.
+     * @return bool
+     */
+    public function validateJsonPayload(mixed $value, array $context): bool
+    {
+        if ($value === null || $value === '') {
+            return true;
+        }
+        if (is_array($value)) {
+            return true;
+        }
+        if (!is_string($value)) {
+            return false;
+        }
+
+        json_decode($value);
+
+        return json_last_error() === JSON_ERROR_NONE;
     }
 }

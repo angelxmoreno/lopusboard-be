@@ -19,6 +19,17 @@ class AttachmentsTableTest extends TestCase
     protected $Attachments;
 
     /**
+     * Fixtures
+     *
+     * @var array<string>
+     */
+    protected array $fixtures = [
+        'app.Attachments',
+        'app.Projects',
+        'app.Users',
+    ];
+
+    /**
      * setUp method
      *
      * @return void
@@ -52,5 +63,25 @@ class AttachmentsTableTest extends TestCase
     {
         $this->assertSame('Users', $this->Attachments->getAssociation('Uploaders')->getClassName());
         $this->assertSame('uploaded_by', $this->Attachments->getAssociation('Uploaders')->getForeignKey());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidationDefaultRejectsInvalidProviderAndUrl(): void
+    {
+        $attachment = $this->Attachments->newEntity(
+            [
+                'project_id' => 1,
+                'storage_provider' => 'dropbox',
+                'filename' => 'bad.txt',
+                'external_url' => 'not-a-url',
+                'uploaded_by' => 1,
+            ],
+            ['accessibleFields' => ['*' => true]],
+        );
+
+        $this->assertArrayHasKey('storage_provider', $attachment->getErrors());
+        $this->assertArrayHasKey('external_url', $attachment->getErrors());
     }
 }

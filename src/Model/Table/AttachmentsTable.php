@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Enum\AttachmentStorageProvider;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
 
@@ -74,6 +75,7 @@ class AttachmentsTable extends AppTable
         $validator
             ->scalar('storage_provider')
             ->notEmptyString('storage_provider');
+        $this->addEnumValidation($validator, 'storage_provider', AttachmentStorageProvider::class);
 
         $validator
             ->scalar('filename')
@@ -87,6 +89,7 @@ class AttachmentsTable extends AppTable
             ->allowEmptyString('mime_type');
 
         $validator
+            ->nonNegativeInteger('file_size')
             ->allowEmptyString('file_size');
 
         $validator
@@ -97,6 +100,7 @@ class AttachmentsTable extends AppTable
         $validator
             ->scalar('external_url')
             ->maxLength('external_url', 1000)
+            ->url('external_url')
             ->allowEmptyString('external_url');
 
         $validator

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Enum\AttachmentLinkableType;
+use Cake\Datasource\EntityInterface;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
 
@@ -65,6 +67,7 @@ class AttachmentLinksTable extends AppTable
             ->scalar('linkable_type')
             ->requirePresence('linkable_type', 'create')
             ->notEmptyString('linkable_type');
+        $this->addEnumValidation($validator, 'linkable_type', AttachmentLinkableType::class);
 
         $validator
             ->nonNegativeInteger('linkable_id')
@@ -84,7 +87,38 @@ class AttachmentLinksTable extends AppTable
     public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->existsIn(['attachment_id'], 'Attachments'), ['errorField' => 'attachment_id']);
+        $rules->add([$this, 'linkableTargetExists'], 'linkableTargetExists', [
+            'errorField' => 'linkable_id',
+            'message' => __('Linkable target does not exist for the selected type.'),
+        ]);
 
         return $rules;
+    }
+
+    /**
+     * Checks that the polymorphic target exists.
+     *
+     * @param \Cake\Datasource\EntityInterface $entity The entity being validated.
+     * @param array<string, mixed> $options Rule options.
+     * @return bool
+     */
+    public function linkableTargetExists(EntityInterface $entity, array $options): bool
+    {
+        $linkableType = $entity->get('linkable_type');
+        $linkableId = $entity->get('linkable_id');
+        if (!is_string($linkableType) || $linkableId === null) {
+            return true;
+        }
+
+        $table = match ($linkableType) {
+            AttachmentLinkableType::Issue->value => 'Issues',
+            AttachmentLinkableType::WikiPage->value => 'WikiPages',
+            default => null,
+        };
+        if ($table === null) {
+            return true;
+        }
+
+        return $this->fetchTable($table)->exists(['id' => $linkableId]);
     }
 }

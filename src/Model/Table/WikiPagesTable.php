@@ -3,8 +3,12 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use ArrayObject;
+use Cake\Datasource\EntityInterface;
+use Cake\Event\EventInterface;
 use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\RulesChecker;
+use Cake\Utility\Text;
 use Cake\Validation\Validator;
 
 /**
@@ -104,7 +108,6 @@ class WikiPagesTable extends AppTable
         $validator
             ->scalar('slug')
             ->maxLength('slug', 500)
-            ->requirePresence('slug', 'create')
             ->notEmptyString('slug');
 
         $validator
@@ -129,6 +132,24 @@ class WikiPagesTable extends AppTable
     }
 
     /**
+     * Normalizes wiki page data before validation runs.
+     *
+     * @param \Cake\Event\EventInterface $event The event instance.
+     * @param \ArrayObject<string, mixed> $data The marshalled data.
+     * @param \ArrayObject<string, mixed> $options Marshal options.
+     * @return void
+     */
+    public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void
+    {
+        $title = $data['title'] ?? null;
+        $slug = $data['slug'] ?? null;
+
+        if (is_string($title) && $title !== '' && (!is_string($slug) || trim($slug) === '')) {
+            $data['slug'] = strtolower(Text::slug($title, ['replacement' => '-']));
+        }
+    }
+
+    /**
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
@@ -148,8 +169,37 @@ class WikiPagesTable extends AppTable
         $rules->add($rules->existsIn(['created_by'], 'Creators'), ['errorField' => 'created_by']);
         $rules->add($rules->existsIn(['last_edited_by'], 'LastEditors'), ['errorField' => 'last_edited_by']);
         $rules->add($rules->existsIn(['parent_id'], 'ParentPages'), ['errorField' => 'parent_id']);
+        $rules->add([$this, 'parentBelongsToProject'], 'parentBelongsToProject', [
+            'errorField' => 'parent_id',
+            'message' => __('Parent page must belong to the same project as the wiki page.'),
+        ]);
 
         return $rules;
+    }
+
+    /**
+     * Checks that the selected parent page belongs to the same project.
+     *
+     * @param \Cake\Datasource\EntityInterface $entity The entity being validated.
+     * @param array<string, mixed> $options Rule options.
+     * @return bool
+     */
+    public function parentBelongsToProject(EntityInterface $entity, array $options): bool
+    {
+        $parentId = $entity->get('parent_id');
+        $projectId = $entity->get('project_id');
+        if ($parentId === null || $projectId === null) {
+            return true;
+        }
+
+        $parentPage = $this->ParentPages
+            ->find()
+            ->select(['project_id'])
+            ->where(['ParentPages.id' => $parentId])
+            ->disableHydration()
+            ->first();
+
+        return $parentPage !== null && (int)$parentPage['project_id'] === (int)$projectId;
     }
 
     /**

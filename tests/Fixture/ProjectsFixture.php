@@ -20,10 +20,19 @@ class ProjectsFixture extends TestFixture
         $this->records = [
             [
                 'id' => 1,
-                'name' => 'Lorem ipsum dolor sit amet',
-                'slug' => 'Lorem ipsum dolor sit amet',
-                'description' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
+                'name' => 'Project One',
+                'slug' => 'project-one',
+                'description' => 'Primary project fixture.',
                 'created_by' => 1,
+                'created' => '2026-03-31 05:06:16',
+                'modified' => '2026-03-31 05:06:16',
+            ],
+            [
+                'id' => 2,
+                'name' => 'Project Two',
+                'slug' => 'project-two',
+                'description' => 'Secondary project fixture.',
+                'created_by' => 2,
                 'created' => '2026-03-31 05:06:16',
                 'modified' => '2026-03-31 05:06:16',
             ],

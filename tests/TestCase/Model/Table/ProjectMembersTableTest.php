@@ -61,7 +61,16 @@ class ProjectMembersTableTest extends TestCase
      */
     public function testValidationDefault(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $member = $this->ProjectMembers->newEntity(
+            [
+                'project_id' => 1,
+                'user_id' => 1,
+                'role' => 'viewer',
+            ],
+            ['accessibleFields' => ['*' => true]],
+        );
+
+        $this->assertArrayHasKey('role', $member->getErrors());
     }
 
     /**
@@ -72,6 +81,16 @@ class ProjectMembersTableTest extends TestCase
      */
     public function testBuildRules(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $member = $this->ProjectMembers->newEntity(
+            [
+                'project_id' => 1,
+                'user_id' => 1,
+                'role' => 'admin',
+            ],
+            ['accessibleFields' => ['*' => true]],
+        );
+
+        $this->assertFalse($this->ProjectMembers->save($member));
+        $this->assertArrayHasKey('project_id', $member->getErrors());
     }
 }

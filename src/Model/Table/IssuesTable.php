@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Enum\ActivitySubjectType;
+use App\Model\Enum\IssuePriority;
+use App\Model\Enum\IssueType;
+use Cake\Datasource\EntityInterface;
 use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
@@ -79,7 +83,7 @@ class IssuesTable extends AppTable
         ]);
         $this->hasMany('ActivityLog', [
             'foreignKey' => 'subject_id',
-            'conditions' => ['ActivityLog.subject_type IN' => ['issue', 'task']],
+            'conditions' => ['ActivityLog.subject_type IN' => ActivitySubjectType::issueTaskValues()],
         ]);
         $this->hasMany('Comments', [
             'foreignKey' => 'issue_id',
@@ -112,6 +116,7 @@ class IssuesTable extends AppTable
         $validator
             ->scalar('type')
             ->notEmptyString('type');
+        $this->addEnumValidation($validator, 'type', IssueType::class);
 
         $validator
             ->scalar('title')
@@ -131,6 +136,7 @@ class IssuesTable extends AppTable
         $validator
             ->scalar('priority')
             ->notEmptyString('priority');
+        $this->addEnumValidation($validator, 'priority', IssuePriority::class);
 
         $validator
             ->nonNegativeInteger('assignee_id')
@@ -171,8 +177,66 @@ class IssuesTable extends AppTable
         $rules->add($rules->existsIn(['status_id'], 'Statuses'), ['errorField' => 'status_id']);
         $rules->add($rules->existsIn(['assignee_id'], 'Assignees'), ['errorField' => 'assignee_id']);
         $rules->add($rules->existsIn(['department_id'], 'Departments'), ['errorField' => 'department_id']);
+        $rules->add([$this, 'statusBelongsToProject'], 'statusBelongsToProject', [
+            'errorField' => 'status_id',
+            'message' => __('Status must belong to the same project as the issue.'),
+        ]);
+        $rules->add([$this, 'parentBelongsToProject'], 'parentBelongsToProject', [
+            'errorField' => 'parent_id',
+            'message' => __('Parent issue must belong to the same project as the issue.'),
+        ]);
 
         return $rules;
+    }
+
+    /**
+     * Checks that the selected status belongs to the same project as the issue.
+     *
+     * @param \Cake\Datasource\EntityInterface $entity The entity being validated.
+     * @param array<string, mixed> $options Rule options.
+     * @return bool
+     */
+    public function statusBelongsToProject(EntityInterface $entity, array $options): bool
+    {
+        $statusId = $entity->get('status_id');
+        $projectId = $entity->get('project_id');
+        if ($statusId === null || $projectId === null) {
+            return true;
+        }
+
+        $status = $this->Statuses
+            ->find()
+            ->select(['project_id'])
+            ->where(['Statuses.id' => $statusId])
+            ->disableHydration()
+            ->first();
+
+        return $status !== null && (int)$status['project_id'] === (int)$projectId;
+    }
+
+    /**
+     * Checks that the selected parent issue belongs to the same project.
+     *
+     * @param \Cake\Datasource\EntityInterface $entity The entity being validated.
+     * @param array<string, mixed> $options Rule options.
+     * @return bool
+     */
+    public function parentBelongsToProject(EntityInterface $entity, array $options): bool
+    {
+        $parentId = $entity->get('parent_id');
+        $projectId = $entity->get('project_id');
+        if ($parentId === null || $projectId === null) {
+            return true;
+        }
+
+        $parentIssue = $this->ParentIssues
+            ->find()
+            ->select(['project_id'])
+            ->where(['ParentIssues.id' => $parentId])
+            ->disableHydration()
+            ->first();
+
+        return $parentIssue !== null && (int)$parentIssue['project_id'] === (int)$projectId;
     }
 
     /**

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Enum\ProjectMemberRole;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
 
@@ -73,6 +74,7 @@ class ProjectMembersTable extends AppTable
         $validator
             ->scalar('role')
             ->notEmptyString('role');
+        $this->addEnumValidation($validator, 'role', ProjectMemberRole::class);
 
         return $validator;
     }

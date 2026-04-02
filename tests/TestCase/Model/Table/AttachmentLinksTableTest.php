@@ -26,6 +26,12 @@ class AttachmentLinksTableTest extends TestCase
     protected array $fixtures = [
         'app.AttachmentLinks',
         'app.Attachments',
+        'app.Issues',
+        'app.WikiPages',
+        'app.Projects',
+        'app.Statuses',
+        'app.Users',
+        'app.Departments',
     ];
 
     /**
@@ -60,7 +66,16 @@ class AttachmentLinksTableTest extends TestCase
      */
     public function testValidationDefault(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $attachmentLink = $this->AttachmentLinks->newEntity(
+            [
+                'attachment_id' => 1,
+                'linkable_type' => 'comment',
+                'linkable_id' => 1,
+            ],
+            ['accessibleFields' => ['*' => true]],
+        );
+
+        $this->assertArrayHasKey('linkable_type', $attachmentLink->getErrors());
     }
 
     /**
@@ -71,6 +86,16 @@ class AttachmentLinksTableTest extends TestCase
      */
     public function testBuildRules(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $attachmentLink = $this->AttachmentLinks->newEntity(
+            [
+                'attachment_id' => 1,
+                'linkable_type' => 'wiki_page',
+                'linkable_id' => 999,
+            ],
+            ['accessibleFields' => ['*' => true]],
+        );
+
+        $this->assertFalse($this->AttachmentLinks->save($attachmentLink));
+        $this->assertArrayHasKey('linkable_id', $attachmentLink->getErrors());
     }
 }

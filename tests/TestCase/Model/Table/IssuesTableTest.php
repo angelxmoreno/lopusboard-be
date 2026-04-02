@@ -20,6 +20,19 @@ class IssuesTableTest extends TestCase
     protected $Issues;
 
     /**
+     * Fixtures
+     *
+     * @var array<string>
+     */
+    protected array $fixtures = [
+        'app.Issues',
+        'app.Projects',
+        'app.Statuses',
+        'app.Users',
+        'app.Departments',
+    ];
+
+    /**
      * setUp method
      *
      * @return void
@@ -29,28 +42,6 @@ class IssuesTableTest extends TestCase
         parent::setUp();
         $config = $this->getTableLocator()->exists('Issues') ? [] : ['className' => IssuesTable::class];
         $this->Issues = $this->getTableLocator()->get('Issues', $config);
-        $this->Issues->setSchema([
-            'id' => ['type' => 'integer'],
-            'project_id' => ['type' => 'integer'],
-            'type' => ['type' => 'string'],
-            'status_id' => ['type' => 'integer'],
-            'position' => ['type' => 'decimal'],
-            'assignee_id' => ['type' => 'integer', 'null' => true],
-            'department_id' => ['type' => 'integer', 'null' => true],
-        ]);
-        $this->Issues->getAssociation('Statuses')->getTarget()->setSchema([
-            'id' => ['type' => 'integer'],
-            'name' => ['type' => 'string'],
-        ]);
-        $this->Issues->getAssociation('Assignees')->getTarget()->setSchema([
-            'id' => ['type' => 'integer'],
-            'name' => ['type' => 'string'],
-            'email' => ['type' => 'string'],
-        ]);
-        $this->Issues->getAssociation('Departments')->getTarget()->setSchema([
-            'id' => ['type' => 'integer'],
-            'name' => ['type' => 'string'],
-        ]);
     }
 
     /**
@@ -78,6 +69,73 @@ class IssuesTableTest extends TestCase
         $this->assertSame('Issues', $this->Issues->getAssociation('Tasks')->getClassName());
         $this->assertSame('parent_id', $this->Issues->getAssociation('Tasks')->getForeignKey());
         $this->assertSame('subject_id', $this->Issues->getAssociation('ActivityLog')->getForeignKey());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidationDefaultRejectsInvalidTypeAndPriority(): void
+    {
+        $issue = $this->Issues->newEntity(
+            [
+                'project_id' => 1,
+                'type' => 'epic',
+                'title' => 'Bad Issue',
+                'status_id' => 1,
+                'priority' => 'urgent',
+                'position' => 1.0,
+                'created_by' => 1,
+            ],
+            ['accessibleFields' => ['*' => true]],
+        );
+
+        $this->assertArrayHasKey('type', $issue->getErrors());
+        $this->assertArrayHasKey('priority', $issue->getErrors());
+    }
+
+    /**
+     * @return void
+     */
+    public function testBuildRulesRejectStatusFromAnotherProject(): void
+    {
+        $issue = $this->Issues->newEntity(
+            [
+                'project_id' => 1,
+                'type' => 'issue',
+                'title' => 'Cross Project Status',
+                'status_id' => 2,
+                'priority' => 'medium',
+                'position' => 3.0,
+                'created_by' => 1,
+            ],
+            ['accessibleFields' => ['*' => true]],
+        );
+
+        $this->assertFalse($this->Issues->save($issue));
+        $this->assertArrayHasKey('status_id', $issue->getErrors());
+    }
+
+    /**
+     * @return void
+     */
+    public function testBuildRulesRejectParentFromAnotherProject(): void
+    {
+        $issue = $this->Issues->newEntity(
+            [
+                'project_id' => 1,
+                'parent_id' => 2,
+                'type' => 'task',
+                'title' => 'Cross Project Parent',
+                'status_id' => 1,
+                'priority' => 'medium',
+                'position' => 4.0,
+                'created_by' => 1,
+            ],
+            ['accessibleFields' => ['*' => true]],
+        );
+
+        $this->assertFalse($this->Issues->save($issue));
+        $this->assertArrayHasKey('parent_id', $issue->getErrors());
     }
 
     /**

@@ -19,6 +19,16 @@ class ProjectsTableTest extends TestCase
     protected $Projects;
 
     /**
+     * Fixtures
+     *
+     * @var array<string>
+     */
+    protected array $fixtures = [
+        'app.Projects',
+        'app.Users',
+    ];
+
+    /**
      * setUp method
      *
      * @return void
@@ -52,5 +62,23 @@ class ProjectsTableTest extends TestCase
     {
         $this->assertSame('Users', $this->Projects->getAssociation('Creators')->getClassName());
         $this->assertSame('created_by', $this->Projects->getAssociation('Creators')->getForeignKey());
+    }
+
+    /**
+     * @return void
+     */
+    public function testBuildRulesRejectsUnknownCreator(): void
+    {
+        $project = $this->Projects->newEntity(
+            [
+                'name' => 'Validation Project',
+                'slug' => 'validation-project',
+                'created_by' => 999,
+            ],
+            ['accessibleFields' => ['*' => true]],
+        );
+
+        $this->assertFalse($this->Projects->save($project));
+        $this->assertArrayHasKey('created_by', $project->getErrors());
     }
 }

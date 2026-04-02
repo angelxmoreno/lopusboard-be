@@ -19,6 +19,17 @@ class WikiPageRevisionsTableTest extends TestCase
     protected $WikiPageRevisions;
 
     /**
+     * Fixtures
+     *
+     * @var array<string>
+     */
+    protected array $fixtures = [
+        'app.WikiPageRevisions',
+        'app.WikiPages',
+        'app.Users',
+    ];
+
+    /**
      * setUp method
      *
      * @return void
@@ -52,5 +63,24 @@ class WikiPageRevisionsTableTest extends TestCase
     {
         $this->assertSame('Users', $this->WikiPageRevisions->getAssociation('Editors')->getClassName());
         $this->assertSame('edited_by', $this->WikiPageRevisions->getAssociation('Editors')->getForeignKey());
+    }
+
+    /**
+     * @return void
+     */
+    public function testBuildRulesRejectDuplicateRevisionNumberPerPage(): void
+    {
+        $revision = $this->WikiPageRevisions->newEntity(
+            [
+                'wiki_page_id' => 1,
+                'body' => 'Duplicate revision',
+                'revision_number' => 1,
+                'edited_by' => 1,
+            ],
+            ['accessibleFields' => ['*' => true]],
+        );
+
+        $this->assertFalse($this->WikiPageRevisions->save($revision));
+        $this->assertArrayHasKey('wiki_page_id', $revision->getErrors());
     }
 }

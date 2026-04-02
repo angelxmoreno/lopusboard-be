@@ -74,10 +74,15 @@ class StatusesTable extends AppTable
         $validator
             ->scalar('color')
             ->maxLength('color', 7)
+            ->add('color', 'hexFormat', [
+                'rule' => ['custom', '/^#[0-9A-Fa-f]{6}$/'],
+                'message' => __('Color must be a valid 6-digit hex code.'),
+            ])
             ->notEmptyString('color');
 
         $validator
             ->decimal('position')
+            ->greaterThan('position', 0, __('Position must be greater than 0.'))
             ->notEmptyString('position');
 
         $validator

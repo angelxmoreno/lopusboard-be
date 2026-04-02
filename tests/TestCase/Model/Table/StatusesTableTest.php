@@ -61,7 +61,20 @@ class StatusesTableTest extends TestCase
      */
     public function testValidationDefault(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $status = $this->Statuses->newEntity(
+            [
+                'project_id' => 1,
+                'name' => 'Broken Status',
+                'color' => 'blue',
+                'position' => 0,
+                'is_default' => false,
+                'is_done' => false,
+            ],
+            ['accessibleFields' => ['*' => true]],
+        );
+
+        $this->assertArrayHasKey('color', $status->getErrors());
+        $this->assertArrayHasKey('position', $status->getErrors());
     }
 
     /**
@@ -72,6 +85,19 @@ class StatusesTableTest extends TestCase
      */
     public function testBuildRules(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $status = $this->Statuses->newEntity(
+            [
+                'project_id' => 999,
+                'name' => 'Unknown Project',
+                'color' => '#111111',
+                'position' => 1.0,
+                'is_default' => false,
+                'is_done' => false,
+            ],
+            ['accessibleFields' => ['*' => true]],
+        );
+
+        $this->assertFalse($this->Statuses->save($status));
+        $this->assertArrayHasKey('project_id', $status->getErrors());
     }
 }

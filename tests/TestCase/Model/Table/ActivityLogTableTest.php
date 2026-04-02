@@ -61,7 +61,21 @@ class ActivityLogTableTest extends TestCase
      */
     public function testValidationDefault(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $activityLog = $this->ActivityLog->newEntity(
+            [
+                'project_id' => 1,
+                'actor_id' => 1,
+                'subject_type' => 'project',
+                'subject_id' => 1,
+                'action' => 'renamed',
+                'old_value' => '{bad json',
+            ],
+            ['accessibleFields' => ['*' => true]],
+        );
+
+        $this->assertArrayHasKey('subject_type', $activityLog->getErrors());
+        $this->assertArrayHasKey('action', $activityLog->getErrors());
+        $this->assertArrayHasKey('old_value', $activityLog->getErrors());
     }
 
     /**
@@ -72,6 +86,18 @@ class ActivityLogTableTest extends TestCase
      */
     public function testBuildRules(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $activityLog = $this->ActivityLog->newEntity(
+            [
+                'project_id' => 999,
+                'actor_id' => 1,
+                'subject_type' => 'issue',
+                'subject_id' => 1,
+                'action' => 'created',
+            ],
+            ['accessibleFields' => ['*' => true]],
+        );
+
+        $this->assertFalse($this->ActivityLog->save($activityLog));
+        $this->assertArrayHasKey('project_id', $activityLog->getErrors());
     }
 }
