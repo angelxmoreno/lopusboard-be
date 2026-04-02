@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
 
@@ -12,7 +11,6 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\ProjectsTable&\Cake\ORM\Association\BelongsTo $Projects
  * @property \App\Model\Table\IssuesTable&\Cake\ORM\Association\HasMany $Issues
- *
  * @method \App\Model\Entity\Department newEmptyEntity()
  * @method \App\Model\Entity\Department newEntity(array $data, array $options = [])
  * @method array<\App\Model\Entity\Department> newEntities(array $data, array $options = [])
@@ -26,7 +24,6 @@ use Cake\Validation\Validator;
  * @method iterable<\App\Model\Entity\Department>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Department> saveManyOrFail(iterable $entities, array $options = [])
  * @method iterable<\App\Model\Entity\Department>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Department>|false deleteMany(iterable $entities, array $options = [])
  * @method iterable<\App\Model\Entity\Department>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Department> deleteManyOrFail(iterable $entities, array $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class DepartmentsTable extends AppTable

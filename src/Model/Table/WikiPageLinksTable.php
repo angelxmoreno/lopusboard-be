@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
 
@@ -12,7 +11,6 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\WikiPagesTable&\Cake\ORM\Association\BelongsTo $SourcePages
  * @property \App\Model\Table\WikiPagesTable&\Cake\ORM\Association\BelongsTo $TargetPages
- *
  * @method \App\Model\Entity\WikiPageLink newEmptyEntity()
  * @method \App\Model\Entity\WikiPageLink newEntity(array $data, array $options = [])
  * @method array<\App\Model\Entity\WikiPageLink> newEntities(array $data, array $options = [])
@@ -26,7 +24,6 @@ use Cake\Validation\Validator;
  * @method iterable<\App\Model\Entity\WikiPageLink>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\WikiPageLink> saveManyOrFail(iterable $entities, array $options = [])
  * @method iterable<\App\Model\Entity\WikiPageLink>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\WikiPageLink>|false deleteMany(iterable $entities, array $options = [])
  * @method iterable<\App\Model\Entity\WikiPageLink>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\WikiPageLink> deleteManyOrFail(iterable $entities, array $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class WikiPageLinksTable extends AppTable
@@ -87,7 +84,13 @@ class WikiPageLinksTable extends AppTable
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->isUnique(['source_page_id', 'target_page_id']), ['errorField' => 'source_page_id', 'message' => __('This combination of source_page_id and target_page_id already exists')]);
+        $rules->add(
+            $rules->isUnique(['source_page_id', 'target_page_id']),
+            [
+                'errorField' => 'source_page_id',
+                'message' => __('This combination of source_page_id and target_page_id already exists'),
+            ],
+        );
         $rules->add($rules->existsIn(['source_page_id'], 'SourcePages'), ['errorField' => 'source_page_id']);
         $rules->add($rules->existsIn(['target_page_id'], 'TargetPages'), ['errorField' => 'target_page_id']);
 

@@ -20,7 +20,6 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\CommentsTable&\Cake\ORM\Association\HasMany $Comments
  * @property \App\Model\Table\IssueRelationsTable&\Cake\ORM\Association\HasMany $IssueRelations
  * @property \App\Model\Table\IssuesTable&\Cake\ORM\Association\HasMany $Tasks
- *
  * @method \App\Model\Entity\Issue newEmptyEntity()
  * @method \App\Model\Entity\Issue newEntity(array $data, array $options = [])
  * @method array<\App\Model\Entity\Issue> newEntities(array $data, array $options = [])
@@ -34,7 +33,6 @@ use Cake\Validation\Validator;
  * @method iterable<\App\Model\Entity\Issue>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Issue> saveManyOrFail(iterable $entities, array $options = [])
  * @method iterable<\App\Model\Entity\Issue>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Issue>|false deleteMany(iterable $entities, array $options = [])
  * @method iterable<\App\Model\Entity\Issue>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Issue> deleteManyOrFail(iterable $entities, array $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class IssuesTable extends AppTable
@@ -177,6 +175,13 @@ class IssuesTable extends AppTable
         return $rules;
     }
 
+    /**
+     * Finds issue rows for the kanban board of a single project.
+     *
+     * @param \Cake\ORM\Query\SelectQuery $query The query to decorate.
+     * @param array<string, mixed> $options Finder options.
+     * @return \Cake\ORM\Query\SelectQuery
+     */
     public function findForKanban(SelectQuery $query, array $options): SelectQuery
     {
         return $query

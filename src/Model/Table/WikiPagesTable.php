@@ -17,7 +17,6 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\WikiPagesTable&\Cake\ORM\Association\HasMany $ChildPages
  * @property \App\Model\Table\WikiPageLinksTable&\Cake\ORM\Association\HasMany $WikiPageLinks
  * @property \App\Model\Table\WikiPageRevisionsTable&\Cake\ORM\Association\HasMany $WikiPageRevisions
- *
  * @method \App\Model\Entity\WikiPage newEmptyEntity()
  * @method \App\Model\Entity\WikiPage newEntity(array $data, array $options = [])
  * @method array<\App\Model\Entity\WikiPage> newEntities(array $data, array $options = [])
@@ -31,7 +30,6 @@ use Cake\Validation\Validator;
  * @method iterable<\App\Model\Entity\WikiPage>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\WikiPage> saveManyOrFail(iterable $entities, array $options = [])
  * @method iterable<\App\Model\Entity\WikiPage>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\WikiPage>|false deleteMany(iterable $entities, array $options = [])
  * @method iterable<\App\Model\Entity\WikiPage>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\WikiPage> deleteManyOrFail(iterable $entities, array $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class WikiPagesTable extends AppTable
@@ -139,7 +137,13 @@ class WikiPagesTable extends AppTable
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->isUnique(['project_id', 'slug']), ['errorField' => 'project_id', 'message' => __('This combination of project_id and slug already exists')]);
+        $rules->add(
+            $rules->isUnique(['project_id', 'slug']),
+            [
+                'errorField' => 'project_id',
+                'message' => __('This combination of project_id and slug already exists'),
+            ],
+        );
         $rules->add($rules->existsIn(['project_id'], 'Projects'), ['errorField' => 'project_id']);
         $rules->add($rules->existsIn(['created_by'], 'Creators'), ['errorField' => 'created_by']);
         $rules->add($rules->existsIn(['last_edited_by'], 'LastEditors'), ['errorField' => 'last_edited_by']);
@@ -148,6 +152,13 @@ class WikiPagesTable extends AppTable
         return $rules;
     }
 
+    /**
+     * Finds wiki pages for a project in tree order.
+     *
+     * @param \Cake\ORM\Query\SelectQuery $query The query to decorate.
+     * @param array<string, mixed> $options Finder options.
+     * @return \Cake\ORM\Query\SelectQuery
+     */
     public function findTree(SelectQuery $query, array $options): SelectQuery
     {
         return $query

@@ -16,7 +16,6 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\ProjectMembersTable&\Cake\ORM\Association\HasMany $ProjectMembers
  * @property \App\Model\Table\ProjectsTable&\Cake\ORM\Association\HasMany $Projects
  * @property \App\Model\Table\WikiPagesTable&\Cake\ORM\Association\HasMany $WikiPages
- *
  * @method \App\Model\Entity\User newEmptyEntity()
  * @method \App\Model\Entity\User newEntity(array $data, array $options = [])
  * @method array<\App\Model\Entity\User> newEntities(array $data, array $options = [])
@@ -30,7 +29,6 @@ use Cake\Validation\Validator;
  * @method iterable<\App\Model\Entity\User>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\User> saveManyOrFail(iterable $entities, array $options = [])
  * @method iterable<\App\Model\Entity\User>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\User>|false deleteMany(iterable $entities, array $options = [])
  * @method iterable<\App\Model\Entity\User>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\User> deleteManyOrFail(iterable $entities, array $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class UsersTable extends AppTable

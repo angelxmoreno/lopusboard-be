@@ -12,7 +12,6 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\ProjectsTable&\Cake\ORM\Association\BelongsTo $Projects
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Uploaders
  * @property \App\Model\Table\AttachmentLinksTable&\Cake\ORM\Association\HasMany $AttachmentLinks
- *
  * @method \App\Model\Entity\Attachment newEmptyEntity()
  * @method \App\Model\Entity\Attachment newEntity(array $data, array $options = [])
  * @method array<\App\Model\Entity\Attachment> newEntities(array $data, array $options = [])
@@ -26,7 +25,6 @@ use Cake\Validation\Validator;
  * @method iterable<\App\Model\Entity\Attachment>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Attachment> saveManyOrFail(iterable $entities, array $options = [])
  * @method iterable<\App\Model\Entity\Attachment>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Attachment>|false deleteMany(iterable $entities, array $options = [])
  * @method iterable<\App\Model\Entity\Attachment>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Attachment> deleteManyOrFail(iterable $entities, array $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class AttachmentsTable extends AppTable

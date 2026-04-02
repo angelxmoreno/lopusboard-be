@@ -11,7 +11,6 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Editors
  * @property \App\Model\Table\WikiPagesTable&\Cake\ORM\Association\BelongsTo $WikiPages
- *
  * @method \App\Model\Entity\WikiPageRevision newEmptyEntity()
  * @method \App\Model\Entity\WikiPageRevision newEntity(array $data, array $options = [])
  * @method array<\App\Model\Entity\WikiPageRevision> newEntities(array $data, array $options = [])
@@ -25,7 +24,6 @@ use Cake\Validation\Validator;
  * @method iterable<\App\Model\Entity\WikiPageRevision>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\WikiPageRevision> saveManyOrFail(iterable $entities, array $options = [])
  * @method iterable<\App\Model\Entity\WikiPageRevision>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\WikiPageRevision>|false deleteMany(iterable $entities, array $options = [])
  * @method iterable<\App\Model\Entity\WikiPageRevision>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\WikiPageRevision> deleteManyOrFail(iterable $entities, array $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class WikiPageRevisionsTable extends AppTable

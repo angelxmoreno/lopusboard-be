@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
 
@@ -12,7 +11,6 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\IssuesTable&\Cake\ORM\Association\BelongsTo $Issues
  * @property \App\Model\Table\IssuesTable&\Cake\ORM\Association\BelongsTo $RelatedIssues
- *
  * @method \App\Model\Entity\IssueRelation newEmptyEntity()
  * @method \App\Model\Entity\IssueRelation newEntity(array $data, array $options = [])
  * @method array<\App\Model\Entity\IssueRelation> newEntities(array $data, array $options = [])
@@ -26,7 +24,6 @@ use Cake\Validation\Validator;
  * @method iterable<\App\Model\Entity\IssueRelation>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\IssueRelation> saveManyOrFail(iterable $entities, array $options = [])
  * @method iterable<\App\Model\Entity\IssueRelation>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\IssueRelation>|false deleteMany(iterable $entities, array $options = [])
  * @method iterable<\App\Model\Entity\IssueRelation>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\IssueRelation> deleteManyOrFail(iterable $entities, array $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class IssueRelationsTable extends AppTable
@@ -91,7 +88,13 @@ class IssueRelationsTable extends AppTable
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->isUnique(['issue_id', 'related_issue_id', 'type']), ['errorField' => 'issue_id', 'message' => __('This combination of issue_id, related_issue_id and type already exists')]);
+        $rules->add(
+            $rules->isUnique(['issue_id', 'related_issue_id', 'type']),
+            [
+                'errorField' => 'issue_id',
+                'message' => __('This combination of issue_id, related_issue_id and type already exists'),
+            ],
+        );
         $rules->add($rules->existsIn(['issue_id'], 'Issues'), ['errorField' => 'issue_id']);
         $rules->add($rules->existsIn(['related_issue_id'], 'RelatedIssues'), ['errorField' => 'related_issue_id']);
 
