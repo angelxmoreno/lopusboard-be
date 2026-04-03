@@ -1,0 +1,41 @@
+src/Model/Table/AttachmentLinksTable.php
+  5001504fa0f17a33 6-7,49-79
+src/Model/Table/IssueRelationsTable.php
+  5001504fa0f17a33 6-8,49-78
+README.md
+  5001504fa0f17a33 116
+tests/TestCase/Model/Table/AttachmentLinksTableTest.php
+  5001504fa0f17a33 27,102-125
+tests/TestCase/Model/Table/WikiPageLinksTableTest.php
+  5001504fa0f17a33 63-72,83-92
+model-review/core-domain-rules.md
+  5001504fa0f17a33 1-87
+src/Model/Behavior/ActivityLogBehavior.php
+  5001504fa0f17a33 21-22,77,79,172,174,250-268
+project-files/proposed-behaviors.md
+  5001504fa0f17a33 111-112
+tests/TestCase/Model/Table/DepartmentsTableTest.php
+  5001504fa0f17a33 64-74,85-95
+tests/TestCase/Model/Table/IssueRelationsTableTest.php
+  5001504fa0f17a33 27,30-33,68-77,88-104,106-123
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.20",
+  "base_commit_sha": "88737ab0ee86776fc9502566711b2175e4b547d9",
+  "prompts": {
+    "5001504fa0f17a33": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019d4176-4ce9-73d2-941e-617d4ffcb4ba",
+        "model": "gpt-5.4"
+      },
+      "human_author": "Angel S. Moreno <angelxmoreno@gmail.com>",
+      "messages": [],
+      "total_additions": 316,
+      "total_deletions": 16,
+      "accepted_lines": 310,
+      "overriden_lines": 0
+    }
+  }
+}
