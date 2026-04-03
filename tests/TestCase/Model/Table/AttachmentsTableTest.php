@@ -24,6 +24,7 @@ class AttachmentsTableTest extends TestCase
      * @var array<string>
      */
     protected array $fixtures = [
+        'app.ActivityLog',
         'app.Attachments',
         'app.Projects',
         'app.Users',
@@ -83,5 +84,31 @@ class AttachmentsTableTest extends TestCase
 
         $this->assertArrayHasKey('storage_provider', $attachment->getErrors());
         $this->assertArrayHasKey('external_url', $attachment->getErrors());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveWritesAttachmentActivity(): void
+    {
+        $attachment = $this->Attachments->newEntity(
+            [
+                'project_id' => 1,
+                'storage_provider' => 'google_drive',
+                'filename' => 'logged.pdf',
+                'uploaded_by' => 1,
+            ],
+            ['accessibleFields' => ['project_id' => true, 'uploaded_by' => true]],
+        );
+
+        $saved = $this->Attachments->save($attachment);
+
+        $this->assertNotFalse($saved);
+        $activityLog = $this->getTableLocator()->get('ActivityLog');
+        $this->assertSame(1, $activityLog->find()->where([
+            'subject_type' => 'attachment',
+            'action' => 'file_attached',
+            'subject_id' => $attachment->id,
+        ])->count());
     }
 }

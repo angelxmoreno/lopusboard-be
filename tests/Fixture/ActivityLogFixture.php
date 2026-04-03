@@ -23,20 +23,7 @@ class ActivityLogFixture extends TestFixture
      */
     public function init(): void
     {
-        $this->records = [
-            [
-                'id' => 1,
-                'project_id' => 1,
-                'actor_id' => 1,
-                'subject_type' => 'issue',
-                'subject_id' => 1,
-                'action' => 'created',
-                'old_value' => '{}',
-                'new_value' => '{}',
-                'created' => '2026-03-31 05:06:15',
-                'modified' => '2026-03-31 05:06:15',
-            ],
-        ];
+        $this->records = [];
         parent::init();
     }
 }

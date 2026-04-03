@@ -25,7 +25,10 @@ class WikiPagesTableTest extends TestCase
      * @var array<string>
      */
     protected array $fixtures = [
+        'app.ActivityLog',
         'app.WikiPages',
+        'app.WikiPageRevisions',
+        'app.WikiPageLinks',
         'app.Projects',
         'app.Users',
     ];
@@ -107,6 +110,46 @@ class WikiPagesTableTest extends TestCase
 
         $this->assertFalse($this->WikiPages->save($page));
         $this->assertArrayHasKey('parent_id', $page->getErrors());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveCreatesRevisionSnapshot(): void
+    {
+        $page = $this->WikiPages->get(1);
+        $page->body = 'Revised content.';
+        $page->set('last_edited_by', 1, ['guard' => false]);
+
+        $saved = $this->WikiPages->save($page);
+
+        $this->assertNotFalse($saved);
+        $this->assertSame(2, $this->WikiPages->WikiPageRevisions->find()->where(['wiki_page_id' => 1])->count());
+        $this->assertSame(1, $this->WikiPages->WikiPageRevisions->find()->where([
+            'wiki_page_id' => 1,
+            'revision_number' => 2,
+            'body' => 'Revised content.',
+        ])->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveSyncsInternalWikiLinks(): void
+    {
+        $page = $this->WikiPages->get(1);
+        $page->body = 'See [[Architecture]].';
+
+        $saved = $this->WikiPages->save($page);
+
+        $this->assertNotFalse($saved);
+        $links = $this->WikiPages->WikiPageLinks->find()
+            ->where(['source_page_id' => 1])
+            ->all()
+            ->extract('target_page_id')
+            ->toList();
+
+        $this->assertSame([3], array_map('intval', $links));
     }
 
     /**

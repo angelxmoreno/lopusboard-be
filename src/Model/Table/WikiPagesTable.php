@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Enum\ActivityAction;
+use App\Model\Enum\ActivitySubjectType;
 use ArrayObject;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\EventInterface;
@@ -53,6 +55,18 @@ class WikiPagesTable extends AppTable
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+        $this->addBehavior('WikiRevision');
+        $this->addBehavior('WikiLinkSync');
+        $this->addBehavior('ActivityLog', [
+            'subjectType' => ActivitySubjectType::WikiPage->value,
+            'actorResolver' => static function (EntityInterface $entity): ?int {
+                return $entity->get('last_edited_by') ?? $entity->get('created_by');
+            },
+            'projectField' => 'project_id',
+            'createAction' => ActivityAction::Created->value,
+            'updateAction' => ActivityAction::Updated->value,
+            'deleteAction' => ActivityAction::Deleted->value,
+        ]);
 
         $this->belongsTo('Projects', [
             'foreignKey' => 'project_id',

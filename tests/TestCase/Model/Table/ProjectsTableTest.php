@@ -26,6 +26,9 @@ class ProjectsTableTest extends TestCase
     protected array $fixtures = [
         'app.Projects',
         'app.Users',
+        'app.Statuses',
+        'app.Departments',
+        'app.ProjectMembers',
     ];
 
     /**
@@ -80,5 +83,28 @@ class ProjectsTableTest extends TestCase
 
         $this->assertFalse($this->Projects->save($project));
         $this->assertArrayHasKey('created_by', $project->getErrors());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveSeedsDefaultStatusesDepartmentsAndAdminMember(): void
+    {
+        $project = $this->Projects->newEntity([
+            'name' => 'Behavior Project',
+            'slug' => 'behavior-project',
+            'created_by' => 1,
+        ], ['accessibleFields' => ['created_by' => true]]);
+
+        $saved = $this->Projects->save($project);
+
+        $this->assertNotFalse($saved);
+        $this->assertSame(5, $this->Projects->Statuses->find()->where(['project_id' => $project->id])->count());
+        $this->assertSame(4, $this->Projects->Departments->find()->where(['project_id' => $project->id])->count());
+        $this->assertSame(1, $this->Projects->ProjectMembers->find()->where([
+            'project_id' => $project->id,
+            'user_id' => 1,
+            'role' => 'admin',
+        ])->count());
     }
 }

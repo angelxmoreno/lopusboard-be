@@ -44,6 +44,19 @@ class WikiPagesFixture extends TestFixture
                 'created' => '2026-03-31 05:06:16',
                 'modified' => '2026-03-31 05:06:16',
             ],
+            [
+                'id' => 3,
+                'project_id' => 1,
+                'parent_id' => null,
+                'title' => 'Architecture',
+                'slug' => 'architecture',
+                'body' => 'Architecture wiki page fixture.',
+                'position' => 3.5,
+                'created_by' => 1,
+                'last_edited_by' => 1,
+                'created' => '2026-03-31 05:06:16',
+                'modified' => '2026-03-31 05:06:16',
+            ],
         ];
         parent::init();
     }

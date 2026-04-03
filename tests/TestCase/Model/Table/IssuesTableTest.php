@@ -25,6 +25,7 @@ class IssuesTableTest extends TestCase
      * @var array<string>
      */
     protected array $fixtures = [
+        'app.ActivityLog',
         'app.Issues',
         'app.Projects',
         'app.Statuses',
@@ -118,7 +119,7 @@ class IssuesTableTest extends TestCase
     /**
      * @return void
      */
-    public function testBuildRulesRejectParentFromAnotherProject(): void
+    public function testNewEntityInheritsParentProjectBeforeValidation(): void
     {
         $issue = $this->Issues->newEntity(
             [
@@ -134,8 +135,8 @@ class IssuesTableTest extends TestCase
             ['accessibleFields' => ['*' => true]],
         );
 
-        $this->assertFalse($this->Issues->save($issue));
-        $this->assertArrayHasKey('parent_id', $issue->getErrors());
+        $this->assertSame(2, (int)$issue->project_id);
+        $this->assertSame([], $issue->getErrors());
     }
 
     /**
@@ -159,6 +160,63 @@ class IssuesTableTest extends TestCase
 
         $this->assertFalse($this->Issues->save($issue));
         $this->assertArrayHasKey('parent_id', $issue->getErrors());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveAssignsParentProjectAndNextPosition(): void
+    {
+        $issue = $this->Issues->newEntity(
+            [
+                'project_id' => 2,
+                'parent_id' => 1,
+                'type' => 'task',
+                'title' => 'Auto Positioned Task',
+                'status_id' => 1,
+                'priority' => 'medium',
+                'created_by' => 1,
+            ],
+            ['accessibleFields' => ['*' => true]],
+        );
+
+        $saved = $this->Issues->save($issue);
+
+        $this->assertNotFalse($saved);
+        $this->assertSame(1, (int)$issue->project_id);
+        $this->assertSame('task', $issue->type);
+        $this->assertSame(4.5, (float)$issue->position);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveRejectsProjectMutationAfterCreate(): void
+    {
+        $issue = $this->Issues->get(1);
+        $issue->set('project_id', 2, ['guard' => false]);
+
+        $this->assertFalse($this->Issues->save($issue));
+        $this->assertSame(1, (int)$this->Issues->get(1)->project_id);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveWritesStatusChangedActivity(): void
+    {
+        $issue = $this->Issues->get(1);
+        $issue->status_id = 3;
+
+        $saved = $this->Issues->save($issue);
+
+        $this->assertNotFalse($saved);
+        $activityLog = $this->getTableLocator()->get('ActivityLog');
+        $this->assertSame(1, $activityLog->find()->where([
+            'subject_type' => 'issue',
+            'action' => 'status_changed',
+            'subject_id' => 1,
+        ])->count());
     }
 
     /**

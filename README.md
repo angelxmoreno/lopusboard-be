@@ -101,6 +101,19 @@ This keeps validators, tests, and future refactors aligned. When adding a new al
 2. reference that enum from table validation
 3. keep migration and `tests/schema.sql` literals in sync with the enum values
 
+### Model Behaviors
+The remaining model-layer business logic is being organized around a small behavior set rather than large table callbacks. The proposed behavior map is documented in [project-files/proposed-behaviors.md](project-files/proposed-behaviors.md).
+
+Current behavior targets:
+- `ProjectSeedingBehavior`
+- `IssueLifecycleBehavior`
+- `WikiRevisionBehavior`
+- `WikiLinkSyncBehavior`
+- `LastAdminProtectionBehavior`
+- `ActivityLogBehavior`
+
+Table classes should continue to own associations, field validation, and small integrity checks. Cross-cutting side effects and save/delete lifecycle rules should live in behaviors.
+
 ---
 
 ## API Endpoints

@@ -24,6 +24,7 @@ class ProjectMembersTableTest extends TestCase
      * @var array<string>
      */
     protected array $fixtures = [
+        'app.ActivityLog',
         'app.ProjectMembers',
         'app.Projects',
         'app.Users',
@@ -97,7 +98,7 @@ class ProjectMembersTableTest extends TestCase
     /**
      * @return void
      */
-    public function testBeforeSavePreventsDemotingLastAdmin(): void
+    public function testSavePreventsDemotingLastAdmin(): void
     {
         $member = $this->ProjectMembers->get(1);
         $member = $this->ProjectMembers->patchEntity($member, ['role' => 'member']);
@@ -109,11 +110,20 @@ class ProjectMembersTableTest extends TestCase
     /**
      * @return void
      */
-    public function testBeforeDeletePreventsDeletingLastAdmin(): void
+    public function testDeletePreventsDeletingLastAdmin(): void
     {
         $member = $this->ProjectMembers->get(1);
 
         $this->assertFalse($this->ProjectMembers->delete($member));
         $this->assertArrayHasKey('role', $member->getErrors());
+    }
+
+    /**
+     * @return void
+     */
+    public function testBehaviorsAreAttached(): void
+    {
+        $this->assertTrue($this->ProjectMembers->behaviors()->has('LastAdminProtection'));
+        $this->assertTrue($this->ProjectMembers->behaviors()->has('ActivityLog'));
     }
 }

@@ -40,6 +40,17 @@ class StatusesFixture extends TestFixture
                 'created' => '2026-03-31 05:06:16',
                 'modified' => '2026-03-31 05:06:16',
             ],
+            [
+                'id' => 3,
+                'project_id' => 1,
+                'name' => 'In Progress',
+                'color' => '#F59E0B',
+                'position' => 3.5,
+                'is_default' => 0,
+                'is_done' => 0,
+                'created' => '2026-03-31 05:06:16',
+                'modified' => '2026-03-31 05:06:16',
+            ],
         ];
         parent::init();
     }

@@ -24,8 +24,12 @@ class CommentsTableTest extends TestCase
      * @var array<string>
      */
     protected array $fixtures = [
+        'app.ActivityLog',
         'app.Comments',
+        'app.Departments',
         'app.Issues',
+        'app.Projects',
+        'app.Statuses',
         'app.Users',
     ];
 
@@ -61,7 +65,13 @@ class CommentsTableTest extends TestCase
      */
     public function testValidationDefault(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $comment = $this->Comments->newEntity([
+            'issue_id' => 1,
+            'user_id' => 1,
+            'body' => '',
+        ], ['accessibleFields' => ['issue_id' => true, 'user_id' => true]]);
+
+        $this->assertArrayHasKey('body', $comment->getErrors());
     }
 
     /**
@@ -72,6 +82,36 @@ class CommentsTableTest extends TestCase
      */
     public function testBuildRules(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $comment = $this->Comments->newEntity([
+            'issue_id' => 999,
+            'user_id' => 999,
+            'body' => 'Invalid references.',
+        ], ['accessibleFields' => ['issue_id' => true, 'user_id' => true]]);
+
+        $this->assertFalse($this->Comments->save($comment));
+        $this->assertArrayHasKey('issue_id', $comment->getErrors());
+        $this->assertArrayHasKey('user_id', $comment->getErrors());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveWritesCommentActivity(): void
+    {
+        $comment = $this->Comments->newEntity([
+            'issue_id' => 1,
+            'user_id' => 1,
+            'body' => 'Logged comment.',
+        ], ['accessibleFields' => ['issue_id' => true, 'user_id' => true]]);
+
+        $saved = $this->Comments->save($comment);
+
+        $this->assertNotFalse($saved);
+        $activityLog = $this->getTableLocator()->get('ActivityLog');
+        $this->assertSame(1, $activityLog->find()->where([
+            'subject_type' => 'comment',
+            'action' => 'comment_added',
+            'subject_id' => $comment->id,
+        ])->count());
     }
 }

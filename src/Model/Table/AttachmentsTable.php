@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Enum\ActivityAction;
+use App\Model\Enum\ActivitySubjectType;
 use App\Model\Enum\AttachmentStorageProvider;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
@@ -45,6 +47,14 @@ class AttachmentsTable extends AppTable
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+        $this->addBehavior('ActivityLog', [
+            'subjectType' => ActivitySubjectType::Attachment->value,
+            'actorField' => 'uploaded_by',
+            'projectField' => 'project_id',
+            'createAction' => ActivityAction::FileAttached->value,
+            'updateAction' => ActivityAction::Updated->value,
+            'deleteAction' => ActivityAction::Deleted->value,
+        ]);
 
         $this->belongsTo('Projects', [
             'foreignKey' => 'project_id',

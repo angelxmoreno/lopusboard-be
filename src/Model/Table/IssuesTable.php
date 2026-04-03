@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Enum\ActivityAction;
 use App\Model\Enum\ActivitySubjectType;
 use App\Model\Enum\IssuePriority;
 use App\Model\Enum\IssueType;
@@ -56,6 +57,28 @@ class IssuesTable extends AppTable
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+        $this->addBehavior('IssueLifecycle');
+        $this->addBehavior('ActivityLog', [
+            'subjectType' => static function (EntityInterface $entity): string {
+                return $entity->get('type') === IssueType::Task->value
+                    ? ActivitySubjectType::Task->value
+                    : ActivitySubjectType::Issue->value;
+            },
+            'actorField' => 'created_by',
+            'projectField' => 'project_id',
+            'createAction' => ActivityAction::Created->value,
+            'updateAction' => ActivityAction::Updated->value,
+            'deleteAction' => ActivityAction::Deleted->value,
+            'fieldActions' => [
+                'status_id' => ActivityAction::StatusChanged->value,
+                'priority' => ActivityAction::PriorityChanged->value,
+                'position' => ActivityAction::Moved->value,
+                'assignee_id' => static fn(
+                    mixed $oldValue,
+                    mixed $newValue,
+                ): string => $newValue === null ? ActivityAction::Unassigned->value : ActivityAction::Assigned->value,
+            ],
+        ]);
 
         $this->belongsTo('Projects', [
             'foreignKey' => 'project_id',

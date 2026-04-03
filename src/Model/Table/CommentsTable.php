@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Enum\ActivityAction;
+use App\Model\Enum\ActivitySubjectType;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
 
@@ -43,6 +45,22 @@ class CommentsTable extends AppTable
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+        $this->addBehavior('ActivityLog', [
+            'subjectType' => ActivitySubjectType::Comment->value,
+            'actorField' => 'user_id',
+            'projectResolver' => function ($entity): ?int {
+                $issue = $this->Issues->find()
+                    ->select(['project_id'])
+                    ->where(['Issues.id' => $entity->get('issue_id')])
+                    ->disableHydration()
+                    ->first();
+
+                return $issue === null ? null : (int)$issue['project_id'];
+            },
+            'createAction' => ActivityAction::CommentAdded->value,
+            'updateAction' => ActivityAction::Updated->value,
+            'deleteAction' => ActivityAction::Deleted->value,
+        ]);
 
         $this->belongsTo('Issues', [
             'foreignKey' => 'issue_id',

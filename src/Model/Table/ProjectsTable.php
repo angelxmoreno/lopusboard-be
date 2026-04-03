@@ -49,6 +49,7 @@ class ProjectsTable extends AppTable
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+        $this->addBehavior('ProjectSeeding');
 
         $this->belongsTo('Creators', [
             'className' => 'Users',
