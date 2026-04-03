@@ -78,6 +78,10 @@ return function (RouteBuilder $routes): void {
         $builder->fallbacks();
     });
 
+    $routes->prefix('Api', ['path' => '/api'], function (RouteBuilder $builder): void {
+        $builder->resources('Issues');
+    });
+
     /*
      * If you need a different set of middleware or none at all,
      * open new scope and define routes there.
