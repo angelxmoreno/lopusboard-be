@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Enum\ActivityAction;
+use App\Model\Enum\ActivitySubjectType;
+use Cake\Datasource\EntityInterface;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
 
@@ -43,6 +46,36 @@ class IssueRelationsTable extends AppTable
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+        $this->addBehavior('ActivityLog', [
+            'subjectType' => function (EntityInterface $entity): ?string {
+                $issue = $this->Issues->find()
+                    ->select(['type'])
+                    ->where(['Issues.id' => $entity->get('issue_id')])
+                    ->disableHydration()
+                    ->first();
+
+                if ($issue === null) {
+                    return null;
+                }
+
+                return $issue['type'] === 'task'
+                    ? ActivitySubjectType::Task->value
+                    : ActivitySubjectType::Issue->value;
+            },
+            'subjectIdField' => 'issue_id',
+            'projectResolver' => function (EntityInterface $entity): ?int {
+                $issue = $this->Issues->find()
+                    ->select(['project_id'])
+                    ->where(['Issues.id' => $entity->get('issue_id')])
+                    ->disableHydration()
+                    ->first();
+
+                return $issue === null ? null : (int)$issue['project_id'];
+            },
+            'createAction' => ActivityAction::RelationAdded->value,
+            'updateAction' => ActivityAction::Updated->value,
+            'deleteAction' => ActivityAction::RelationRemoved->value,
+        ]);
 
         $this->belongsTo('Issues', [
             'foreignKey' => 'issue_id',

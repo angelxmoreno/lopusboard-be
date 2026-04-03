@@ -24,8 +24,13 @@ class IssueRelationsTableTest extends TestCase
      * @var array<string>
      */
     protected array $fixtures = [
+        'app.ActivityLog',
         'app.IssueRelations',
         'app.Issues',
+        'app.Projects',
+        'app.Statuses',
+        'app.Users',
+        'app.Departments',
     ];
 
     /**
@@ -60,7 +65,16 @@ class IssueRelationsTableTest extends TestCase
      */
     public function testValidationDefault(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $relation = $this->IssueRelations->newEntity(
+            [
+                'issue_id' => 1,
+                'related_issue_id' => 2,
+                'type' => '',
+            ],
+            ['accessibleFields' => ['*' => true]],
+        );
+
+        $this->assertArrayHasKey('type', $relation->getErrors());
     }
 
     /**
@@ -71,6 +85,41 @@ class IssueRelationsTableTest extends TestCase
      */
     public function testBuildRules(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $duplicate = $this->IssueRelations->newEntity(
+            [
+                'issue_id' => 1,
+                'related_issue_id' => 1,
+                'type' => 'blocks',
+            ],
+            ['accessibleFields' => ['*' => true]],
+        );
+
+        $this->assertFalse($this->IssueRelations->save($duplicate, ['actor_id' => 1]));
+        $this->assertArrayHasKey('issue_id', $duplicate->getErrors());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveWritesRelationAddedActivity(): void
+    {
+        $relation = $this->IssueRelations->newEntity(
+            [
+                'issue_id' => 1,
+                'related_issue_id' => 2,
+                'type' => 'depends_on',
+            ],
+            ['accessibleFields' => ['*' => true]],
+        );
+
+        $saved = $this->IssueRelations->save($relation, ['actor_id' => 1]);
+
+        $this->assertNotFalse($saved);
+        $activityLog = $this->getTableLocator()->get('ActivityLog');
+        $this->assertSame(1, $activityLog->find()->where([
+            'subject_type' => 'issue',
+            'subject_id' => 1,
+            'action' => 'relation_added',
+        ])->count());
     }
 }

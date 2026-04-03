@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Enum\ActivityAction;
+use App\Model\Enum\ActivitySubjectType;
 use App\Model\Enum\AttachmentLinkableType;
 use Cake\Datasource\EntityInterface;
 use Cake\ORM\RulesChecker;
@@ -44,6 +46,37 @@ class AttachmentLinksTable extends AppTable
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+        $this->addBehavior('ActivityLog', [
+            'subjectType' => function (EntityInterface $entity): ?string {
+                return match ($entity->get('linkable_type')) {
+                    AttachmentLinkableType::Issue->value => ActivitySubjectType::Issue->value,
+                    AttachmentLinkableType::WikiPage->value => ActivitySubjectType::WikiPage->value,
+                    default => null,
+                };
+            },
+            'subjectIdField' => 'linkable_id',
+            'actorResolver' => function (EntityInterface $entity): ?int {
+                $attachment = $this->Attachments->find()
+                    ->select(['uploaded_by'])
+                    ->where(['Attachments.id' => $entity->get('attachment_id')])
+                    ->disableHydration()
+                    ->first();
+
+                return $attachment === null ? null : (int)$attachment['uploaded_by'];
+            },
+            'projectResolver' => function (EntityInterface $entity): ?int {
+                $attachment = $this->Attachments->find()
+                    ->select(['project_id'])
+                    ->where(['Attachments.id' => $entity->get('attachment_id')])
+                    ->disableHydration()
+                    ->first();
+
+                return $attachment === null ? null : (int)$attachment['project_id'];
+            },
+            'createAction' => ActivityAction::FileAttached->value,
+            'updateAction' => ActivityAction::Updated->value,
+            'deleteAction' => ActivityAction::Deleted->value,
+        ]);
 
         $this->belongsTo('Attachments', [
             'foreignKey' => 'attachment_id',

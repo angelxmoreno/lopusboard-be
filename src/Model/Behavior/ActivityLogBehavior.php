@@ -18,6 +18,8 @@ class ActivityLogBehavior extends Behavior
      */
     protected array $_defaultConfig = [
         'subjectType' => null,
+        'subjectIdField' => 'id',
+        'subjectIdResolver' => null,
         'actorField' => null,
         'actorResolver' => null,
         'projectField' => null,
@@ -72,9 +74,9 @@ class ActivityLogBehavior extends Behavior
         $projectId = $this->resolveProjectId($entity, $options);
         $actorId = $this->resolveActorId($entity, $options);
         $subjectType = $this->resolveSubjectType($entity, $options);
-        $subjectId = (int)$entity->get('id');
+        $subjectId = $this->resolveSubjectId($entity, $options);
 
-        if ($projectId === null || $actorId === null || $subjectType === null || $subjectId === 0) {
+        if ($projectId === null || $actorId === null || $subjectType === null || $subjectId === null) {
             return;
         }
 
@@ -167,9 +169,9 @@ class ActivityLogBehavior extends Behavior
         $projectId = $this->resolveProjectId($entity, $options);
         $actorId = $this->resolveActorId($entity, $options);
         $subjectType = $this->resolveSubjectType($entity, $options);
-        $subjectId = (int)$entity->get('id');
+        $subjectId = $this->resolveSubjectId($entity, $options);
 
-        if ($projectId === null || $actorId === null || $subjectType === null || $subjectId === 0) {
+        if ($projectId === null || $actorId === null || $subjectType === null || $subjectId === null) {
             return;
         }
 
@@ -240,6 +242,30 @@ class ActivityLogBehavior extends Behavior
         }
         if (is_callable($subjectType)) {
             return $subjectType($entity, $options);
+        }
+
+        return null;
+    }
+
+    /**
+     * Resolves the activity subject identifier.
+     *
+     * @param \Cake\Datasource\EntityInterface $entity The mutated entity.
+     * @param \ArrayObject<string, mixed> $options Persistence options.
+     * @return int|null
+     */
+    protected function resolveSubjectId(EntityInterface $entity, ArrayObject $options): ?int
+    {
+        $resolver = $this->getConfig('subjectIdResolver');
+        if (is_callable($resolver)) {
+            $subjectId = $resolver($entity, $options);
+
+            return $subjectId === null ? null : (int)$subjectId;
+        }
+
+        $field = $this->getConfig('subjectIdField');
+        if (is_string($field) && $entity->get($field) !== null) {
+            return (int)$entity->get($field);
         }
 
         return null;

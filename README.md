@@ -113,6 +113,7 @@ Current behavior targets:
 - `ActivityLogBehavior`
 
 Table classes should continue to own associations, field validation, and small integrity checks. Cross-cutting side effects and save/delete lifecycle rules should live in behaviors.
+`ActivityLogBehavior` is also wired for relation and attachment-link mutations so future saves and deletes on those join tables can reach the project audit feed without bespoke controller logging.
 
 ---
 

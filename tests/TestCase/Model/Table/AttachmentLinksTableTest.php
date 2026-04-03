@@ -24,6 +24,7 @@ class AttachmentLinksTableTest extends TestCase
      * @var array<string>
      */
     protected array $fixtures = [
+        'app.ActivityLog',
         'app.AttachmentLinks',
         'app.Attachments',
         'app.Issues',
@@ -97,5 +98,30 @@ class AttachmentLinksTableTest extends TestCase
 
         $this->assertFalse($this->AttachmentLinks->save($attachmentLink));
         $this->assertArrayHasKey('linkable_id', $attachmentLink->getErrors());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveWritesAttachmentLinkActivity(): void
+    {
+        $attachmentLink = $this->AttachmentLinks->newEntity(
+            [
+                'attachment_id' => 1,
+                'linkable_type' => 'wiki_page',
+                'linkable_id' => 1,
+            ],
+            ['accessibleFields' => ['*' => true]],
+        );
+
+        $saved = $this->AttachmentLinks->save($attachmentLink);
+
+        $this->assertNotFalse($saved);
+        $activityLog = $this->getTableLocator()->get('ActivityLog');
+        $this->assertSame(1, $activityLog->find()->where([
+            'subject_type' => 'wiki_page',
+            'subject_id' => 1,
+            'action' => 'file_attached',
+        ])->count());
     }
 }

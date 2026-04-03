@@ -60,7 +60,16 @@ class WikiPageLinksTableTest extends TestCase
      */
     public function testValidationDefault(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $link = $this->WikiPageLinks->newEntity(
+            [
+                'source_page_id' => null,
+                'target_page_id' => null,
+            ],
+            ['accessibleFields' => ['*' => true]],
+        );
+
+        $this->assertArrayHasKey('source_page_id', $link->getErrors());
+        $this->assertArrayHasKey('target_page_id', $link->getErrors());
     }
 
     /**
@@ -71,6 +80,15 @@ class WikiPageLinksTableTest extends TestCase
      */
     public function testBuildRules(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $duplicate = $this->WikiPageLinks->newEntity(
+            [
+                'source_page_id' => 1,
+                'target_page_id' => 1,
+            ],
+            ['accessibleFields' => ['*' => true]],
+        );
+
+        $this->assertFalse($this->WikiPageLinks->save($duplicate));
+        $this->assertArrayHasKey('source_page_id', $duplicate->getErrors());
     }
 }

@@ -108,6 +108,8 @@ If each table logs activity differently, the audit trail will drift quickly. A b
 - `WikiPagesTable`
 - `ProjectMembersTable`
 - `AttachmentsTable`
+- `IssueRelationsTable`
+- `AttachmentLinksTable`
 
 ### Tables it would write to
 - `ActivityLog`

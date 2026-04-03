@@ -61,7 +61,17 @@ class DepartmentsTableTest extends TestCase
      */
     public function testValidationDefault(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $department = $this->Departments->newEntity(
+            [
+                'project_id' => 1,
+                'name' => '',
+                'position' => 'not-a-number',
+            ],
+            ['accessibleFields' => ['*' => true]],
+        );
+
+        $this->assertArrayHasKey('name', $department->getErrors());
+        $this->assertArrayHasKey('position', $department->getErrors());
     }
 
     /**
@@ -72,6 +82,16 @@ class DepartmentsTableTest extends TestCase
      */
     public function testBuildRules(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $department = $this->Departments->newEntity(
+            [
+                'project_id' => 999,
+                'name' => 'Ghost Department',
+                'position' => 1.0,
+            ],
+            ['accessibleFields' => ['*' => true]],
+        );
+
+        $this->assertFalse($this->Departments->save($department));
+        $this->assertArrayHasKey('project_id', $department->getErrors());
     }
 }
