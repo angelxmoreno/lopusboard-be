@@ -1,6 +1,6 @@
 # Architecture
 
-IdentityBridge should be built around four layers.
+IdentityBridge should be built around three layers.
 
 ## 1. Provider Adapter
 
@@ -31,24 +31,15 @@ Provider payloads differ, so the plugin needs one normalized value object such a
 - avatar url
 - raw claims
 
-This becomes the stable boundary between provider code and host app mapping code.
+This becomes the stable boundary between provider code and host app logic.
 
-## 3. User Mapping
+## 3. Local User Resolution And Request Identity
 
 The plugin should not decide how a remote identity becomes a local user row.
 
-Instead, the host app provides a mapper that turns normalized identity into local fields such as:
+Instead, the host app implements a resolver that can:
 
-- `auth_provider`
-- `provider_user_id`
-- `email`
-- `name`
-- `avatar_url`
-
-## 4. Local User Resolution And Request Identity
-
-After mapping, the plugin calls a host-app resolver to:
-
+- map normalized identity into whatever local user fields it needs
 - find an existing local user
 - create one if missing
 - optionally update selected fields on later requests or sign-ins

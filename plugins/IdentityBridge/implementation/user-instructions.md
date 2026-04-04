@@ -7,9 +7,8 @@ The goal is to build a CakePHP plugin that:
 - accepts a bearer JWT from the frontend
 - verifies that JWT against one configured remote auth provider
 - normalizes the remote identity into a stable plugin shape
-- maps that identity into the host app's local user fields
 - hands that identity to the host app
-- lets the host app find or create the local user
+- lets the host app map and resolve the local user
 - attaches the local user to the request
 
 This plugin should support one configured provider per app. It should not try to auto-detect providers per request.
@@ -65,20 +64,17 @@ Acceptance criteria:
 Create these files:
 
 - `plugins/IdentityBridge/src/Provider/ProviderInterface.php`
-- `plugins/IdentityBridge/src/Mapper/UserMapperInterface.php`
 - `plugins/IdentityBridge/src/Resolver/LocalUserResolverInterface.php`
 
 Purpose of each class:
 
 - `ProviderInterface`: contract for JWT verification plus remote identity normalization
-- `UserMapperInterface`: contract for mapping normalized identity into local user data
-- `LocalUserResolverInterface`: host-app contract for returning the local user from normalized identity
+- `LocalUserResolverInterface`: host-app contract for mapping normalized identity and returning the local user
 
 What to build:
 
 - `ProviderInterface` verifies a JWT and returns `RemoteIdentity`
-- `UserMapperInterface` maps `RemoteIdentity` into host-app user data
-- `LocalUserResolverInterface` returns the local app user after the host app resolves it
+- `LocalUserResolverInterface` returns the local app user after the host app maps and resolves it
 
 Acceptance criteria:
 
@@ -99,10 +95,11 @@ Purpose of this class:
 What it should do:
 
 1. accept `RemoteIdentity`
-2. allow the host app to look up the local user
-3. allow the host app to create the user if missing
-4. allow the host app to update selected fields if needed
-5. return the resolved local user entity or object
+2. let the host app map identity fields into the local user shape
+3. allow the host app to look up the local user
+4. allow the host app to create the user if missing
+5. allow the host app to update selected fields if needed
+6. return the resolved local user entity or object
 
 Important:
 
@@ -114,7 +111,7 @@ Acceptance criteria:
 
 - the interface is small and explicit
 - the package does not assume a `UsersTable` schema
-- the host app has one clear place to implement local user lookup, create, and update logic
+- the host app has one clear place to implement local user mapping, lookup, create, and update logic
 
 ## Step 4: Build The Middleware
 
@@ -166,19 +163,18 @@ Purpose of this class:
 What to add:
 
 - container registrations for the provider implementation
-- container registration for the mapper
 - container registration for the local user resolver
 - middleware registration if the plugin is going to self-register it
 
 Important:
 
 - keep the plugin generic
-- the host app should be able to swap provider, mapper, and local user resolver implementations through configuration or DI bindings
+- the host app should be able to swap provider and local user resolver implementations through configuration or DI bindings
 
 Acceptance criteria:
 
 - the plugin can resolve all required services from the container
-- there is a clear place for the host app to override provider, mapper, and resolver bindings
+- there is a clear place for the host app to override provider and resolver bindings
 
 ## Step 6: Implement One Real Provider
 
@@ -234,15 +230,15 @@ What to test:
 
 Do not leave the middleware untested. That is the main integration point.
 
-## Step 8: Define The Host App Mapping Contract
+## Step 8: Define The Host App Resolution Contract
 
 Once the plugin core works, document what the host app must provide.
 
 At minimum, the host app must define:
 
 - which provider to use
-- how `RemoteIdentity` maps into the local user shape
-- how the host app resolves the local user from that identity
+- how the host app resolves the local user from `RemoteIdentity`
+- how the host app maps `RemoteIdentity` into the local user shape
 - which local fields are immutable
 - which local fields may be refreshed from remote identity
 
@@ -265,11 +261,10 @@ Do not mix old and new auth flows longer than necessary.
 The plugin is done when all of these are true:
 
 - a request with a valid bearer token resolves a verified `RemoteIdentity`
-- the plugin maps that identity into the local user shape
 - the plugin passes that identity into the host app’s local user resolver correctly
 - the request carries the resolved local user for downstream app code
 - invalid tokens return `401`
-- tests cover provider verification, mapping, and middleware behavior
+- tests cover provider verification and middleware behavior
 
 ## Suggested Delivery Order
 
@@ -286,7 +281,7 @@ Use this commit order:
 ## Common Mistakes To Avoid
 
 - putting provider-specific claim parsing in middleware
-- letting the plugin depend directly on the host app `UsersTable` shape without a mapper boundary
+- letting the plugin depend directly on the host app `UsersTable` shape
 - treating local-user lookup and persistence as package-owned logic
 - using raw claim arrays everywhere instead of `RemoteIdentity`
 - blending authentication and authorization

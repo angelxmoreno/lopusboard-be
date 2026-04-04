@@ -17,24 +17,6 @@ interface ProviderInterface
 
 The provider should throw a domain-specific authentication exception when verification fails.
 
-## User Mapper Interface
-
-Purpose: convert normalized remote identity into the local user payload.
-
-Suggested shape:
-
-```php
-interface UserMapperInterface
-{
-    /**
-     * @return array<string, mixed>
-     */
-    public function map(RemoteIdentity $identity): array;
-}
-```
-
-This contract belongs to the host app boundary, not the provider boundary.
-
 ## Local User Resolver Interface
 
 Purpose: hand normalized identity to the host app and get back the resolved local user.
@@ -49,7 +31,7 @@ interface LocalUserResolverInterface
 ```
 
 This interface should be implemented by the host application, not by the package.
-The host app decides how to look up, create, or update its local user.
+The host app decides how to map, look up, create, or update its local user.
 
 ## Remote Identity Value Object
 

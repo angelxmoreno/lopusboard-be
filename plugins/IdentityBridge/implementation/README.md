@@ -17,7 +17,6 @@ The plugin should not know the host app’s full `User` shape. It should only:
 
 - verify the token
 - normalize remote identity
-- call a mapper supplied by the host app
 - call a host-app resolver that returns the local user
 
-That keeps provider concerns, mapping concerns, and application authorization concerns cleanly separated.
+That keeps provider concerns and application persistence rules cleanly separated while keeping the package API small.

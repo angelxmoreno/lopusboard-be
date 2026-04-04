@@ -7,10 +7,9 @@ The frontend owns login state and sends a bearer token with each request. The ba
 1. read the incoming JWT
 2. verify it against the configured provider
 3. fetch or normalize the remote user
-4. map that remote user into the local app user shape
-5. pass the normalized identity into the host app
-6. let the host app resolve the local user record
-7. attach the resolved local user to the request
+4. pass the normalized identity into the host app
+5. let the host app map and resolve the local user record
+6. attach the resolved local user to the request
 
 This plugin is intentionally built around one configured provider per app. It does not try to detect the provider per request.
 
@@ -18,7 +17,7 @@ This plugin is intentionally built around one configured provider per app. It do
 
 - keep remote identity concerns outside the host application
 - support provider-specific adapters behind one plugin contract
-- allow each app to define its own mapping from provider user data to local user fields
+- keep the plugin API small enough for fast adoption
 - make local authorization independent from remote authentication
 
 ## Non-Goals
@@ -34,10 +33,8 @@ This plugin is intentionally built around one configured provider per app. It do
   Verifies the bearer token and resolves the authenticated local user.
 - `Provider/ProviderInterface.php`
   Contract for verifying a token and returning normalized remote identity data.
-- `Mapper/UserMapperInterface.php`
-  Contract for converting provider identity data into local user fields.
 - `Resolver/LocalUserResolverInterface.php`
-  Host-app contract for finding, creating, or updating the local user.
+  Host-app contract for mapping remote identity and finding, creating, or updating the local user.
 - `ValueObject/RemoteIdentity.php`
   Normalized identity returned by provider adapters.
 
@@ -45,7 +42,6 @@ This plugin is intentionally built around one configured provider per app. It do
 
 - choose one provider adapter
 - provide provider-specific configuration
-- define how remote identity maps into the local `users` table
 - implement `LocalUserResolverInterface`
 - use the resolved local user for authorization and domain rules
 

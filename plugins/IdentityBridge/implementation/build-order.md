@@ -18,33 +18,21 @@ Class purposes:
 - `AuthenticationException`: signals invalid, expired, or unverifiable tokens
 - `ConfigurationException`: signals broken plugin or provider configuration
 
-## 2. Provider Contract
+## 2. Contracts
 
 Create:
 
 - `src/Provider/ProviderInterface.php`
-
-Goal:
-- define the boundary every provider adapter must implement
-
-Class purpose:
-- `ProviderInterface`: verifies a JWT and returns `RemoteIdentity`
-
-## 3. Mapper And Local User Resolver Contracts
-
-Create:
-
-- `src/Mapper/UserMapperInterface.php`
 - `src/Resolver/LocalUserResolverInterface.php`
 
 Goal:
-- define how normalized identity becomes host-app user data and how the host app returns the local user
+- define the only two contracts the package needs for provider verification and host-app user resolution
 
 Class purposes:
-- `UserMapperInterface`: maps `RemoteIdentity` into the host app’s local user payload
-- `LocalUserResolverInterface`: host-app contract for finding, creating, or updating the local user
+- `ProviderInterface`: verifies a JWT and returns `RemoteIdentity`
+- `LocalUserResolverInterface`: host-app contract for mapping `RemoteIdentity` plus finding, creating, or updating the local user
 
-## 4. Middleware
+## 3. Middleware
 
 Create:
 
@@ -56,16 +44,16 @@ Goal:
 Class purpose:
 - `IdentityBridgeMiddleware`: orchestrates token extraction, provider verification, local user resolution, and request attribute assignment
 
-## 5. Container Wiring
+## 4. Container Wiring
 
 Update:
 
 - `src/IdentityBridgePlugin.php`
 
 Goal:
-- register provider, mapper, and local user resolver dependencies cleanly
+- register provider and local user resolver dependencies cleanly
 
-## 6. First Provider Adapter
+## 5. First Provider Adapter
 
 Create one provider first, not all four.
 
@@ -79,19 +67,18 @@ Goal:
 Class purpose:
 - `<ProviderName>Provider`: contains provider-specific JWT verification and claim normalization
 
-## 7. Tests
+## 6. Tests
 
 Add:
 
 - unit tests for the provider adapter
-- unit tests for the mapper
 - unit tests for the host app’s local user resolver implementation
 - middleware/integration tests for authenticated requests
 
 Goal:
-- keep verification, mapping, and local-user resolution behavior stable
+- keep verification and local-user resolution behavior stable
 
-## 8. Host App Integration
+## 7. Host App Integration
 
 After the plugin is working:
 
