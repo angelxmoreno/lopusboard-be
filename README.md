@@ -61,6 +61,12 @@ Run the migrations to set up the 14-table schema (see `wiki/03-schema.md` for de
 bin/cake migrations migrate
 ```
 
+Load a rerunnable local demo dataset with one user, one project, and related placeholder records:
+
+```bash
+bin/cake migrations seed --seed DemoDataSeed
+```
+
 ### 5. Running the Server
 ```bash
 bin/cake server -p 8080
@@ -133,6 +139,7 @@ For a full list of endpoints and request/response shapes, refer to [08-api-endpo
 |---|---|
 | `bin/cake bake all <Table>` | Generate Model, Controller, and Templates |
 | `bin/cake migrations migrate` | Run database migrations |
+| `bin/cake migrations seed --seed DemoDataSeed` | Seed one demo user plus placeholder project data |
 | `vendor/bin/phpunit` | Run the test suite |
 | `vendor/bin/phpstan` | Static analysis (Level 8) |
 
