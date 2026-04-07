@@ -104,6 +104,12 @@ Suggested config shape:
 
 ```php
 [
+    'provider' => App\Auth\ClerkProvider::class,
+    'providerConfig' => [
+        'jwksUrl' => env('CLERK_JWKS_URL'),
+        'issuer' => env('CLERK_ISSUER'),
+    ],
+    'resolver' => App\Auth\AppUserResolver::class,
     'mode' => AuthenticationMode::ProtectedByDefault->value,
     'overrides' => [
         'Api/Auth/*' => false,
@@ -277,6 +283,9 @@ Important:
 - keep the plugin generic
 - the host app should be able to swap provider and local user resolver implementations through configuration or DI bindings
 - middleware configuration should be easy for the host app to override
+- the simplest v1 shape is config-backed class names for `provider` and `resolver`
+- the plugin can pass `IdentityBridge.providerConfig` into the provider constructor as a single array
+- if the host app needs a different provider constructor shape, it should override the provider binding in `Application::services()`
 
 Acceptance criteria:
 

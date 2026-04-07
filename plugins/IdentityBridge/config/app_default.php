@@ -5,6 +5,9 @@ use IdentityBridge\Enum\AuthenticationMode;
 
 return [
     'IdentityBridge' => [
+        'provider' => null,
+        'providerConfig' => [],
+        'resolver' => null,
         'mode' => AuthenticationMode::ProtectedByDefault->value,
         'overrides' => [
             'Api/Auth/*' => false,

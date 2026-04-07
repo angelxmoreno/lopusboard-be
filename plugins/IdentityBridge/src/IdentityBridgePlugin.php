@@ -5,10 +5,16 @@ namespace IdentityBridge;
 
 use Cake\Console\CommandCollection;
 use Cake\Core\BasePlugin;
+use Cake\Core\Configure;
 use Cake\Core\ContainerInterface;
 use Cake\Core\PluginApplicationInterface;
 use Cake\Http\MiddlewareQueue;
 use Cake\Routing\RouteBuilder;
+use IdentityBridge\Exception\ConfigurationException;
+use IdentityBridge\Middleware\IdentityBridgeMiddleware;
+use IdentityBridge\Provider\ProviderInterface;
+use IdentityBridge\Resolver\LocalUserResolverInterface;
+use IdentityBridge\Service\IdentityAuthenticator;
 
 /**
  * Plugin for IdentityBridge
@@ -92,7 +98,82 @@ class IdentityBridgePlugin extends BasePlugin
      */
     public function services(ContainerInterface $container): void
     {
-        // Add your services here
-        // remove this method hook if you don't need it
+        $container->addShared(ProviderInterface::class, function () use ($container): ProviderInterface {
+            $className = $this->getConfiguredClassName('provider', ProviderInterface::class);
+
+            if (!$container->has($className)) {
+                $container->addShared($className, function () use ($className): object {
+                    return new $className((array)Configure::read('IdentityBridge.providerConfig', []));
+                });
+            }
+
+            /** @var \IdentityBridge\Provider\ProviderInterface */
+            return $container->get($className);
+        });
+
+        $container->addShared(
+            LocalUserResolverInterface::class,
+            function () use ($container): LocalUserResolverInterface {
+                $className = $this->getConfiguredClassName('resolver', LocalUserResolverInterface::class);
+
+                if (!$container->has($className)) {
+                    $container->addShared($className);
+                }
+
+                /** @var \IdentityBridge\Resolver\LocalUserResolverInterface */
+                return $container->get($className);
+            },
+        );
+
+        $container->addShared(IdentityAuthenticator::class, function () use ($container): IdentityAuthenticator {
+            return new IdentityAuthenticator(
+                $container->get(ProviderInterface::class),
+                $container->get(LocalUserResolverInterface::class),
+            );
+        });
+
+        $container->addShared(IdentityBridgeMiddleware::class, function () use ($container): IdentityBridgeMiddleware {
+            return new IdentityBridgeMiddleware(
+                $container->get(IdentityAuthenticator::class),
+                (array)Configure::read('IdentityBridge', []),
+            );
+        });
+    }
+
+    /**
+     * Resolves and validates a configured provider or resolver class name.
+     *
+     * @param string $configKey The IdentityBridge config key to inspect.
+     * @param string $interfaceName The required interface name.
+     * @return class-string
+     */
+    private function getConfiguredClassName(string $configKey, string $interfaceName): string
+    {
+        $className = Configure::read("IdentityBridge.$configKey");
+        if (!is_string($className) || $className === '') {
+            throw new ConfigurationException(sprintf(
+                'IdentityBridge config key "%s" must contain a class name ' .
+                'for %s.',
+                $configKey,
+                $interfaceName,
+            ));
+        }
+
+        if (!class_exists($className)) {
+            throw new ConfigurationException(sprintf(
+                'Configured IdentityBridge class "%s" does not exist.',
+                $className,
+            ));
+        }
+
+        if (!is_a($className, $interfaceName, true)) {
+            throw new ConfigurationException(sprintf(
+                'Configured IdentityBridge class "%s" must implement %s.',
+                $className,
+                $interfaceName,
+            ));
+        }
+
+        return $className;
     }
 }
