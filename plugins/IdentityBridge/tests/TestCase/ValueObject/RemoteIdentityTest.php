@@ -17,7 +17,7 @@ class RemoteIdentityTest extends TestCase
 
         $identity = new RemoteIdentity(
             provider: 'clerk',
-            subject: 'provider-user-123',
+            providerUserId: 'provider-user-123',
             email: 'demo@example.com',
             emailVerified: true,
             displayName: 'Demo User',
@@ -26,7 +26,7 @@ class RemoteIdentityTest extends TestCase
         );
 
         $this->assertSame('clerk', $identity->provider);
-        $this->assertSame('provider-user-123', $identity->subject);
+        $this->assertSame('provider-user-123', $identity->providerUserId);
         $this->assertSame('demo@example.com', $identity->email);
         $this->assertTrue($identity->emailVerified);
         $this->assertSame('Demo User', $identity->displayName);
@@ -38,11 +38,11 @@ class RemoteIdentityTest extends TestCase
     {
         $identity = new RemoteIdentity(
             provider: 'firebase',
-            subject: 'firebase-user-456',
+            providerUserId: 'firebase-user-456',
         );
 
         $this->assertSame('firebase', $identity->provider);
-        $this->assertSame('firebase-user-456', $identity->subject);
+        $this->assertSame('firebase-user-456', $identity->providerUserId);
         $this->assertNull($identity->email);
         $this->assertFalse($identity->emailVerified);
         $this->assertNull($identity->displayName);

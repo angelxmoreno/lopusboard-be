@@ -13,7 +13,7 @@ class AuthenticatedRequestIdentityTest extends TestCase
     {
         $remoteIdentity = new RemoteIdentity(
             provider: 'supabase',
-            subject: 'provider-user-123',
+            providerUserId: 'provider-user-123',
             email: 'demo@example.com',
         );
         $user = (object)[

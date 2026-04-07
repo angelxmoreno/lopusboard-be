@@ -29,6 +29,7 @@ class User extends AppEntity
      * @var array<string, bool>
      */
     protected array $_accessible = [
+        'appwrite_id' => true,
         'name' => true,
         'email' => true,
         'avatar_url' => true,

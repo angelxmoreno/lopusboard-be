@@ -67,10 +67,7 @@ class IdentityBridgePlugin extends BasePlugin
      */
     public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
     {
-        // Add your middlewares here
-        // remove this method hook if you don't need it
-
-        return $middlewareQueue;
+        return $middlewareQueue->add(IdentityBridgeMiddleware::class);
     }
 
     /**

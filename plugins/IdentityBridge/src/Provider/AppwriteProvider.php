@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace IdentityBridge\Provider;
 
 use Appwrite\Client;
+use Appwrite\Models\User;
 use Appwrite\Services\Account;
 use IdentityBridge\ValueObject\RemoteIdentity;
 
@@ -52,6 +53,21 @@ class AppwriteProvider implements ProviderInterface
     }
 
     /**
+     * Fetches the current Appwrite account user for the given bearer token.
+     *
+     * @param string $jwt The provider-issued bearer token.
+     * @return \Appwrite\Models\User
+     * @throws \Appwrite\AppwriteException
+     */
+    protected function fetchUser(string $jwt): User
+    {
+        $client = $this->buildClient($jwt);
+        $account = new Account($client);
+
+        return $account->get();
+    }
+
+    /**
      * Verifies a bearer token and returns normalized remote identity data.
      *
      * @param string $jwt The provider-issued bearer token.
@@ -60,13 +76,11 @@ class AppwriteProvider implements ProviderInterface
      */
     public function verify(string $jwt): RemoteIdentity
     {
-        $client = $this->buildClient($jwt);
-        $account = new Account($client);
-        $user = $account->get();
+        $user = $this->fetchUser($jwt);
 
         return new RemoteIdentity(
             provider: self::PROVIDER_NAME,
-            subject: (string)$user->id,
+            providerUserId: (string)$user->id,
             email: $user->email,
             emailVerified: $user->emailVerification,
             displayName: $user->name,

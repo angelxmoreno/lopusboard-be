@@ -19,7 +19,7 @@ class IdentityAuthenticatorTest extends TestCase
         $jwt = 'provider.jwt.token';
         $remoteIdentity = new RemoteIdentity(
             provider: 'clerk',
-            subject: 'user_123',
+            providerUserId: 'user_123',
             email: 'demo@example.com',
             claims: ['sub' => 'user_123'],
         );

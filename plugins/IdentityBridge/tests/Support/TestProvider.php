@@ -23,7 +23,7 @@ final class TestProvider implements ProviderInterface
     {
         return new RemoteIdentity(
             provider: 'test',
-            subject: 'provider-user-123',
+            providerUserId: 'provider-user-123',
         );
     }
 

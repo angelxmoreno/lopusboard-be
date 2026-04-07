@@ -15,7 +15,7 @@ readonly class RemoteIdentity
      */
     public function __construct(
         public string $provider,
-        public string $subject,
+        public string $providerUserId,
         public ?string $email = null,
         public bool $emailVerified = false,
         public ?string $displayName = null,

@@ -38,7 +38,7 @@ The host app decides how to map, look up, create, or update its local user.
 Suggested fields:
 
 - `provider`
-- `subject`
+- `providerUserId`
 - `email`
 - `emailVerified`
 - `displayName`

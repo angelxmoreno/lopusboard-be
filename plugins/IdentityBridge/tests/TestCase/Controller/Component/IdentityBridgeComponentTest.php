@@ -18,7 +18,7 @@ class IdentityBridgeComponentTest extends TestCase
         $authenticatedIdentity = new AuthenticatedRequestIdentity(
             new RemoteIdentity(
                 provider: 'clerk',
-                subject: 'user_123',
+                providerUserId: 'user_123',
             ),
             (object)['id' => 42],
         );
@@ -33,7 +33,7 @@ class IdentityBridgeComponentTest extends TestCase
     {
         $remoteIdentity = new RemoteIdentity(
             provider: 'clerk',
-            subject: 'user_123',
+            providerUserId: 'user_123',
         );
         $authenticatedIdentity = new AuthenticatedRequestIdentity(
             $remoteIdentity,
@@ -52,7 +52,7 @@ class IdentityBridgeComponentTest extends TestCase
         $authenticatedIdentity = new AuthenticatedRequestIdentity(
             new RemoteIdentity(
                 provider: 'clerk',
-                subject: 'user_123',
+                providerUserId: 'user_123',
             ),
             $user,
         );
@@ -69,7 +69,7 @@ class IdentityBridgeComponentTest extends TestCase
             'identityBridge.identity' => new AuthenticatedRequestIdentity(
                 new RemoteIdentity(
                     provider: 'clerk',
-                    subject: 'user_123',
+                    providerUserId: 'user_123',
                 ),
                 (object)['id' => 42],
             ),
@@ -91,7 +91,7 @@ class IdentityBridgeComponentTest extends TestCase
         $authenticatedIdentity = new AuthenticatedRequestIdentity(
             new RemoteIdentity(
                 provider: 'clerk',
-                subject: 'user_123',
+                providerUserId: 'user_123',
             ),
             $user,
         );

@@ -25,7 +25,7 @@ The host app configures exactly one of these.
 Provider payloads differ, so the plugin needs one normalized value object such as:
 
 - provider name
-- external subject id
+- provider-assigned user id
 - email
 - display name
 - avatar url

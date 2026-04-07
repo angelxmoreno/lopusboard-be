@@ -53,7 +53,7 @@ What to build:
 Minimum `RemoteIdentity` fields:
 
 - `provider`
-- `subject`
+- `providerUserId`
 - `email`
 - `emailVerified`
 - `displayName`

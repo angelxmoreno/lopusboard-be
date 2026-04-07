@@ -82,7 +82,7 @@ class IdentityBridgeMiddlewareTest extends TestCase
     {
         $remoteIdentity = new RemoteIdentity(
             provider: 'clerk',
-            subject: 'user_123',
+            providerUserId: 'user_123',
             email: 'demo@example.com',
         );
         $user = (object)[
@@ -216,7 +216,7 @@ class IdentityBridgeMiddlewareTest extends TestCase
     {
         $remoteIdentity ??= new RemoteIdentity(
             provider: 'clerk',
-            subject: 'provider-user-123',
+            providerUserId: 'provider-user-123',
         );
         $user ??= (object)['id' => 1];
 
