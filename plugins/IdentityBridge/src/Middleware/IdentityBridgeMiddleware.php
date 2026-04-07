@@ -5,11 +5,11 @@ namespace IdentityBridge\Middleware;
 
 use Cake\Core\Configure;
 use Cake\Http\Response;
-use Cake\Http\ServerRequest;
 use IdentityBridge\Enum\AuthenticationMode;
 use IdentityBridge\Exception\AuthenticationException;
 use IdentityBridge\Exception\ConfigurationException;
 use IdentityBridge\Service\IdentityAuthenticator;
+use IdentityBridge\Utility\RequestUtils;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -27,6 +27,10 @@ final class IdentityBridgeMiddleware implements MiddlewareInterface
      */
     private array $overrides;
 
+    /**
+     * @param \IdentityBridge\Service\IdentityAuthenticator $authenticator Shared authenticator service.
+     * @param array<string, mixed> $config Middleware configuration overrides.
+     */
     public function __construct(
         private readonly IdentityAuthenticator $authenticator,
         array $config = [],
@@ -34,7 +38,7 @@ final class IdentityBridgeMiddleware implements MiddlewareInterface
         $config = array_replace((array)Configure::read('IdentityBridge', []), $config);
 
         $mode = AuthenticationMode::tryFrom(
-            (string)($config['mode'] ?? AuthenticationMode::ProtectedByDefault->value)
+            (string)($config['mode'] ?? AuthenticationMode::ProtectedByDefault->value),
         );
         if ($mode === null) {
             throw new ConfigurationException('Invalid IdentityBridge authentication mode.');
@@ -51,7 +55,7 @@ final class IdentityBridgeMiddleware implements MiddlewareInterface
             }
             if (!is_bool($isProtected)) {
                 throw new ConfigurationException(
-                    'IdentityBridge override values must be booleans.'
+                    'IdentityBridge override values must be booleans.',
                 );
             }
         }
@@ -60,15 +64,24 @@ final class IdentityBridgeMiddleware implements MiddlewareInterface
         $this->overrides = $overrides;
     }
 
+    /**
+     * Applies route protection rules and attaches authenticated request state.
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request The incoming request.
+     * @param \Psr\Http\Server\RequestHandlerInterface $handler The next handler.
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $routeTarget = $this->getRouteTarget($request);
+        $routeTarget = RequestUtils::getRouteTarget($request);
         if ($routeTarget === null || !$this->isProtectedRoute($routeTarget)) {
             return $handler->handle($request);
         }
 
         try {
-            $authenticatedIdentity = $this->authenticator->authenticate($this->extractBearerToken($request));
+            $authenticatedIdentity = $this->authenticator->authenticate(
+                RequestUtils::extractBearerToken($request),
+            );
         } catch (AuthenticationException $exception) {
             return $this->buildUnauthorizedResponse($exception);
         }
@@ -80,41 +93,12 @@ final class IdentityBridgeMiddleware implements MiddlewareInterface
         return $handler->handle($request);
     }
 
-    private function getRouteTarget(ServerRequestInterface $request): ?string
-    {
-        $params = [];
-        if ($request instanceof ServerRequest) {
-            $params = [
-                'prefix' => $request->getParam('prefix'),
-                'controller' => $request->getParam('controller'),
-                'action' => $request->getParam('action'),
-            ];
-        } else {
-            $params = [
-                'prefix' => $request->getAttribute('prefix'),
-                'controller' => $request->getAttribute('controller'),
-                'action' => $request->getAttribute('action'),
-            ];
-        }
-
-        $controller = $params['controller'];
-        $action = $params['action'];
-        if (!is_string($controller) || $controller === '' || !is_string($action) || $action === '') {
-            return null;
-        }
-
-        $segments = [];
-        $prefix = $params['prefix'];
-        if (is_string($prefix) && $prefix !== '') {
-            $segments[] = $prefix;
-        }
-
-        $segments[] = $controller;
-        $segments[] = $action;
-
-        return implode('/', $segments);
-    }
-
+    /**
+     * Determines whether the matched route requires authentication.
+     *
+     * @param string $routeTarget The normalized prefix/controller/action target.
+     * @return bool
+     */
     private function isProtectedRoute(string $routeTarget): bool
     {
         foreach ($this->overrides as $pattern => $isProtected) {
@@ -126,16 +110,12 @@ final class IdentityBridgeMiddleware implements MiddlewareInterface
         return $this->mode === AuthenticationMode::ProtectedByDefault;
     }
 
-    private function extractBearerToken(ServerRequestInterface $request): string
-    {
-        $header = $request->getHeaderLine('Authorization');
-        if (preg_match('/^\s*Bearer\s+(.+?)\s*$/i', $header, $matches) === 1) {
-            return $matches[1];
-        }
-
-        return '';
-    }
-
+    /**
+     * Builds a consistent unauthorized JSON response for auth failures.
+     *
+     * @param \IdentityBridge\Exception\AuthenticationException $exception The auth error.
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     private function buildUnauthorizedResponse(AuthenticationException $exception): ResponseInterface
     {
         $body = json_encode(['message' => $exception->getMessage()], JSON_THROW_ON_ERROR);

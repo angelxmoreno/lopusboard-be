@@ -183,7 +183,7 @@ class IdentityBridgeMiddlewareTest extends TestCase
                 'prefix' => $prefix,
                 'controller' => $controller,
                 'action' => $action,
-            ], static fn (mixed $value): bool => $value !== null),
+            ], static fn(mixed $value): bool => $value !== null),
         ]);
 
         if ($authorization !== null) {

@@ -44,11 +44,11 @@ class IdentityBridgePlugin extends BasePlugin
         $routes->plugin(
             'IdentityBridge',
             ['path' => '/identity-bridge'],
-            function (RouteBuilder $builder) {
+            function (RouteBuilder $builder): void {
                 // Add custom routes here
 
                 $builder->fallbacks();
-            }
+            },
         );
         parent::routes($routes);
     }

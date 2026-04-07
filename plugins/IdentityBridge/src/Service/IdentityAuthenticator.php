@@ -13,6 +13,10 @@ use IdentityBridge\ValueObject\AuthenticatedRequestIdentity;
  */
 final class IdentityAuthenticator
 {
+    /**
+     * @param \IdentityBridge\Provider\ProviderInterface $provider The configured identity provider.
+     * @param \IdentityBridge\Resolver\LocalUserResolverInterface $localUserResolver The host-app user resolver.
+     */
     public function __construct(
         private readonly ProviderInterface $provider,
         private readonly LocalUserResolverInterface $localUserResolver,

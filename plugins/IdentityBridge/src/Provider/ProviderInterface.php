@@ -14,7 +14,7 @@ interface ProviderInterface
      * Verifies a bearer token and returns normalized remote identity data.
      *
      * @param string $jwt The provider-issued bearer token.
-     * @return RemoteIdentity
+     * @return \IdentityBridge\ValueObject\RemoteIdentity
      */
     public function verify(string $jwt): RemoteIdentity;
 }

@@ -13,7 +13,7 @@ interface LocalUserResolverInterface
     /**
      * Finds, creates, or updates the local user for a verified remote identity.
      *
-     * @param RemoteIdentity $identity The normalized identity.
+     * @param \IdentityBridge\ValueObject\RemoteIdentity $identity The normalized identity.
      * @return object
      */
     public function resolve(RemoteIdentity $identity): object;
