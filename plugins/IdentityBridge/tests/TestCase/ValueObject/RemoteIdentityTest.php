@@ -49,4 +49,26 @@ class RemoteIdentityTest extends TestCase
         $this->assertNull($identity->avatarUrl);
         $this->assertSame([], $identity->claims);
     }
+
+    public function testItSerializesToApiSafeJsonShape(): void
+    {
+        $identity = new RemoteIdentity(
+            provider: 'appwrite',
+            providerUserId: 'user_789',
+            email: 'demo@example.com',
+            emailVerified: true,
+            displayName: 'Demo User',
+            avatarUrl: 'https://example.com/avatar.png',
+            claims: ['sub' => 'user_789'],
+        );
+
+        $this->assertSame([
+            'provider' => 'appwrite',
+            'providerUserId' => 'user_789',
+            'email' => 'demo@example.com',
+            'emailVerified' => true,
+            'displayName' => 'Demo User',
+            'avatarUrl' => 'https://example.com/avatar.png',
+        ], $identity->jsonSerialize());
+    }
 }

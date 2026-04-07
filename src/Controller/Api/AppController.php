@@ -27,6 +27,7 @@ class AppController extends BaseAppController
 
         $this->setRequest($this->getRequest()->withParam('_ext', 'json'));
         $this->viewBuilder()->setClassName(JsonView::class);
+        $this->loadComponent('IdentityBridge.IdentityBridge');
 
         $this->loadComponent('Crud.Crud', [
             'actions' => [
