@@ -1,0 +1,39 @@
+src/Controller/Api/AppController.php
+  5001504fa0f17a33 30
+tests/Support/Auth/TestIdentityResolver.php
+  5001504fa0f17a33 1-24
+tests/TestCase/Controller/Api/IdentityControllerTest.php
+  5001504fa0f17a33 1-83
+src/Action/IdentityMeAction.php
+  5001504fa0f17a33 1-58
+src/Controller/Api/IdentityController.php
+  5001504fa0f17a33 1-26
+config/routes.php
+  5001504fa0f17a33 83
+tests/Support/Auth/TestIdentityProvider.php
+  5001504fa0f17a33 1-39
+plugins/IdentityBridge/tests/TestCase/ValueObject/RemoteIdentityTest.php
+  5001504fa0f17a33 52-73
+plugins/IdentityBridge/src/ValueObject/RemoteIdentity.php
+  5001504fa0f17a33 6-7,13,28-41
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.5",
+  "base_commit_sha": "421a2a9d74d8f06f47a5070f4a4f2fbc0121363f",
+  "prompts": {
+    "5001504fa0f17a33": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019d4176-4ce9-73d2-941e-617d4ffcb4ba",
+        "model": "gpt-5.4"
+      },
+      "human_author": "Angel S. Moreno",
+      "messages": [],
+      "total_additions": 420,
+      "total_deletions": 84,
+      "accepted_lines": 337,
+      "overriden_lines": 0
+    }
+  }
+}
