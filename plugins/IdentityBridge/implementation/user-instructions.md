@@ -10,8 +10,15 @@ The goal is to build a CakePHP plugin that:
 - hands that identity to the host app
 - lets the host app map and resolve the local user
 - attaches the local user to the request
+- lets controllers access the resolved auth state cleanly
 
 This plugin should support one configured provider per app. It should not try to auto-detect providers per request.
+
+The recommended v1 shape is:
+
+- a shared authenticator service that does the real work
+- config-driven middleware that decides which routes authenticate
+- a thin component that gives controllers easy access to the resolved auth objects
 
 ## Before You Start
 
@@ -56,7 +63,7 @@ Minimum `RemoteIdentity` fields:
 Acceptance criteria:
 
 - the object can be constructed with all expected fields
-- the object exposes getters or readonly properties
+- the object exposes readonly properties or equally simple accessors
 - there is no provider-specific logic in this class
 
 ## Step 2: Define The Contracts
@@ -82,38 +89,97 @@ Acceptance criteria:
 - method names communicate responsibility
 - interfaces depend on `RemoteIdentity`, not raw arrays from providers
 
-## Step 3: Define The Local User Resolver Boundary
+Note:
 
-Create:
+- if you already completed steps 1 and 2, do not recreate these files later
+- there should be only one `LocalUserResolverInterface`
 
-- `plugins/IdentityBridge/src/Resolver/LocalUserResolverInterface.php`
+## Step 3: Define The Plugin Config Shape
 
-Purpose of this class:
+Before building middleware, write down the exact config the plugin will support.
 
-- `LocalUserResolverInterface`: gives the plugin a stable way to ask the host app for the local user without owning the app’s persistence rules
+You do not need code first. A small documented array shape is enough.
 
-What it should do:
+Suggested config shape:
 
-1. accept `RemoteIdentity`
-2. let the host app map identity fields into the local user shape
-3. allow the host app to look up the local user
-4. allow the host app to create the user if missing
-5. allow the host app to update selected fields if needed
-6. return the resolved local user entity or object
+```php
+[
+    'mode' => AuthenticationMode::ProtectedByDefault->value,
+    'overrides' => [
+        'Api/Auth/*' => false,
+        'Api/Health/index' => false,
+    ],
+]
+```
 
-Important:
+Important syntax note:
 
-- do not implement this as package-owned local user persistence
-- the plugin should define the interface only
-- the host app owns the implementation
+- `Api/Health/index` means `prefix/controller/action`
+- it is not a URL
+- it is not a named route
+
+This v1 format is just a simple route-target matcher for middleware config.
+
+Override rules:
+
+- `true` means protected
+- `false` means public
+- any route not listed in `overrides` falls back to `mode`
+
+What this config is for:
+
+- the middleware uses it to decide whether the current route should authenticate
+
+What this config is not for:
+
+- the shared authenticator service does not need route config
+- the provider contract does not need route config
 
 Acceptance criteria:
 
-- the interface is small and explicit
-- the package does not assume a `UsersTable` schema
-- the host app has one clear place to implement local user mapping, lookup, create, and update logic
+- you can clearly answer how a route becomes public or protected
+- the config is simple enough for a normal CakePHP app team to understand quickly
 
-## Step 4: Build The Middleware
+## Step 4: Build The Shared Authenticator Service
+
+Create:
+
+- `plugins/IdentityBridge/src/Service/IdentityAuthenticator.php`
+- optionally `plugins/IdentityBridge/src/ValueObject/AuthenticatedRequestIdentity.php`
+
+Purpose of each class:
+
+- `IdentityAuthenticator`: plugin-owned service that performs token verification and host-app user resolution
+- `AuthenticatedRequestIdentity`: optional value object that bundles `RemoteIdentity` plus the resolved local user
+
+What `IdentityAuthenticator` should do:
+
+1. accept a bearer token string
+2. call the configured provider
+3. receive `RemoteIdentity`
+4. call the configured `LocalUserResolverInterface`
+5. return both the `RemoteIdentity` and the resolved local user
+
+Important:
+
+- put the real auth logic here, not in middleware and not in the component
+- middleware and the component should stay thin adapters over this service
+- the host app still owns mapping and persistence through `LocalUserResolverInterface`
+- this service can be built before concrete plugin config exists
+
+Why the order still works:
+
+- the service only depends on `ProviderInterface` and `LocalUserResolverInterface`
+- for tests, use fake implementations of those interfaces
+- route config only matters once middleware exists
+
+Acceptance criteria:
+
+- one method can authenticate a token end to end
+- token verification and local-user resolution are wired in one place
+- middleware and component can both reuse the same service later
+
+## Step 5: Build The Middleware
 
 Create:
 
@@ -121,36 +187,74 @@ Create:
 
 Purpose of this class:
 
-- `IdentityBridgeMiddleware`: central request entry point for token extraction, verification, local user resolution, and request identity attachment
+- `IdentityBridgeMiddleware`: route-aware middleware that decides whether a request should authenticate and, if needed, stores the resolved auth state on the request
 
 What it should do:
 
-1. read the `Authorization` header
-2. extract the bearer token
-3. reject missing or malformed tokens
-4. pass the token to the configured provider
-5. receive `RemoteIdentity`
-6. call the configured local user resolver
-7. attach both the remote identity and local user to the request
-8. continue to the next middleware
+1. run after Cake routing so route params are available
+2. inspect plugin config to decide whether this route should authenticate
+3. if the route is skipped, continue immediately
+4. if the route is protected, extract the bearer token
+5. call `IdentityAuthenticator`
+6. attach both the remote identity and local user to the request
+7. continue to the next middleware
 
 Request attributes to set:
 
 - `identityBridge.remoteIdentity`
 - `identityBridge.user`
 
+Route matching guidance:
+
+- match on `prefix/controller/action`
+- do not match on raw URL strings if you can avoid it
+- keep the first version simple and predictable
+
 Do not:
 
-- make authorization decisions here
-- embed provider-specific verification logic directly in the middleware
+- put provider verification logic directly in the middleware
+- make the middleware depend on controller state
+- use route metadata in v1
 
 Acceptance criteria:
 
-- missing token returns `401`
-- invalid token returns `401`
-- valid token attaches the local user to the request
+- protected routes return `401` when the token is missing or invalid
+- skipped routes do not attempt auth
+- protected routes with valid tokens attach both auth objects to the request
 
-## Step 5: Register Plugin Services
+## Step 6: Build The Controller Component
+
+Create:
+
+- `plugins/IdentityBridge/src/Controller/Component/IdentityBridgeComponent.php`
+
+Purpose of this class:
+
+- `IdentityBridgeComponent`: thin controller adapter that exposes the resolved auth state to controllers
+
+What it should do:
+
+- read `identityBridge.remoteIdentity` from the request
+- read `identityBridge.user` from the request
+- expose convenience methods such as:
+  - `getRemoteIdentity()`
+  - `getUser()`
+  - `hasUser()`
+  - `requireUser()`
+
+Important:
+
+- the component should not authenticate tokens itself
+- the component should not decide which routes are public or protected
+- it is only a controller-facing accessor layer
+
+Acceptance criteria:
+
+- controllers can get the normalized identity without reading raw request attributes
+- controllers can get the resolved local user without reading raw request attributes
+- missing required auth can be surfaced cleanly through `requireUser()`
+
+## Step 7: Register Plugin Services
 
 Update:
 
@@ -164,19 +268,23 @@ What to add:
 
 - container registrations for the provider implementation
 - container registration for the local user resolver
+- container registration for `IdentityAuthenticator`
 - middleware registration if the plugin is going to self-register it
+- component registration if needed by Cake conventions
 
 Important:
 
 - keep the plugin generic
 - the host app should be able to swap provider and local user resolver implementations through configuration or DI bindings
+- middleware configuration should be easy for the host app to override
 
 Acceptance criteria:
 
 - the plugin can resolve all required services from the container
 - there is a clear place for the host app to override provider and resolver bindings
+- middleware can receive its auth config cleanly
 
-## Step 6: Implement One Real Provider
+## Step 8: Implement One Real Provider
 
 Do not implement all providers first.
 
@@ -211,7 +319,7 @@ Acceptance criteria:
 - valid provider token returns `RemoteIdentity`
 - expired or invalid token throws `AuthenticationException`
 
-## Step 7: Add Tests As You Build
+## Step 9: Add Tests As You Build
 
 Add tests for each layer while building it.
 
@@ -219,18 +327,21 @@ Recommended test files:
 
 - `tests/TestCase/ValueObject/RemoteIdentityTest.php`
 - `tests/TestCase/Provider/...`
+- `tests/TestCase/Service/IdentityAuthenticatorTest.php`
 - `tests/TestCase/Middleware/IdentityBridgeMiddlewareTest.php`
+- `tests/TestCase/Controller/Component/IdentityBridgeComponentTest.php`
 
 What to test:
 
 - `RemoteIdentity` stores expected values
 - provider adapter normalizes claims correctly
-- middleware passes normalized identity to the local user resolver correctly
-- middleware rejects bad tokens and accepts valid ones
+- `IdentityAuthenticator` passes verified identity into the resolver correctly
+- middleware respects the route config and authenticates only when expected
+- component returns the resolved auth state correctly
 
-Do not leave the middleware untested. That is the main integration point.
+Do not leave the middleware and component untested. Those are the main framework integration points.
 
-## Step 8: Define The Host App Resolution Contract
+## Step 10: Define The Host App Resolution Contract
 
 Once the plugin core works, document what the host app must provide.
 
@@ -241,18 +352,21 @@ At minimum, the host app must define:
 - how the host app maps `RemoteIdentity` into the local user shape
 - which local fields are immutable
 - which local fields may be refreshed from remote identity
+- which routes are public vs protected in middleware config
 
 If the app still uses `appwrite_id`, call that out clearly. The current app schema is too provider-specific for a reusable bridge plugin.
 
-## Step 9: Integrate Into The Host App
+## Step 11: Integrate Into The Host App
 
 After the plugin works in isolation:
 
 1. update the host app user schema if needed
 2. load the plugin
-3. place the middleware into the API stack
-4. remove old provider-specific auth code from the app
-5. verify authenticated requests resolve a local user
+3. register the middleware after routing
+4. add middleware config for public vs protected routes
+5. load the component in controllers that need auth-state access
+6. remove old provider-specific auth code from the app
+7. verify authenticated requests resolve a local user
 
 Do not mix old and new auth flows longer than necessary.
 
@@ -262,21 +376,24 @@ The plugin is done when all of these are true:
 
 - a request with a valid bearer token resolves a verified `RemoteIdentity`
 - the plugin passes that identity into the host app’s local user resolver correctly
+- protected routes are enforced by middleware config
 - the request carries the resolved local user for downstream app code
+- controllers can access the resolved auth state through the component
 - invalid tokens return `401`
-- tests cover provider verification and middleware behavior
+- tests cover provider verification, authenticator behavior, middleware behavior, and component behavior
 
 ## Suggested Delivery Order
 
 Use this commit order:
 
 1. `feat: add identity bridge core value objects and contracts`
-2. `feat: add identity bridge local user resolver contract`
+2. `feat: add identity bridge authenticator service`
 3. `feat: add identity bridge auth middleware`
-4. `feat: register identity bridge services in plugin container`
-5. `feat: add <provider> adapter for identity bridge`
-6. `test: add identity bridge middleware and provider coverage`
-7. `docs: document host app integration for identity bridge`
+4. `feat: add identity bridge controller component`
+5. `feat: register identity bridge services in plugin container`
+6. `feat: add <provider> adapter for identity bridge`
+7. `test: add identity bridge framework integration coverage`
+8. `docs: document host app integration for identity bridge`
 
 ## Common Mistakes To Avoid
 
@@ -284,5 +401,6 @@ Use this commit order:
 - letting the plugin depend directly on the host app `UsersTable` shape
 - treating local-user lookup and persistence as package-owned logic
 - using raw claim arrays everywhere instead of `RemoteIdentity`
+- making controllers talk backward to middleware
 - blending authentication and authorization
 - trying to support all providers before the first one works end to end

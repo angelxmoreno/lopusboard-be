@@ -45,6 +45,40 @@ This plugin is intentionally built around one configured provider per app. It do
 - implement `LocalUserResolverInterface`
 - use the resolved local user for authorization and domain rules
 
+## Route Matching Note
+
+When the plugin docs show values like `Api/Health/index`, that syntax means:
+
+- `prefix/controller/action`
+
+It is:
+
+- not a URL like `/api/health`
+- not a named route
+
+The first version of the plugin should use this controller-target style because it is simple and does not require every app to define named routes up front.
+
+## Route Protection Config
+
+The recommended v1 config shape is:
+
+```php
+[
+    'mode' => AuthenticationMode::ProtectedByDefault->value,
+    'overrides' => [
+        'Api/Auth/*' => false,
+        'Api/Health/index' => false,
+    ],
+]
+```
+
+Rules:
+
+- `mode` sets the default behavior for every route
+- `overrides` replaces that default for specific `prefix/controller/action` targets
+- `true` means protected
+- `false` means public
+
 ## Implementation Docs
 
 Build notes live in [implementation/README.md](/Users/amoreno/ClaudeDesktopDropBox/lopusboard/lopusboard-be/plugins/IdentityBridge/implementation/README.md).

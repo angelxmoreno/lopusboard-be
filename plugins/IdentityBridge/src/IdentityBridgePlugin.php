@@ -26,7 +26,7 @@ class IdentityBridgePlugin extends BasePlugin
      */
     public function bootstrap(PluginApplicationInterface $app): void
     {
-        // remove this method hook if you don't need it
+        parent::bootstrap($app);
     }
 
     /**
