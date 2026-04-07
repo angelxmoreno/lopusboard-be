@@ -86,9 +86,7 @@ final class IdentityBridgeMiddleware implements MiddlewareInterface
             return $this->buildUnauthorizedResponse($exception);
         }
 
-        $request = $request
-            ->withAttribute('identityBridge.remoteIdentity', $authenticatedIdentity->remoteIdentity)
-            ->withAttribute('identityBridge.user', $authenticatedIdentity->user);
+        $request = $request->withAttribute('identityBridge.identity', $authenticatedIdentity);
 
         return $handler->handle($request);
     }

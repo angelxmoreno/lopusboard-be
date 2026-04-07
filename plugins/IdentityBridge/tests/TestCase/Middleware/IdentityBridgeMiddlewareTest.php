@@ -12,6 +12,7 @@ use IdentityBridge\Middleware\IdentityBridgeMiddleware;
 use IdentityBridge\Provider\ProviderInterface;
 use IdentityBridge\Resolver\LocalUserResolverInterface;
 use IdentityBridge\Service\IdentityAuthenticator;
+use IdentityBridge\ValueObject\AuthenticatedRequestIdentity;
 use IdentityBridge\ValueObject\RemoteIdentity;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
@@ -49,8 +50,7 @@ class IdentityBridgeMiddlewareTest extends TestCase
         );
 
         $this->assertSame(204, $response->getStatusCode());
-        $this->assertNull($handler->request?->getAttribute('identityBridge.remoteIdentity'));
-        $this->assertNull($handler->request?->getAttribute('identityBridge.user'));
+        $this->assertNull($handler->request?->getAttribute('identityBridge.identity'));
     }
 
     public function testProtectedRouteReturnsUnauthorizedWhenTokenIsMissing(): void
@@ -89,6 +89,7 @@ class IdentityBridgeMiddlewareTest extends TestCase
             'id' => 10,
             'email' => 'demo@example.com',
         ];
+        $authenticatedIdentity = new AuthenticatedRequestIdentity($remoteIdentity, $user);
 
         $middleware = new IdentityBridgeMiddleware(
             $this->makeAuthenticator($remoteIdentity, $user),
@@ -115,8 +116,7 @@ class IdentityBridgeMiddlewareTest extends TestCase
         );
 
         $this->assertSame(200, $response->getStatusCode());
-        $this->assertSame($remoteIdentity, $handler->request?->getAttribute('identityBridge.remoteIdentity'));
-        $this->assertSame($user, $handler->request?->getAttribute('identityBridge.user'));
+        $this->assertEquals($authenticatedIdentity, $handler->request?->getAttribute('identityBridge.identity'));
     }
 
     public function testPublicByDefaultOverrideCanProtectSpecificRoute(): void
