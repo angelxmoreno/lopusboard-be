@@ -80,6 +80,7 @@ return function (RouteBuilder $routes): void {
 
     $routes->prefix('Api', ['path' => '/api'], function (RouteBuilder $builder): void {
         $builder->resources('Issues');
+        $builder->resources('Projects');
         $builder->fallbacks();
     });
 
