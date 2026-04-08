@@ -12,4 +12,14 @@ namespace App\Controller\Api;
  */
 class ProjectsController extends AppController
 {
+    /**
+     * @return void
+     * @throws \Exception
+     */
+    public function initialize(): void
+    {
+        parent::initialize();
+
+        $this->useAuthorizedCrudActions();
+    }
 }
