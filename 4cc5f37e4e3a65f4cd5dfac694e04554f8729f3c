@@ -1,0 +1,27 @@
+bin/run-phpcpd.php
+  5001504fa0f17a33 1-39
+composer.json
+  5001504fa0f17a33 70-71
+bin/run-phpmd.php
+  5001504fa0f17a33 1-28
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.6",
+  "base_commit_sha": "4cc5f37e4e3a65f4cd5dfac694e04554f8729f3c",
+  "prompts": {
+    "5001504fa0f17a33": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019d4176-4ce9-73d2-941e-617d4ffcb4ba",
+        "model": "gpt-5.4"
+      },
+      "human_author": "Angel S. Moreno",
+      "messages": [],
+      "total_additions": 118,
+      "total_deletions": 2,
+      "accepted_lines": 69,
+      "overriden_lines": 0
+    }
+  }
+}
