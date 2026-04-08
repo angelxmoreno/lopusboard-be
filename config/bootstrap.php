@@ -72,8 +72,8 @@ $envFile = ROOT . DS . '.env';
 if (file_exists($envFile)) {
     $dotenv = new Loader([$envFile]);
     $dotenv->parse()
-        ->toEnv()
-        ->toServer();
+        ->toEnv(true)
+        ->toServer(true);
 }
 
 /*
