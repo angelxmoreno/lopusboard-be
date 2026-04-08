@@ -21,7 +21,7 @@ Run a single test file with `vendor/bin/phpunit tests/TestCase/ApplicationTest.p
 Follow PSR-12 conventions as enforced by `cakephp/cakephp-codesniffer`. Use 4-space indentation, LF line endings, and a final newline; YAML files use 2 spaces, and `.neon` files use tabs per `.editorconfig`. Keep `declare(strict_types=1);` at the top of PHP files. Match CakePHP naming: `UsersTable.php`, `User.php`, `UsersController.php`, and dashed routes via `DashedRoute`.
 
 ## Testing Guidelines
-PHPUnit is configured through `phpunit.xml.dist`; test bootstrap runs migrations before the suite, so keep migrations healthy when changing schema. Add or update tests in the mirrored `tests/TestCase/...` namespace for every behavior change. CI runs PHPUnit on PHP 8.2 and 8.5, plus PHP CodeSniffer and PHPStan.
+PHPUnit is configured through `phpunit.xml.dist`; test bootstrap runs migrations before the suite, so keep migrations healthy when changing schema. Add or update tests in the mirrored `tests/TestCase/...` namespace for every behavior change. CI runs PHPUnit on PHP 8.5 with lowest/highest dependency coverage, plus PHP CodeSniffer, PHPStan, and PHPMD.
 
 ## Commit & Pull Request Guidelines
 Recent history uses Conventional Commit prefixes (`feat:`, `chore:`); keep that format and make scopes descriptive when useful. Pull requests should summarize the big picture, link the related issue when applicable, and include tests for new behavior or bug fixes. The existing PR template also expects contributors to verify the test suite still passes before requesting review.

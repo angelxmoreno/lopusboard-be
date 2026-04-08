@@ -145,6 +145,29 @@ For a full list of endpoints and request/response shapes, refer to [08-api-endpo
 
 ---
 
+## Quality Tooling
+
+We maintain high code quality through a suite of automated checks.
+
+### Local Git Hooks (CaptainHook)
+Local git hooks are automatically installed via `composer install` or `composer update` to ensure every commit and push meets our standards:
+- **`pre-commit`**: Runs PHP_CodeSniffer only against staged PHP files.
+- **`commit-msg`**: Validates that commit messages follow [Conventional Commits](https://www.conventionalcommits.org/).
+- **`pre-push`**: Runs `composer push-check` (Tests + Static Analysis + Maintainability). Full repository PHP_CodeSniffer remains available through `composer check` and CI.
+
+### Manual Commands
+| Command | Description |
+|---|---|
+| `composer cs-check` | Check coding standards (PHP_CodeSniffer) |
+| `composer cs-fix` | Automatically fix coding standard violations |
+| `composer stan` | Run PHPStan static analysis |
+| `composer md` | Run PHPMD maintainability checks |
+| `composer cpd` | Run duplicate detection against `src/` and `plugins/` |
+| `composer push-check` | Run the lean pre-push gate (Tests, Stan, PHPMD) |
+| `composer check` | Run all mandatory quality gates (Tests, CS, Stan) |
+
+---
+
 ## Documentation Links
 - [LopusBoard Project Wiki](../wiki/README.md)
 - [CakePHP Documentation](https://book.cakephp.org/5/en/index.html)

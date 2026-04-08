@@ -1,0 +1,2323 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Access to an undefined property Cake\\Controller\\Controller\:\:\$Authorization\.$#'
+			identifier: property.notFound
+			count: 3
+			path: src/Action/AuthorizedAddAction.php
+
+		-
+			message: '#^Access to an undefined property Cake\\Controller\\Controller\:\:\$Authorization\.$#'
+			identifier: property.notFound
+			count: 3
+			path: src/Action/AuthorizedDeleteAction.php
+
+		-
+			message: '#^Access to an undefined property Cake\\Controller\\Controller\:\:\$Authorization\.$#'
+			identifier: property.notFound
+			count: 3
+			path: src/Action/AuthorizedEditAction.php
+
+		-
+			message: '#^Access to an undefined property Cake\\Controller\\Controller\:\:\$Authorization\.$#'
+			identifier: property.notFound
+			count: 3
+			path: src/Action/AuthorizedIndexAction.php
+
+		-
+			message: '#^Access to an undefined property Crud\\Event\\Subject\:\:\$query\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Action/AuthorizedIndexAction.php
+
+		-
+			message: '#^Access to an undefined property Cake\\Controller\\Controller\:\:\$Authorization\.$#'
+			identifier: property.notFound
+			count: 3
+			path: src/Action/AuthorizedViewAction.php
+
+		-
+			message: '#^Access to an undefined property Cake\\Controller\\Controller\:\:\$IdentityBridge\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Action/IdentityMeAction.php
+
+		-
+			message: '#^Method App\\Action\\IdentityMeAction\:\:serializeUser\(\) has parameter \$user with generic interface ArrayAccess but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Action/IdentityMeAction.php
+
+		-
+			message: '#^Method App\\Auth\\AppUserResolver\:\:resolve\(\) return type with generic interface ArrayAccess does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Auth/AppUserResolver.php
+
+		-
+			message: '#^Call to an undefined method Cake\\ORM\\Table\:\:getTableLocator\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Model/Behavior/ActivityLogBehavior.php
+
+		-
+			message: '#^Method App\\Model\\Behavior\\ActivityLogBehavior\:\:afterDelete\(\) has parameter \$event with generic interface Cake\\Event\\EventInterface but does not specify its types\: TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Behavior/ActivityLogBehavior.php
+
+		-
+			message: '#^Method App\\Model\\Behavior\\ActivityLogBehavior\:\:afterSave\(\) has parameter \$event with generic interface Cake\\Event\\EventInterface but does not specify its types\: TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Behavior/ActivityLogBehavior.php
+
+		-
+			message: '#^Method App\\Model\\Behavior\\ActivityLogBehavior\:\:beforeDelete\(\) has parameter \$event with generic interface Cake\\Event\\EventInterface but does not specify its types\: TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Behavior/ActivityLogBehavior.php
+
+		-
+			message: '#^Method App\\Model\\Behavior\\ActivityLogBehavior\:\:beforeSave\(\) has parameter \$event with generic interface Cake\\Event\\EventInterface but does not specify its types\: TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Behavior/ActivityLogBehavior.php
+
+		-
+			message: '#^Method App\\Model\\Behavior\\IssueLifecycleBehavior\:\:beforeMarshal\(\) has parameter \$event with generic interface Cake\\Event\\EventInterface but does not specify its types\: TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Behavior/IssueLifecycleBehavior.php
+
+		-
+			message: '#^Method App\\Model\\Behavior\\IssueLifecycleBehavior\:\:beforeSave\(\) has parameter \$event with generic interface Cake\\Event\\EventInterface but does not specify its types\: TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Behavior/IssueLifecycleBehavior.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between mixed and null will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: src/Model/Behavior/IssueLifecycleBehavior.php
+
+		-
+			message: '#^Method App\\Model\\Behavior\\LastAdminProtectionBehavior\:\:beforeDelete\(\) has parameter \$event with generic interface Cake\\Event\\EventInterface but does not specify its types\: TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Behavior/LastAdminProtectionBehavior.php
+
+		-
+			message: '#^Method App\\Model\\Behavior\\LastAdminProtectionBehavior\:\:beforeSave\(\) has parameter \$event with generic interface Cake\\Event\\EventInterface but does not specify its types\: TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Behavior/LastAdminProtectionBehavior.php
+
+		-
+			message: '#^Method App\\Model\\Behavior\\ProjectSeedingBehavior\:\:afterSave\(\) has parameter \$event with generic interface Cake\\Event\\EventInterface but does not specify its types\: TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Behavior/ProjectSeedingBehavior.php
+
+		-
+			message: '#^Method App\\Model\\Behavior\\WikiLinkSyncBehavior\:\:afterSave\(\) has parameter \$event with generic interface Cake\\Event\\EventInterface but does not specify its types\: TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Behavior/WikiLinkSyncBehavior.php
+
+		-
+			message: '#^Offset 1 on array\{list\<string\>, list\<non\-empty\-string\>\} on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.offset
+			count: 1
+			path: src/Model/Behavior/WikiLinkSyncBehavior.php
+
+		-
+			message: '#^Method App\\Model\\Behavior\\WikiRevisionBehavior\:\:afterSave\(\) has parameter \$event with generic interface Cake\\Event\\EventInterface but does not specify its types\: TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Behavior/WikiRevisionBehavior.php
+
+		-
+			message: '#^Class App\\Model\\Entity\\ActivityLog has PHPDoc tag @property for property \$new_value with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Entity/ActivityLog.php
+
+		-
+			message: '#^Class App\\Model\\Entity\\ActivityLog has PHPDoc tag @property for property \$old_value with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Entity/ActivityLog.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Entity\\ActivityLog\:\:\$actor contains unknown class App\\Model\\Entity\\Actor\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Model/Entity/ActivityLog.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Entity\\Issue\:\:\$assignee contains unknown class App\\Model\\Entity\\Assignee\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Model/Entity/Issue.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Entity\\Issue\:\:\$child_issues contains unknown class App\\Model\\Entity\\ChildIssue\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Model/Entity/Issue.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Entity\\Issue\:\:\$parent_issue contains unknown class App\\Model\\Entity\\ParentIssue\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Model/Entity/Issue.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Entity\\IssueRelation\:\:\$related_issue contains unknown class App\\Model\\Entity\\RelatedIssue\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Model/Entity/IssueRelation.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Entity\\WikiPage\:\:\$child_wiki_pages contains unknown class App\\Model\\Entity\\ChildWikiPage\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Model/Entity/WikiPage.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Entity\\WikiPage\:\:\$parent_wiki_page contains unknown class App\\Model\\Entity\\ParentWikiPage\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Model/Entity/WikiPage.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Entity\\WikiPageLink\:\:\$source_page contains unknown class App\\Model\\Entity\\SourcePage\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Model/Entity/WikiPageLink.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Entity\\WikiPageLink\:\:\$target_page contains unknown class App\\Model\\Entity\\TargetPage\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Model/Entity/WikiPageLink.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ActivityLogTable has PHPDoc tag @method for method deleteMany\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ActivityLogTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ActivityLogTable has PHPDoc tag @method for method deleteMany\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ActivityLogTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ActivityLogTable has PHPDoc tag @method for method deleteManyOrFail\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ActivityLogTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ActivityLogTable has PHPDoc tag @method for method deleteManyOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ActivityLogTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ActivityLogTable has PHPDoc tag @method for method findOrCreate\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ActivityLogTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ActivityLogTable has PHPDoc tag @method for method get\(\) parameter \#2 \$finder with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ActivityLogTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ActivityLogTable has PHPDoc tag @method for method newEntities\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ActivityLogTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ActivityLogTable has PHPDoc tag @method for method newEntities\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ActivityLogTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ActivityLogTable has PHPDoc tag @method for method newEntity\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ActivityLogTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ActivityLogTable has PHPDoc tag @method for method newEntity\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ActivityLogTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ActivityLogTable has PHPDoc tag @method for method patchEntities\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ActivityLogTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ActivityLogTable has PHPDoc tag @method for method patchEntities\(\) parameter \#2 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ActivityLogTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ActivityLogTable has PHPDoc tag @method for method patchEntities\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ActivityLogTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ActivityLogTable has PHPDoc tag @method for method patchEntity\(\) parameter \#2 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ActivityLogTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ActivityLogTable has PHPDoc tag @method for method patchEntity\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ActivityLogTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ActivityLogTable has PHPDoc tag @method for method save\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ActivityLogTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ActivityLogTable has PHPDoc tag @method for method saveMany\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ActivityLogTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ActivityLogTable has PHPDoc tag @method for method saveMany\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ActivityLogTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ActivityLogTable has PHPDoc tag @method for method saveManyOrFail\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ActivityLogTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ActivityLogTable has PHPDoc tag @method for method saveManyOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ActivityLogTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ActivityLogTable has PHPDoc tag @method for method saveOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ActivityLogTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\ActivityLogTable\:\:\$Actors contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/ActivityLogTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\ActivityLogTable\:\:\$Projects contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/ActivityLogTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentLinksTable has PHPDoc tag @method for method deleteMany\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentLinksTable has PHPDoc tag @method for method deleteMany\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentLinksTable has PHPDoc tag @method for method deleteManyOrFail\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentLinksTable has PHPDoc tag @method for method deleteManyOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentLinksTable has PHPDoc tag @method for method findOrCreate\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentLinksTable has PHPDoc tag @method for method get\(\) parameter \#2 \$finder with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentLinksTable has PHPDoc tag @method for method newEntities\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentLinksTable has PHPDoc tag @method for method newEntities\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentLinksTable has PHPDoc tag @method for method newEntity\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentLinksTable has PHPDoc tag @method for method newEntity\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentLinksTable has PHPDoc tag @method for method patchEntities\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentLinksTable has PHPDoc tag @method for method patchEntities\(\) parameter \#2 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentLinksTable has PHPDoc tag @method for method patchEntities\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentLinksTable has PHPDoc tag @method for method patchEntity\(\) parameter \#2 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentLinksTable has PHPDoc tag @method for method patchEntity\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentLinksTable has PHPDoc tag @method for method save\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentLinksTable has PHPDoc tag @method for method saveMany\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentLinksTable has PHPDoc tag @method for method saveMany\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentLinksTable has PHPDoc tag @method for method saveManyOrFail\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentLinksTable has PHPDoc tag @method for method saveManyOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentLinksTable has PHPDoc tag @method for method saveOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentLinksTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\AttachmentLinksTable\:\:\$Attachments contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/AttachmentLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentsTable has PHPDoc tag @method for method deleteMany\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentsTable has PHPDoc tag @method for method deleteMany\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentsTable has PHPDoc tag @method for method deleteManyOrFail\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentsTable has PHPDoc tag @method for method deleteManyOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentsTable has PHPDoc tag @method for method findOrCreate\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentsTable has PHPDoc tag @method for method get\(\) parameter \#2 \$finder with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentsTable has PHPDoc tag @method for method newEntities\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentsTable has PHPDoc tag @method for method newEntities\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentsTable has PHPDoc tag @method for method newEntity\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentsTable has PHPDoc tag @method for method newEntity\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentsTable has PHPDoc tag @method for method patchEntities\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentsTable has PHPDoc tag @method for method patchEntities\(\) parameter \#2 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentsTable has PHPDoc tag @method for method patchEntities\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentsTable has PHPDoc tag @method for method patchEntity\(\) parameter \#2 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentsTable has PHPDoc tag @method for method patchEntity\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentsTable has PHPDoc tag @method for method save\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentsTable has PHPDoc tag @method for method saveMany\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentsTable has PHPDoc tag @method for method saveMany\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentsTable has PHPDoc tag @method for method saveManyOrFail\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentsTable has PHPDoc tag @method for method saveManyOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\AttachmentsTable has PHPDoc tag @method for method saveOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AttachmentsTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\AttachmentsTable\:\:\$AttachmentLinks contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/AttachmentsTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\AttachmentsTable\:\:\$Projects contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/AttachmentsTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\AttachmentsTable\:\:\$Uploaders contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/AttachmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\CommentsTable has PHPDoc tag @method for method deleteMany\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/CommentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\CommentsTable has PHPDoc tag @method for method deleteMany\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/CommentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\CommentsTable has PHPDoc tag @method for method deleteManyOrFail\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/CommentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\CommentsTable has PHPDoc tag @method for method deleteManyOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/CommentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\CommentsTable has PHPDoc tag @method for method findOrCreate\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/CommentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\CommentsTable has PHPDoc tag @method for method get\(\) parameter \#2 \$finder with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/CommentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\CommentsTable has PHPDoc tag @method for method newEntities\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/CommentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\CommentsTable has PHPDoc tag @method for method newEntities\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/CommentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\CommentsTable has PHPDoc tag @method for method newEntity\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/CommentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\CommentsTable has PHPDoc tag @method for method newEntity\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/CommentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\CommentsTable has PHPDoc tag @method for method patchEntities\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/CommentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\CommentsTable has PHPDoc tag @method for method patchEntities\(\) parameter \#2 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/CommentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\CommentsTable has PHPDoc tag @method for method patchEntities\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/CommentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\CommentsTable has PHPDoc tag @method for method patchEntity\(\) parameter \#2 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/CommentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\CommentsTable has PHPDoc tag @method for method patchEntity\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/CommentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\CommentsTable has PHPDoc tag @method for method save\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/CommentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\CommentsTable has PHPDoc tag @method for method saveMany\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/CommentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\CommentsTable has PHPDoc tag @method for method saveMany\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/CommentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\CommentsTable has PHPDoc tag @method for method saveManyOrFail\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/CommentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\CommentsTable has PHPDoc tag @method for method saveManyOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/CommentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\CommentsTable has PHPDoc tag @method for method saveOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/CommentsTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\CommentsTable\:\:\$Issues contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/CommentsTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\CommentsTable\:\:\$Users contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/CommentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\DepartmentsTable has PHPDoc tag @method for method deleteMany\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/DepartmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\DepartmentsTable has PHPDoc tag @method for method deleteMany\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/DepartmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\DepartmentsTable has PHPDoc tag @method for method deleteManyOrFail\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/DepartmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\DepartmentsTable has PHPDoc tag @method for method deleteManyOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/DepartmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\DepartmentsTable has PHPDoc tag @method for method findOrCreate\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/DepartmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\DepartmentsTable has PHPDoc tag @method for method get\(\) parameter \#2 \$finder with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/DepartmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\DepartmentsTable has PHPDoc tag @method for method newEntities\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/DepartmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\DepartmentsTable has PHPDoc tag @method for method newEntities\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/DepartmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\DepartmentsTable has PHPDoc tag @method for method newEntity\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/DepartmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\DepartmentsTable has PHPDoc tag @method for method newEntity\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/DepartmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\DepartmentsTable has PHPDoc tag @method for method patchEntities\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/DepartmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\DepartmentsTable has PHPDoc tag @method for method patchEntities\(\) parameter \#2 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/DepartmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\DepartmentsTable has PHPDoc tag @method for method patchEntities\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/DepartmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\DepartmentsTable has PHPDoc tag @method for method patchEntity\(\) parameter \#2 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/DepartmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\DepartmentsTable has PHPDoc tag @method for method patchEntity\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/DepartmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\DepartmentsTable has PHPDoc tag @method for method save\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/DepartmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\DepartmentsTable has PHPDoc tag @method for method saveMany\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/DepartmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\DepartmentsTable has PHPDoc tag @method for method saveMany\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/DepartmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\DepartmentsTable has PHPDoc tag @method for method saveManyOrFail\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/DepartmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\DepartmentsTable has PHPDoc tag @method for method saveManyOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/DepartmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\DepartmentsTable has PHPDoc tag @method for method saveOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/DepartmentsTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\DepartmentsTable\:\:\$Issues contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/DepartmentsTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\DepartmentsTable\:\:\$Projects contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/DepartmentsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssueRelationsTable has PHPDoc tag @method for method deleteMany\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssueRelationsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssueRelationsTable has PHPDoc tag @method for method deleteMany\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssueRelationsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssueRelationsTable has PHPDoc tag @method for method deleteManyOrFail\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssueRelationsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssueRelationsTable has PHPDoc tag @method for method deleteManyOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssueRelationsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssueRelationsTable has PHPDoc tag @method for method findOrCreate\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssueRelationsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssueRelationsTable has PHPDoc tag @method for method get\(\) parameter \#2 \$finder with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssueRelationsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssueRelationsTable has PHPDoc tag @method for method newEntities\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssueRelationsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssueRelationsTable has PHPDoc tag @method for method newEntities\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssueRelationsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssueRelationsTable has PHPDoc tag @method for method newEntity\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssueRelationsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssueRelationsTable has PHPDoc tag @method for method newEntity\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssueRelationsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssueRelationsTable has PHPDoc tag @method for method patchEntities\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssueRelationsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssueRelationsTable has PHPDoc tag @method for method patchEntities\(\) parameter \#2 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssueRelationsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssueRelationsTable has PHPDoc tag @method for method patchEntities\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssueRelationsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssueRelationsTable has PHPDoc tag @method for method patchEntity\(\) parameter \#2 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssueRelationsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssueRelationsTable has PHPDoc tag @method for method patchEntity\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssueRelationsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssueRelationsTable has PHPDoc tag @method for method save\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssueRelationsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssueRelationsTable has PHPDoc tag @method for method saveMany\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssueRelationsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssueRelationsTable has PHPDoc tag @method for method saveMany\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssueRelationsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssueRelationsTable has PHPDoc tag @method for method saveManyOrFail\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssueRelationsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssueRelationsTable has PHPDoc tag @method for method saveManyOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssueRelationsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssueRelationsTable has PHPDoc tag @method for method saveOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssueRelationsTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\IssueRelationsTable\:\:\$Issues contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/IssueRelationsTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\IssueRelationsTable\:\:\$RelatedIssues contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/IssueRelationsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssuesTable has PHPDoc tag @method for method deleteMany\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssuesTable has PHPDoc tag @method for method deleteMany\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssuesTable has PHPDoc tag @method for method deleteManyOrFail\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssuesTable has PHPDoc tag @method for method deleteManyOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssuesTable has PHPDoc tag @method for method findOrCreate\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssuesTable has PHPDoc tag @method for method get\(\) parameter \#2 \$finder with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssuesTable has PHPDoc tag @method for method newEntities\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssuesTable has PHPDoc tag @method for method newEntities\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssuesTable has PHPDoc tag @method for method newEntity\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssuesTable has PHPDoc tag @method for method newEntity\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssuesTable has PHPDoc tag @method for method patchEntities\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssuesTable has PHPDoc tag @method for method patchEntities\(\) parameter \#2 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssuesTable has PHPDoc tag @method for method patchEntities\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssuesTable has PHPDoc tag @method for method patchEntity\(\) parameter \#2 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssuesTable has PHPDoc tag @method for method patchEntity\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssuesTable has PHPDoc tag @method for method save\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssuesTable has PHPDoc tag @method for method saveMany\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssuesTable has PHPDoc tag @method for method saveMany\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssuesTable has PHPDoc tag @method for method saveManyOrFail\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssuesTable has PHPDoc tag @method for method saveManyOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\IssuesTable has PHPDoc tag @method for method saveOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^Method App\\Model\\Table\\IssuesTable\:\:findForKanban\(\) has parameter \$query with generic class Cake\\ORM\\Query\\SelectQuery but does not specify its types\: TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^Method App\\Model\\Table\\IssuesTable\:\:findForKanban\(\) return type with generic class Cake\\ORM\\Query\\SelectQuery does not specify its types\: TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\IssuesTable\:\:\$ActivityLog contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\IssuesTable\:\:\$Assignees contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\IssuesTable\:\:\$Comments contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\IssuesTable\:\:\$Creators contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\IssuesTable\:\:\$Departments contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\IssuesTable\:\:\$IssueRelations contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\IssuesTable\:\:\$ParentIssues contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\IssuesTable\:\:\$Projects contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\IssuesTable\:\:\$Statuses contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\IssuesTable\:\:\$Tasks contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/IssuesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectMembersTable has PHPDoc tag @method for method deleteMany\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectMembersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectMembersTable has PHPDoc tag @method for method deleteMany\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectMembersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectMembersTable has PHPDoc tag @method for method deleteManyOrFail\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectMembersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectMembersTable has PHPDoc tag @method for method deleteManyOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectMembersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectMembersTable has PHPDoc tag @method for method findOrCreate\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectMembersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectMembersTable has PHPDoc tag @method for method get\(\) parameter \#2 \$finder with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectMembersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectMembersTable has PHPDoc tag @method for method newEntities\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectMembersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectMembersTable has PHPDoc tag @method for method newEntities\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectMembersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectMembersTable has PHPDoc tag @method for method newEntity\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectMembersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectMembersTable has PHPDoc tag @method for method newEntity\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectMembersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectMembersTable has PHPDoc tag @method for method patchEntities\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectMembersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectMembersTable has PHPDoc tag @method for method patchEntities\(\) parameter \#2 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectMembersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectMembersTable has PHPDoc tag @method for method patchEntities\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectMembersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectMembersTable has PHPDoc tag @method for method patchEntity\(\) parameter \#2 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectMembersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectMembersTable has PHPDoc tag @method for method patchEntity\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectMembersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectMembersTable has PHPDoc tag @method for method save\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectMembersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectMembersTable has PHPDoc tag @method for method saveMany\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectMembersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectMembersTable has PHPDoc tag @method for method saveMany\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectMembersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectMembersTable has PHPDoc tag @method for method saveManyOrFail\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectMembersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectMembersTable has PHPDoc tag @method for method saveManyOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectMembersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectMembersTable has PHPDoc tag @method for method saveOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectMembersTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\ProjectMembersTable\:\:\$Projects contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/ProjectMembersTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\ProjectMembersTable\:\:\$Users contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/ProjectMembersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectsTable has PHPDoc tag @method for method deleteMany\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectsTable has PHPDoc tag @method for method deleteMany\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectsTable has PHPDoc tag @method for method deleteManyOrFail\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectsTable has PHPDoc tag @method for method deleteManyOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectsTable has PHPDoc tag @method for method findOrCreate\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectsTable has PHPDoc tag @method for method get\(\) parameter \#2 \$finder with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectsTable has PHPDoc tag @method for method newEntities\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectsTable has PHPDoc tag @method for method newEntities\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectsTable has PHPDoc tag @method for method newEntity\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectsTable has PHPDoc tag @method for method newEntity\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectsTable has PHPDoc tag @method for method patchEntities\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectsTable has PHPDoc tag @method for method patchEntities\(\) parameter \#2 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectsTable has PHPDoc tag @method for method patchEntities\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectsTable has PHPDoc tag @method for method patchEntity\(\) parameter \#2 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectsTable has PHPDoc tag @method for method patchEntity\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectsTable has PHPDoc tag @method for method save\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectsTable has PHPDoc tag @method for method saveMany\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectsTable has PHPDoc tag @method for method saveMany\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectsTable has PHPDoc tag @method for method saveManyOrFail\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectsTable has PHPDoc tag @method for method saveManyOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\ProjectsTable has PHPDoc tag @method for method saveOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\ProjectsTable\:\:\$ActivityLog contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\ProjectsTable\:\:\$Attachments contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\ProjectsTable\:\:\$Creators contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\ProjectsTable\:\:\$Departments contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\ProjectsTable\:\:\$Issues contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\ProjectsTable\:\:\$ProjectMembers contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\ProjectsTable\:\:\$Statuses contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\ProjectsTable\:\:\$WikiPages contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/ProjectsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\StatusesTable has PHPDoc tag @method for method deleteMany\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/StatusesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\StatusesTable has PHPDoc tag @method for method deleteMany\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/StatusesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\StatusesTable has PHPDoc tag @method for method deleteManyOrFail\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/StatusesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\StatusesTable has PHPDoc tag @method for method deleteManyOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/StatusesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\StatusesTable has PHPDoc tag @method for method findOrCreate\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/StatusesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\StatusesTable has PHPDoc tag @method for method get\(\) parameter \#2 \$finder with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/StatusesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\StatusesTable has PHPDoc tag @method for method newEntities\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/StatusesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\StatusesTable has PHPDoc tag @method for method newEntities\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/StatusesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\StatusesTable has PHPDoc tag @method for method newEntity\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/StatusesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\StatusesTable has PHPDoc tag @method for method newEntity\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/StatusesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\StatusesTable has PHPDoc tag @method for method patchEntities\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/StatusesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\StatusesTable has PHPDoc tag @method for method patchEntities\(\) parameter \#2 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/StatusesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\StatusesTable has PHPDoc tag @method for method patchEntities\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/StatusesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\StatusesTable has PHPDoc tag @method for method patchEntity\(\) parameter \#2 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/StatusesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\StatusesTable has PHPDoc tag @method for method patchEntity\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/StatusesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\StatusesTable has PHPDoc tag @method for method save\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/StatusesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\StatusesTable has PHPDoc tag @method for method saveMany\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/StatusesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\StatusesTable has PHPDoc tag @method for method saveMany\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/StatusesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\StatusesTable has PHPDoc tag @method for method saveManyOrFail\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/StatusesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\StatusesTable has PHPDoc tag @method for method saveManyOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/StatusesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\StatusesTable has PHPDoc tag @method for method saveOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/StatusesTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\StatusesTable\:\:\$Issues contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/StatusesTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\StatusesTable\:\:\$Projects contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/StatusesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\UsersTable has PHPDoc tag @method for method deleteMany\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/UsersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\UsersTable has PHPDoc tag @method for method deleteMany\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/UsersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\UsersTable has PHPDoc tag @method for method deleteManyOrFail\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/UsersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\UsersTable has PHPDoc tag @method for method deleteManyOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/UsersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\UsersTable has PHPDoc tag @method for method findOrCreate\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/UsersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\UsersTable has PHPDoc tag @method for method get\(\) parameter \#2 \$finder with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/UsersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\UsersTable has PHPDoc tag @method for method newEntities\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/UsersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\UsersTable has PHPDoc tag @method for method newEntities\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/UsersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\UsersTable has PHPDoc tag @method for method newEntity\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/UsersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\UsersTable has PHPDoc tag @method for method newEntity\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/UsersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\UsersTable has PHPDoc tag @method for method patchEntities\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/UsersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\UsersTable has PHPDoc tag @method for method patchEntities\(\) parameter \#2 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/UsersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\UsersTable has PHPDoc tag @method for method patchEntities\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/UsersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\UsersTable has PHPDoc tag @method for method patchEntity\(\) parameter \#2 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/UsersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\UsersTable has PHPDoc tag @method for method patchEntity\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/UsersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\UsersTable has PHPDoc tag @method for method save\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/UsersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\UsersTable has PHPDoc tag @method for method saveMany\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/UsersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\UsersTable has PHPDoc tag @method for method saveMany\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/UsersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\UsersTable has PHPDoc tag @method for method saveManyOrFail\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/UsersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\UsersTable has PHPDoc tag @method for method saveManyOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/UsersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\UsersTable has PHPDoc tag @method for method saveOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/UsersTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\UsersTable\:\:\$ActivityLog contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/UsersTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\UsersTable\:\:\$AssignedIssues contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/UsersTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\UsersTable\:\:\$Comments contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/UsersTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\UsersTable\:\:\$Issues contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/UsersTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\UsersTable\:\:\$ProjectMembers contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/UsersTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\UsersTable\:\:\$Projects contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/UsersTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\UsersTable\:\:\$WikiPages contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/UsersTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageLinksTable has PHPDoc tag @method for method deleteMany\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageLinksTable has PHPDoc tag @method for method deleteMany\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageLinksTable has PHPDoc tag @method for method deleteManyOrFail\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageLinksTable has PHPDoc tag @method for method deleteManyOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageLinksTable has PHPDoc tag @method for method findOrCreate\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageLinksTable has PHPDoc tag @method for method get\(\) parameter \#2 \$finder with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageLinksTable has PHPDoc tag @method for method newEntities\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageLinksTable has PHPDoc tag @method for method newEntities\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageLinksTable has PHPDoc tag @method for method newEntity\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageLinksTable has PHPDoc tag @method for method newEntity\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageLinksTable has PHPDoc tag @method for method patchEntities\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageLinksTable has PHPDoc tag @method for method patchEntities\(\) parameter \#2 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageLinksTable has PHPDoc tag @method for method patchEntities\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageLinksTable has PHPDoc tag @method for method patchEntity\(\) parameter \#2 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageLinksTable has PHPDoc tag @method for method patchEntity\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageLinksTable has PHPDoc tag @method for method save\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageLinksTable has PHPDoc tag @method for method saveMany\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageLinksTable has PHPDoc tag @method for method saveMany\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageLinksTable has PHPDoc tag @method for method saveManyOrFail\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageLinksTable has PHPDoc tag @method for method saveManyOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageLinksTable has PHPDoc tag @method for method saveOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageLinksTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\WikiPageLinksTable\:\:\$SourcePages contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/WikiPageLinksTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\WikiPageLinksTable\:\:\$TargetPages contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/WikiPageLinksTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageRevisionsTable has PHPDoc tag @method for method deleteMany\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageRevisionsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageRevisionsTable has PHPDoc tag @method for method deleteMany\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageRevisionsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageRevisionsTable has PHPDoc tag @method for method deleteManyOrFail\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageRevisionsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageRevisionsTable has PHPDoc tag @method for method deleteManyOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageRevisionsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageRevisionsTable has PHPDoc tag @method for method findOrCreate\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageRevisionsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageRevisionsTable has PHPDoc tag @method for method get\(\) parameter \#2 \$finder with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageRevisionsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageRevisionsTable has PHPDoc tag @method for method newEntities\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageRevisionsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageRevisionsTable has PHPDoc tag @method for method newEntities\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageRevisionsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageRevisionsTable has PHPDoc tag @method for method newEntity\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageRevisionsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageRevisionsTable has PHPDoc tag @method for method newEntity\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageRevisionsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageRevisionsTable has PHPDoc tag @method for method patchEntities\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageRevisionsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageRevisionsTable has PHPDoc tag @method for method patchEntities\(\) parameter \#2 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageRevisionsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageRevisionsTable has PHPDoc tag @method for method patchEntities\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageRevisionsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageRevisionsTable has PHPDoc tag @method for method patchEntity\(\) parameter \#2 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageRevisionsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageRevisionsTable has PHPDoc tag @method for method patchEntity\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageRevisionsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageRevisionsTable has PHPDoc tag @method for method save\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageRevisionsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageRevisionsTable has PHPDoc tag @method for method saveMany\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageRevisionsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageRevisionsTable has PHPDoc tag @method for method saveMany\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageRevisionsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageRevisionsTable has PHPDoc tag @method for method saveManyOrFail\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageRevisionsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageRevisionsTable has PHPDoc tag @method for method saveManyOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageRevisionsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPageRevisionsTable has PHPDoc tag @method for method saveOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPageRevisionsTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\WikiPageRevisionsTable\:\:\$Editors contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/WikiPageRevisionsTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\WikiPageRevisionsTable\:\:\$WikiPages contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/WikiPageRevisionsTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPagesTable has PHPDoc tag @method for method deleteMany\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPagesTable has PHPDoc tag @method for method deleteMany\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPagesTable has PHPDoc tag @method for method deleteManyOrFail\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPagesTable has PHPDoc tag @method for method deleteManyOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPagesTable has PHPDoc tag @method for method findOrCreate\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPagesTable has PHPDoc tag @method for method get\(\) parameter \#2 \$finder with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPagesTable has PHPDoc tag @method for method newEntities\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPagesTable has PHPDoc tag @method for method newEntities\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPagesTable has PHPDoc tag @method for method newEntity\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPagesTable has PHPDoc tag @method for method newEntity\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPagesTable has PHPDoc tag @method for method patchEntities\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPagesTable has PHPDoc tag @method for method patchEntities\(\) parameter \#2 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPagesTable has PHPDoc tag @method for method patchEntities\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPagesTable has PHPDoc tag @method for method patchEntity\(\) parameter \#2 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPagesTable has PHPDoc tag @method for method patchEntity\(\) parameter \#3 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPagesTable has PHPDoc tag @method for method save\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPagesTable has PHPDoc tag @method for method saveMany\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPagesTable has PHPDoc tag @method for method saveMany\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPagesTable has PHPDoc tag @method for method saveManyOrFail\(\) parameter \#1 \$entities with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPagesTable has PHPDoc tag @method for method saveManyOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^Class App\\Model\\Table\\WikiPagesTable has PHPDoc tag @method for method saveOrFail\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^Method App\\Model\\Table\\WikiPagesTable\:\:beforeMarshal\(\) has parameter \$event with generic interface Cake\\Event\\EventInterface but does not specify its types\: TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^Method App\\Model\\Table\\WikiPagesTable\:\:findTree\(\) has parameter \$query with generic class Cake\\ORM\\Query\\SelectQuery but does not specify its types\: TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^Method App\\Model\\Table\\WikiPagesTable\:\:findTree\(\) return type with generic class Cake\\ORM\\Query\\SelectQuery does not specify its types\: TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\WikiPagesTable\:\:\$ChildPages contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\WikiPagesTable\:\:\$Creators contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\WikiPagesTable\:\:\$LastEditors contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\WikiPagesTable\:\:\$ParentPages contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\WikiPagesTable\:\:\$Projects contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\WikiPagesTable\:\:\$WikiPageLinks contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^PHPDoc tag @property for property App\\Model\\Table\\WikiPagesTable\:\:\$WikiPageRevisions contains unresolvable type\.$#'
+			identifier: propertyTag.unresolvableType
+			count: 1
+			path: src/Model/Table/WikiPagesTable.php
+
+		-
+			message: '#^Method App\\Policy\\ProjectsTablePolicy\:\:scopeIndex\(\) has parameter \$query with generic class Cake\\ORM\\Query\\SelectQuery but does not specify its types\: TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Policy/ProjectsTablePolicy.php
+
+		-
+			message: '#^Method App\\Policy\\ProjectsTablePolicy\:\:scopeIndex\(\) return type with generic class Cake\\ORM\\Query\\SelectQuery does not specify its types\: TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Policy/ProjectsTablePolicy.php
