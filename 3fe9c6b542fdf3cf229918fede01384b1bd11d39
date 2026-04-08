@@ -1,0 +1,29 @@
+captainhook.json
+  5001504fa0f17a33 36
+project-files/php-quality-tooling-plan.md
+  5001504fa0f17a33 148
+README.md
+  5001504fa0f17a33 156,166
+composer.json
+  5001504fa0f17a33 66-70
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.6",
+  "base_commit_sha": "3fe9c6b542fdf3cf229918fede01384b1bd11d39",
+  "prompts": {
+    "5001504fa0f17a33": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019d4176-4ce9-73d2-941e-617d4ffcb4ba",
+        "model": "gpt-5.4"
+      },
+      "human_author": "Angel S. Moreno",
+      "messages": [],
+      "total_additions": 18,
+      "total_deletions": 11,
+      "accepted_lines": 14,
+      "overriden_lines": 0
+    }
+  }
+}
