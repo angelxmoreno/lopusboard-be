@@ -8,66 +8,70 @@ The backend foundation is now in a stable place:
 - remote authentication is wired through IdentityBridge and Appwrite
 - the API layer has thin Crud-backed `Issues` and `Projects` controllers
 - the authenticated identity endpoint is working at `/api/identity/me`
+- project authorization helpers, policies, and authorized Crud actions now exist for the `Projects` slice
 
-The next work should move up to the API layer in this order.
+The next work should keep expanding the API layer in dependency order, with controllers and policies created together.
 
-## 1. Authorization Setup
+## 1. Finish The Project-Scoped Setup Slice
 
-Add the application authorization layer before rolling out more endpoints:
-- choose CakePHP Authorization as the app-level authorization mechanism
-- wire the authenticated local user into the authorization identity flow
-- define the first policies around project membership and project roles
-- decide the standard `401` vs `403` response behavior for API requests
-
-Why first:
-- authentication is already done, but authorization is still missing
-- project, issue, wiki, and attachment endpoints all depend on project-scoped access rules
-- adding authorization after building every controller would create rework
-
-## 2. Project Bootstrap Endpoints
-
-Build the first project-level API surface:
-- projects
-- project members
-- statuses
-- departments
+Create the next project-scoped controllers and policies:
+- `ProjectMembersController`
+- `StatusesController`
+- `DepartmentsController`
+- `ProjectMembersTablePolicy` and `ProjectMemberPolicy`
+- `StatusesTablePolicy` and `StatusPolicy`
+- `DepartmentsTablePolicy` and `DepartmentPolicy`
 
 Why first:
-- `ProjectSeedingBehavior` is already in place
-- project creation now has the expected side effects
-- other feature areas depend on this project bootstrap flow
+- almost every other resource depends on project membership and project roles
+- this completes the project bootstrap surface around the `Projects` slice that is already wired
+- it lets the app establish a stable policy pattern before moving into issues and wiki
 
-## 3. Issue Workflow Endpoints
+## 2. Build The Issue Workflow Slice
 
-Build the core board workflow:
-- create, update, list, and detail issue endpoints
-- kanban reads
-- move and reorder actions
-- comments
-- issue relations
+Create the issue controllers and policies together:
+- `IssuesController`
+- `CommentsController`
+- `IssueRelationsController`
+- `IssuesTablePolicy` and `IssuePolicy`
+- `CommentsTablePolicy` and `CommentPolicy`
+- `IssueRelationsTablePolicy` and `IssueRelationPolicy`
 
 Why next:
-- the issue model rules and lifecycle behavior are already enforced
-- this is the main product workflow and depends on the project bootstrap layer
+- issue access rules build directly on project membership
+- this is the main product workflow
+- it reuses the authorized Crud action pattern you already have
 
-## 4. Wiki Endpoints
+## 3. Build The Wiki Slice
 
-Build the wiki surface:
-- page CRUD
-- tree reads
-- revision history
-- restore revision flow
+Create the wiki controllers and policies together:
+- `WikiPagesController`
+- `WikiPageRevisionsController`
+- `WikiPagesTablePolicy` and `WikiPagePolicy`
+- `WikiPageRevisionsTablePolicy` and `WikiPageRevisionPolicy`
 
 Why after issues:
-- wiki revisioning and link syncing are already implemented in the model layer
-- this is a self-contained feature area once project membership and routing are in place
+- wiki still depends on the same project-scoped authorization rules
+- by this point the project and issue patterns should be settled enough to copy cleanly
 
-## 5. Attachments And Activity Feed
+## 4. Finish Attachments And Activity Feed
 
-Finish the supporting collaboration features:
-- attachment registration and linking
-- project-wide activity endpoint
+Create the final supporting controllers and policies:
+- `AttachmentsController`
+- `ActivityLogController` as read-only
+- `AttachmentsTablePolicy` and `AttachmentPolicy`
+- `ActivityLogTablePolicy`
 
 Why last:
 - attachments and audit feed rely on the earlier project, issue, and wiki workflows
 - the model-level audit logging is ready, so the API layer can expose it cleanly
+
+## 5. Delivery Pattern For Each Batch
+
+For each batch above:
+- create the controllers
+- create the matching policies
+- wire only the controllers whose policies are actually implemented
+- add integration tests for one or two representative endpoints before moving to the next batch
+
+This keeps velocity high without creating a large set of half-wired controllers and policies.
