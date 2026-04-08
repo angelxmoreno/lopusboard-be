@@ -1,0 +1,27 @@
+README.md
+  5001504fa0f17a33 165
+composer.json
+  5001504fa0f17a33 55,59
+bin/install-git-hooks.php
+  5001504fa0f17a33 1-37
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.6",
+  "base_commit_sha": "6b4c97e86c0762d882f7e78b71e7f5f911c9e65d",
+  "prompts": {
+    "5001504fa0f17a33": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019d4176-4ce9-73d2-941e-617d4ffcb4ba",
+        "model": "gpt-5.4"
+      },
+      "human_author": "Angel S. Moreno",
+      "messages": [],
+      "total_additions": 40,
+      "total_deletions": 2,
+      "accepted_lines": 40,
+      "overriden_lines": 0
+    }
+  }
+}
