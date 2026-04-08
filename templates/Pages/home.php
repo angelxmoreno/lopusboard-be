@@ -227,10 +227,6 @@ endif;
                     </div>
                 </div>
                 <hr>
-<?php
-debug(Configure::read('IdentityBridge'));
-?>
-                <hr>
                 <div class="row">
                     <div class="column links">
                         <h3>Training and Certification</h3>

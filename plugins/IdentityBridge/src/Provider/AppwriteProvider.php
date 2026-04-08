@@ -16,18 +16,15 @@ class AppwriteProvider implements ProviderInterface
 
     protected string $projectId;
 
-    protected string $key;
-
     protected bool $isDev;
 
     /**
-     * @param array{endpoint?: string, projectId?: string, key?: string, isDev?: bool} $config Provider config.
+     * @param array{endpoint?: string, projectId?: string, isDev?: bool} $config Provider config.
      */
     public function __construct(array $config = [])
     {
         $this->endpoint = (string)($config['endpoint'] ?? '');
         $this->projectId = (string)($config['projectId'] ?? '');
-        $this->key = (string)($config['key'] ?? '');
         $this->isDev = (bool)($config['isDev'] ?? false);
     }
 
@@ -40,8 +37,7 @@ class AppwriteProvider implements ProviderInterface
 
         $client
             ->setEndpoint($this->endpoint)
-            ->setProject($this->projectId)
-            ->setKey($this->key);
+            ->setProject($this->projectId);
 
         if ($this->isDev) {
             $client->setSelfSigned();

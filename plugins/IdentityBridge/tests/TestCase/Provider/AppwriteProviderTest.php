@@ -86,7 +86,6 @@ class AppwriteProviderTest extends TestCase
         $provider = new class ([
             'endpoint' => 'https://appwrite.example.test/v1',
             'projectId' => 'project_123',
-            'key' => 'secret_key',
             'isDev' => true,
         ]) extends AppwriteProvider {
             public function getSnapshot(): array
@@ -94,7 +93,6 @@ class AppwriteProviderTest extends TestCase
                 return [
                     'endpoint' => $this->endpoint,
                     'projectId' => $this->projectId,
-                    'key' => $this->key,
                     'isDev' => $this->isDev,
                 ];
             }
@@ -103,7 +101,6 @@ class AppwriteProviderTest extends TestCase
         $this->assertSame([
             'endpoint' => 'https://appwrite.example.test/v1',
             'projectId' => 'project_123',
-            'key' => 'secret_key',
             'isDev' => true,
         ], $provider->getSnapshot());
     }
