@@ -150,7 +150,7 @@ For a full list of endpoints and request/response shapes, refer to [08-api-endpo
 We maintain high code quality through a suite of automated checks.
 
 ### Local Git Hooks (CaptainHook)
-Local git hooks are installed to ensure every commit and push meets our standards:
+Local git hooks are automatically installed via `composer install` or `composer update` to ensure every commit and push meets our standards:
 - **`pre-commit`**: Runs `composer cs-check` (Coding Standards).
 - **`commit-msg`**: Validates that commit messages follow [Conventional Commits](https://www.conventionalcommits.org/).
 - **`pre-push`**: Runs `composer check` (Tests + CS + Static Analysis) and `composer md` (Maintainability).

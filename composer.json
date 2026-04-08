@@ -50,8 +50,14 @@
         "sort-packages": true
     },
     "scripts": {
-        "post-install-cmd": "App\\Console\\Installer::postInstall",
+        "post-install-cmd": [
+            "App\\Console\\Installer::postInstall",
+            "vendor/bin/captainhook install --force --skip-existing"
+        ],
         "post-create-project-cmd": "App\\Console\\Installer::postInstall",
+        "post-update-cmd": [
+            "vendor/bin/captainhook install --force --skip-existing"
+        ],
         "check": [
             "@test",
             "@cs-check",
@@ -62,6 +68,7 @@
         "test": "phpunit --colors=always",
         "stan": "phpstan analyse --memory-limit=512M",
         "md": "phpmd src,tests,plugins ansi phpmd.xml",
+        "cpd": "php bin/phpcpd.phar src plugins --exclude vendor --exclude tmp --exclude logs --exclude templates --exclude webroot --exclude tests",
         "quality": [
             "@cs-check",
             "@stan",
