@@ -1,0 +1,55 @@
+tests/TestCase/Policy/ProjectPolicyTest.php
+  5001504fa0f17a33 1-50
+tests/Support/Auth/TestIdentityResolver.php
+  5001504fa0f17a33 14-19,27
+src/Action/AuthorizedEditAction.php
+  5001504fa0f17a33 1-60
+tests/TestCase/Controller/Api/ProjectsControllerTest.php
+  5001504fa0f17a33 1-91
+src/Action/AuthorizedDeleteAction.php
+  5001504fa0f17a33 1-42
+src/Controller/Api/AppController.php
+  5001504fa0f17a33 47-63
+tests/TestCase/Authorization/ProjectAuthorizationTest.php
+  5001504fa0f17a33 1-48
+src/Action/AuthorizedIndexAction.php
+  5001504fa0f17a33 1-51
+src/Action/AuthorizedCrudActionTrait.php
+  5001504fa0f17a33 1-73
+tests/TestCase/Policy/ProjectsTablePolicyTest.php
+  5001504fa0f17a33 1-60
+tests/Support/Auth/TestAuthorizationIdentity.php
+  5001504fa0f17a33 1-65
+src/Controller/Api/ProjectsController.php
+  5001504fa0f17a33 15-24
+src/Policy/ProjectsTablePolicy.php
+  5001504fa0f17a33 1-74
+src/Action/AuthorizedAddAction.php
+  5001504fa0f17a33 1-45
+src/Policy/ProjectPolicy.php
+  5001504fa0f17a33 1-79
+src/Action/AuthorizedViewAction.php
+  5001504fa0f17a33 1-29
+src/Authorization/ProjectAuthorization.php
+  5001504fa0f17a33 1-111
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.6",
+  "base_commit_sha": "4628cf0b3cdb7b672dba09890911577e6ba55f16",
+  "prompts": {
+    "5001504fa0f17a33": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019d4176-4ce9-73d2-941e-617d4ffcb4ba",
+        "model": "gpt-5.4"
+      },
+      "human_author": "Angel S. Moreno",
+      "messages": [],
+      "total_additions": 982,
+      "total_deletions": 13,
+      "accepted_lines": 919,
+      "overriden_lines": 0
+    }
+  }
+}
