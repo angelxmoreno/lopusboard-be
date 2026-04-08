@@ -1,0 +1,35 @@
+{
+    "config": {
+        "verbosity": "normal",
+        "ansi": true,
+        "run-mode": "local",
+        "run-exec": ""
+    },
+    "pre-commit": {
+        "enabled": true,
+        "actions": [
+            {
+                "action": "composer cs-check"
+            }
+        ]
+    },
+    "commit-msg": {
+        "enabled": true,
+        "actions": [
+            {
+                "action": "php bin/validate-commit-message.php {$FILE}"
+            }
+        ]
+    },
+    "pre-push": {
+        "enabled": true,
+        "actions": [
+            {
+                "action": "composer check"
+            },
+            {
+                "action": "composer md"
+            }
+        ]
+    }
+}
