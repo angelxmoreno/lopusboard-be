@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace IdentityBridge\Test\TestCase\Service;
 
+use ArrayAccess;
+use ArrayObject;
 use IdentityBridge\Exception\AuthenticationException;
 use IdentityBridge\Provider\ProviderInterface;
 use IdentityBridge\Resolver\LocalUserResolverInterface;
@@ -10,7 +12,6 @@ use IdentityBridge\Service\IdentityAuthenticator;
 use IdentityBridge\ValueObject\AuthenticatedRequestIdentity;
 use IdentityBridge\ValueObject\RemoteIdentity;
 use PHPUnit\Framework\TestCase;
-use stdClass;
 
 class IdentityAuthenticatorTest extends TestCase
 {
@@ -23,10 +24,10 @@ class IdentityAuthenticatorTest extends TestCase
             email: 'demo@example.com',
             claims: ['sub' => 'user_123'],
         );
-        $user = (object)[
+        $user = new ArrayObject([
             'id' => 42,
             'email' => 'demo@example.com',
-        ];
+        ]);
 
         $provider = new class ($jwt, $remoteIdentity) implements ProviderInterface {
             public function __construct(
@@ -46,11 +47,11 @@ class IdentityAuthenticatorTest extends TestCase
         $resolver = new class ($remoteIdentity, $user) implements LocalUserResolverInterface {
             public function __construct(
                 private readonly RemoteIdentity $expectedIdentity,
-                private readonly object $user,
+                private readonly ArrayAccess $user,
             ) {
             }
 
-            public function resolve(RemoteIdentity $identity): object
+            public function resolve(RemoteIdentity $identity): ArrayAccess
             {
                 TestCase::assertSame($this->expectedIdentity, $identity);
 
@@ -75,7 +76,7 @@ class IdentityAuthenticatorTest extends TestCase
         };
 
         $resolver = new class implements LocalUserResolverInterface {
-            public function resolve(RemoteIdentity $identity): object
+            public function resolve(RemoteIdentity $identity): ArrayAccess
             {
                 TestCase::fail('Resolver should not be called for blank tokens.');
             }
@@ -97,9 +98,9 @@ class IdentityAuthenticatorTest extends TestCase
         };
 
         $resolver = new class implements LocalUserResolverInterface {
-            public function resolve(RemoteIdentity $identity): object
+            public function resolve(RemoteIdentity $identity): ArrayAccess
             {
-                return new stdClass();
+                return new ArrayObject();
             }
         };
 

@@ -11,6 +11,7 @@ return [
     'Migrations' => [
         'onlyCli' => true,
     ],
+    'Authorization' => [],
     'Crud' => [],
     'IdentityBridge' => [],
 ];

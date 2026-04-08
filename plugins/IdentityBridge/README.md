@@ -34,7 +34,7 @@ This plugin is intentionally built around one configured provider per app. It do
 - `Provider/ProviderInterface.php`
   Contract for verifying a token and returning normalized remote identity data.
 - `Resolver/LocalUserResolverInterface.php`
-  Host-app contract for mapping remote identity and finding, creating, or updating the local user.
+  Host-app contract for mapping remote identity and finding, creating, or updating an `ArrayAccess`-compatible local user object.
 - `ValueObject/RemoteIdentity.php`
   Normalized identity returned by provider adapters.
 

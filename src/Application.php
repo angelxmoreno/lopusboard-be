@@ -16,6 +16,11 @@ declare(strict_types=1);
  */
 namespace App;
 
+use Authorization\AuthorizationService;
+use Authorization\AuthorizationServiceInterface;
+use Authorization\AuthorizationServiceProviderInterface;
+use Authorization\Middleware\AuthorizationMiddleware;
+use Authorization\Policy\OrmResolver;
 use Cake\Core\Configure;
 use Cake\Core\ContainerInterface;
 use Cake\Datasource\FactoryLocator;
@@ -28,6 +33,7 @@ use Cake\Http\MiddlewareQueue;
 use Cake\ORM\Locator\TableLocator;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Application setup class.
@@ -37,7 +43,7 @@ use Cake\Routing\Middleware\RoutingMiddleware;
  *
  * @extends \Cake\Http\BaseApplication<\App\Application>
  */
-class Application extends BaseApplication
+class Application extends BaseApplication implements AuthorizationServiceProviderInterface
 {
     /**
      * Load all the application configuration and bootstrap logic.
@@ -89,6 +95,41 @@ class Application extends BaseApplication
             ]));
 
         return $middlewareQueue;
+    }
+
+    /**
+     * Add plugin middleware and append authorization after IdentityBridge authentication.
+     *
+     * The Authorization docs normally show AuthorizationMiddleware in middleware(),
+     * but IdentityBridge adds its auth middleware through the plugin lifecycle.
+     * Authorization needs the resolved local user on the request first, so it
+     * must be appended after parent::pluginMiddleware() instead of in the main
+     * application middleware queue.
+     *
+     * @param \Cake\Http\MiddlewareQueue $middleware The middleware queue to update.
+     * @return \Cake\Http\MiddlewareQueue
+     */
+    public function pluginMiddleware(MiddlewareQueue $middleware): MiddlewareQueue
+    {
+        $middleware = parent::pluginMiddleware($middleware);
+
+        return $middleware->add(new AuthorizationMiddleware($this, [
+            'identityAttribute' => 'identity',
+            'requireAuthorizationCheck' => false,
+        ], $this->getContainer()));
+    }
+
+    /**
+     * Returns the application authorization service.
+     *
+     * Policies will be resolved from the app ORM layer once they are added.
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request The current request.
+     * @return \Authorization\AuthorizationServiceInterface
+     */
+    public function getAuthorizationService(ServerRequestInterface $request): AuthorizationServiceInterface
+    {
+        return new AuthorizationService(new OrmResolver());
     }
 
     /**

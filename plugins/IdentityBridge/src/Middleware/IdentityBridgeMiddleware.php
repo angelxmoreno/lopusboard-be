@@ -87,6 +87,7 @@ final class IdentityBridgeMiddleware implements MiddlewareInterface
         }
 
         $request = $request->withAttribute('identityBridge.identity', $authenticatedIdentity);
+        $request = $request->withAttribute('identity', $authenticatedIdentity->user);
 
         return $handler->handle($request);
     }

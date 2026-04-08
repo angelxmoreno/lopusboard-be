@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Action;
 
+use ArrayAccess;
 use Cake\Http\Exception\UnauthorizedException;
 use Crud\Action\BaseAction;
 
@@ -43,16 +44,16 @@ class IdentityMeAction extends BaseAction
     }
 
     /**
-     * @param object $user The resolved local user object.
+     * @param \ArrayAccess $user The resolved local user object.
      * @return array<string, mixed>
      */
-    protected function serializeUser(object $user): array
+    protected function serializeUser(ArrayAccess $user): array
     {
         return [
-            'id' => $user->id ?? null,
-            'name' => $user->name ?? null,
-            'email' => $user->email ?? null,
-            'avatarUrl' => $user->avatar_url ?? null,
+            'id' => $user['id'] ?? null,
+            'name' => $user['name'] ?? null,
+            'email' => $user['email'] ?? null,
+            'avatarUrl' => $user['avatar_url'] ?? null,
         ];
     }
 }

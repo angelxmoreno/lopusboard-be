@@ -76,7 +76,7 @@ Create these files:
 Purpose of each class:
 
 - `ProviderInterface`: contract for JWT verification plus remote identity normalization
-- `LocalUserResolverInterface`: host-app contract for mapping normalized identity and returning the local user
+- `LocalUserResolverInterface`: host-app contract for mapping normalized identity and returning an `ArrayAccess`-compatible local user object
 
 What to build:
 

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace IdentityBridge\Test\TestCase\ValueObject;
 
+use ArrayObject;
 use IdentityBridge\ValueObject\AuthenticatedRequestIdentity;
 use IdentityBridge\ValueObject\RemoteIdentity;
 use PHPUnit\Framework\TestCase;
@@ -16,10 +17,10 @@ class AuthenticatedRequestIdentityTest extends TestCase
             providerUserId: 'provider-user-123',
             email: 'demo@example.com',
         );
-        $user = (object)[
+        $user = new ArrayObject([
             'id' => 99,
             'email' => 'demo@example.com',
-        ];
+        ]);
 
         $authenticatedIdentity = new AuthenticatedRequestIdentity($remoteIdentity, $user);
 

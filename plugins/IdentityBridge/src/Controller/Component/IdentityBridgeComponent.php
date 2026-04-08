@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace IdentityBridge\Controller\Component;
 
+use ArrayAccess;
 use Cake\Controller\Component;
 use Cake\Controller\ComponentRegistry;
 use IdentityBridge\Exception\AuthenticationException;
@@ -48,9 +49,9 @@ final class IdentityBridgeComponent extends Component
     /**
      * Returns the resolved local user attached by the middleware.
      *
-     * @return object|null
+     * @return \ArrayAccess|null
      */
-    public function getUser(): ?object
+    public function getUser(): ?ArrayAccess
     {
         return $this->getAuthenticatedRequestIdentity()?->user;
     }
@@ -68,9 +69,9 @@ final class IdentityBridgeComponent extends Component
     /**
      * Returns the resolved local user or throws when the request is unauthenticated.
      *
-     * @return object
+     * @return \ArrayAccess
      */
-    public function requireUser(): object
+    public function requireUser(): ArrayAccess
     {
         $user = $this->getUser();
         if ($user === null) {

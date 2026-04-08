@@ -5,6 +5,7 @@ namespace App\Auth;
 
 use App\Model\Entity\User;
 use App\Model\Table\UsersTable;
+use ArrayAccess;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use IdentityBridge\Resolver\LocalUserResolverInterface;
 use IdentityBridge\ValueObject\RemoteIdentity;
@@ -17,9 +18,9 @@ class AppUserResolver implements LocalUserResolverInterface
      * Finds, creates, or updates the local user for a verified remote identity.
      *
      * @param \IdentityBridge\ValueObject\RemoteIdentity $identity The normalized identity.
-     * @return object
+     * @return \ArrayAccess
      */
-    public function resolve(RemoteIdentity $identity): object
+    public function resolve(RemoteIdentity $identity): ArrayAccess
     {
         $user = $this->findUser($identity);
         if ($user === null) {

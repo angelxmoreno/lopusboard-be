@@ -26,7 +26,7 @@ Suggested shape:
 ```php
 interface LocalUserResolverInterface
 {
-    public function resolve(RemoteIdentity $identity): object;
+    public function resolve(RemoteIdentity $identity): ArrayAccess;
 }
 ```
 

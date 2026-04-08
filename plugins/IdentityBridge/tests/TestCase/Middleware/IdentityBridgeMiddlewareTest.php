@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace IdentityBridge\Test\TestCase\Middleware;
 
+use ArrayAccess;
+use ArrayObject;
 use Cake\Http\Response;
 use Cake\Http\ServerRequest;
 use IdentityBridge\Enum\AuthenticationMode;
@@ -85,10 +87,10 @@ class IdentityBridgeMiddlewareTest extends TestCase
             providerUserId: 'user_123',
             email: 'demo@example.com',
         );
-        $user = (object)[
+        $user = new ArrayObject([
             'id' => 10,
             'email' => 'demo@example.com',
-        ];
+        ]);
         $authenticatedIdentity = new AuthenticatedRequestIdentity($remoteIdentity, $user);
 
         $middleware = new IdentityBridgeMiddleware(
@@ -117,6 +119,7 @@ class IdentityBridgeMiddlewareTest extends TestCase
 
         $this->assertSame(200, $response->getStatusCode());
         $this->assertEquals($authenticatedIdentity, $handler->request?->getAttribute('identityBridge.identity'));
+        $this->assertSame($user, $handler->request?->getAttribute('identity'));
     }
 
     public function testPublicByDefaultOverrideCanProtectSpecificRoute(): void
@@ -203,7 +206,7 @@ class IdentityBridgeMiddlewareTest extends TestCase
         };
 
         $resolver = new class implements LocalUserResolverInterface {
-            public function resolve(RemoteIdentity $identity): object
+            public function resolve(RemoteIdentity $identity): ArrayAccess
             {
                 TestCase::fail('Resolver should not be called for skipped routes.');
             }
@@ -212,13 +215,13 @@ class IdentityBridgeMiddlewareTest extends TestCase
         return new IdentityAuthenticator($provider, $resolver);
     }
 
-    private function makeAuthenticator(?RemoteIdentity $remoteIdentity = null, ?object $user = null): IdentityAuthenticator
+    private function makeAuthenticator(?RemoteIdentity $remoteIdentity = null, ?ArrayAccess $user = null): IdentityAuthenticator
     {
         $remoteIdentity ??= new RemoteIdentity(
             provider: 'clerk',
             providerUserId: 'provider-user-123',
         );
-        $user ??= (object)['id' => 1];
+        $user ??= new ArrayObject(['id' => 1]);
 
         $provider = new class ($remoteIdentity) implements ProviderInterface {
             public function __construct(private readonly RemoteIdentity $remoteIdentity)
@@ -236,11 +239,11 @@ class IdentityBridgeMiddlewareTest extends TestCase
         };
 
         $resolver = new class ($user) implements LocalUserResolverInterface {
-            public function __construct(private readonly object $user)
+            public function __construct(private readonly ArrayAccess $user)
             {
             }
 
-            public function resolve(RemoteIdentity $identity): object
+            public function resolve(RemoteIdentity $identity): ArrayAccess
             {
                 return $this->user;
             }

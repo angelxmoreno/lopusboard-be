@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace IdentityBridge\Test\TestCase\Resolver;
 
+use ArrayAccess;
 use IdentityBridge\Resolver\LocalUserResolverInterface;
 use IdentityBridge\ValueObject\RemoteIdentity;
 use PHPUnit\Framework\TestCase;
@@ -18,6 +19,6 @@ class LocalUserResolverInterfaceTest extends TestCase
         $this->assertCount(1, $parameters);
         $this->assertSame('identity', $parameters[0]->getName());
         $this->assertSame(RemoteIdentity::class, (string)$parameters[0]->getType());
-        $this->assertSame('object', (string)$method->getReturnType());
+        $this->assertSame(ArrayAccess::class, (string)$method->getReturnType());
     }
 }

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace IdentityBridge\Test\TestCase\Controller\Component;
 
+use ArrayObject;
 use Cake\Controller\Controller;
 use Cake\Http\ServerRequest;
 use IdentityBridge\Controller\Component\IdentityBridgeComponent;
@@ -20,7 +21,7 @@ class IdentityBridgeComponentTest extends TestCase
                 provider: 'clerk',
                 providerUserId: 'user_123',
             ),
-            (object)['id' => 42],
+            new ArrayObject(['id' => 42]),
         );
         $component = $this->makeComponent([
             'identityBridge.identity' => $authenticatedIdentity,
@@ -37,7 +38,7 @@ class IdentityBridgeComponentTest extends TestCase
         );
         $authenticatedIdentity = new AuthenticatedRequestIdentity(
             $remoteIdentity,
-            (object)['id' => 42],
+            new ArrayObject(['id' => 42]),
         );
         $component = $this->makeComponent([
             'identityBridge.identity' => $authenticatedIdentity,
@@ -48,7 +49,7 @@ class IdentityBridgeComponentTest extends TestCase
 
     public function testGetUserReturnsResolvedLocalUser(): void
     {
-        $user = (object)['id' => 42];
+        $user = new ArrayObject(['id' => 42]);
         $authenticatedIdentity = new AuthenticatedRequestIdentity(
             new RemoteIdentity(
                 provider: 'clerk',
@@ -71,7 +72,7 @@ class IdentityBridgeComponentTest extends TestCase
                     provider: 'clerk',
                     providerUserId: 'user_123',
                 ),
-                (object)['id' => 42],
+                new ArrayObject(['id' => 42]),
             ),
         ]);
 
@@ -87,7 +88,7 @@ class IdentityBridgeComponentTest extends TestCase
 
     public function testRequireUserReturnsResolvedUser(): void
     {
-        $user = (object)['id' => 42];
+        $user = new ArrayObject(['id' => 42]);
         $authenticatedIdentity = new AuthenticatedRequestIdentity(
             new RemoteIdentity(
                 provider: 'clerk',
