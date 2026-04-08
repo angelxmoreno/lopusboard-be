@@ -470,7 +470,7 @@ return [
         'provider' => AppwriteProvider::class,
         'providerConfig' => [
             'endpoint' => env('APPWRITE_ENDPOINT'),
-            'project' => env('APPWRITE_PROJECT_NAME'),
+            'projectId' => env('APPWRITE_PROJECT_ID'),
             'key' => env('APPWRITE_KEY'),
             'isDev' => filter_var(env('DEBUG', false), FILTER_VALIDATE_BOOLEAN),
         ],
