@@ -1,0 +1,25 @@
+composer.json
+  684b81bbe541510c 71
+phpstan.neon
+  684b81bbe541510c 1-3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.6",
+  "base_commit_sha": "9e1d4ed4baece09d27f685f43e29ba74ee811761",
+  "prompts": {
+    "684b81bbe541510c": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "82c9ef0d-17e0-4cda-bb89-1b7670687996",
+        "model": "gemini-3-flash-preview"
+      },
+      "human_author": "Angel S. Moreno",
+      "messages": [],
+      "total_additions": 4,
+      "total_deletions": 1,
+      "accepted_lines": 4,
+      "overriden_lines": 0
+    }
+  }
+}
