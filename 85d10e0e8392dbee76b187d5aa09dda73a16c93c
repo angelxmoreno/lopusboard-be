@@ -1,0 +1,61 @@
+plugins/IdentityBridge/src/Middleware/IdentityBridgeMiddleware.php
+  5001504fa0f17a33 90
+plugins/IdentityBridge/tests/TestCase/Middleware/IdentityBridgeMiddlewareTest.php
+  5001504fa0f17a33 6-7,90,93,122,209,218,224,242,246
+config/plugins.php
+  5001504fa0f17a33 14
+plugins/IdentityBridge/tests/TestCase/ValueObject/AuthenticatedRequestIdentityTest.php
+  5001504fa0f17a33 6,20,23
+plugins/IdentityBridge/src/ValueObject/AuthenticatedRequestIdentity.php
+  5001504fa0f17a33 6-7,15,19
+src/Action/IdentityMeAction.php
+  5001504fa0f17a33 6,47,50,53-56
+src/Application.php
+  5001504fa0f17a33 19-23,36,46,100-132
+plugins/IdentityBridge/src/Controller/Component/IdentityBridgeComponent.php
+  5001504fa0f17a33 6,52,54,72,74
+plugins/IdentityBridge/tests/TestCase/Service/IdentityAuthenticatorTest.php
+  5001504fa0f17a33 6-7,27,30,50,54,79,101,103
+tests/Support/Auth/TestIdentityResolver.php
+  5001504fa0f17a33 6-7,15,17,19,24
+plugins/IdentityBridge/tests/TestCase/Resolver/LocalUserResolverInterfaceTest.php
+  5001504fa0f17a33 6,22
+src/Auth/AppUserResolver.php
+  5001504fa0f17a33 8,21,23
+plugins/IdentityBridge/implementation/user-instructions.md
+  5001504fa0f17a33 79
+plugins/IdentityBridge/tests/Support/TestResolver.php
+  5001504fa0f17a33 6-7,15,17,19
+plugins/IdentityBridge/implementation/contracts.md
+  5001504fa0f17a33 29
+composer.json
+  5001504fa0f17a33 10
+plugins/IdentityBridge/README.md
+  5001504fa0f17a33 37
+plugins/IdentityBridge/tests/TestCase/Controller/Component/IdentityBridgeComponentTest.php
+  5001504fa0f17a33 6,24,41,52,75,91
+src/Controller/AppController.php
+  5001504fa0f17a33 44
+plugins/IdentityBridge/src/Resolver/LocalUserResolverInterface.php
+  5001504fa0f17a33 6,18,20
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.5",
+  "base_commit_sha": "85d10e0e8392dbee76b187d5aa09dda73a16c93c",
+  "prompts": {
+    "5001504fa0f17a33": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019d4176-4ce9-73d2-941e-617d4ffcb4ba",
+        "model": "gpt-5.4"
+      },
+      "human_author": "Angel S. Moreno",
+      "messages": [],
+      "total_additions": 121,
+      "total_deletions": 59,
+      "accepted_lines": 118,
+      "overriden_lines": 0
+    }
+  }
+}
