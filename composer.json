@@ -67,8 +67,8 @@
         "cs-fix": "phpcbf --colors -p",
         "test": "phpunit --colors=always",
         "stan": "phpstan analyse --memory-limit=512M",
-        "md": "php -d error_reporting='E_ALL & ~E_DEPRECATED' vendor/bin/phpmd src,tests,plugins ansi phpmd.xml",
-        "cpd": "php -d error_reporting='E_ALL & ~E_DEPRECATED' bin/phpcpd.phar src plugins --exclude vendor --exclude tmp --exclude logs --exclude templates --exclude webroot --exclude tests",
+        "md": "php bin/run-phpmd.php",
+        "cpd": "php bin/run-phpcpd.php",
         "quality": [
             "@cs-check",
             "@stan",
