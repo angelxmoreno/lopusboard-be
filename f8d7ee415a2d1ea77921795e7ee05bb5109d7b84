@@ -1,0 +1,25 @@
+project-files/php-quality-tooling-plan.md
+  5001504fa0f17a33 32
+config/bootstrap.php
+  5001504fa0f17a33 75-76
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.6",
+  "base_commit_sha": "f8d7ee415a2d1ea77921795e7ee05bb5109d7b84",
+  "prompts": {
+    "5001504fa0f17a33": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019d4176-4ce9-73d2-941e-617d4ffcb4ba",
+        "model": "gpt-5.4"
+      },
+      "human_author": "Angel S. Moreno",
+      "messages": [],
+      "total_additions": 7,
+      "total_deletions": 7,
+      "accepted_lines": 8,
+      "overriden_lines": 0
+    }
+  }
+}
