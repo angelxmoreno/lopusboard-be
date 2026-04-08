@@ -153,7 +153,7 @@ We maintain high code quality through a suite of automated checks.
 Local git hooks are automatically installed via `composer install` or `composer update` to ensure every commit and push meets our standards:
 - **`pre-commit`**: Runs PHP_CodeSniffer only against staged PHP files.
 - **`commit-msg`**: Validates that commit messages follow [Conventional Commits](https://www.conventionalcommits.org/).
-- **`pre-push`**: Runs `composer check` (Tests + CS + Static Analysis) and `composer md` (Maintainability).
+- **`pre-push`**: Runs `composer push-check` (Tests + Static Analysis + Maintainability). Full repository PHP_CodeSniffer remains available through `composer check` and CI.
 
 ### Manual Commands
 | Command | Description |
@@ -163,6 +163,7 @@ Local git hooks are automatically installed via `composer install` or `composer 
 | `composer stan` | Run PHPStan static analysis |
 | `composer md` | Run PHPMD maintainability checks |
 | `composer cpd` | Run duplicate detection against `src/` and `plugins/` |
+| `composer push-check` | Run the lean pre-push gate (Tests, Stan, PHPMD) |
 | `composer check` | Run all mandatory quality gates (Tests, CS, Stan) |
 
 ---

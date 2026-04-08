@@ -145,8 +145,7 @@ Run a PHP script that validates Conventional Commits.
 
 Run:
 
-- `composer check`
-- `composer md`
+- `composer push-check`
 
 Do not run `composer cpd` in `pre-push` yet unless the repo is already clean.
 

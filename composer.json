@@ -63,6 +63,11 @@
             "@cs-check",
             "@stan"
         ],
+        "push-check": [
+            "@test",
+            "@stan",
+            "@md"
+        ],
         "cs-check": "phpcs --colors -p",
         "cs-fix": "phpcbf --colors -p",
         "test": "phpunit --colors=always",
