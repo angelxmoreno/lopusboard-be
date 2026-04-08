@@ -162,6 +162,7 @@ Local git hooks are automatically installed via `composer install` or `composer 
 | `composer cs-fix` | Automatically fix coding standard violations |
 | `composer stan` | Run PHPStan static analysis |
 | `composer md` | Run PHPMD maintainability checks |
+| `composer cpd` | Run duplicate detection against `src/` and `plugins/` |
 | `composer check` | Run all mandatory quality gates (Tests, CS, Stan) |
 
 ---

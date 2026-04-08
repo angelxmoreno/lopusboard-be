@@ -52,11 +52,11 @@
     "scripts": {
         "post-install-cmd": [
             "App\\Console\\Installer::postInstall",
-            "vendor/bin/captainhook install --force --skip-existing"
+            "php bin/install-git-hooks.php"
         ],
         "post-create-project-cmd": "App\\Console\\Installer::postInstall",
         "post-update-cmd": [
-            "vendor/bin/captainhook install --force --skip-existing"
+            "php bin/install-git-hooks.php"
         ],
         "check": [
             "@test",
