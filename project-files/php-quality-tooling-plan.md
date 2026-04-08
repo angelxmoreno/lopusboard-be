@@ -29,7 +29,7 @@ Do not invent alternatives unless blocked. Follow this plan as written.
 
 ## Existing State
 
-- `phpcs` is already installed and configured via [phpcs.xml](/Users/amoreno/ClaudeDesktopDropBox/lopusboard/lopusboard-be/phpcs.xml)
+- `phpcs` is already installed and configured via `phpcs.xml`
 - `phpunit` is already installed
 - `composer.json` already has:
   - `cs-check`
