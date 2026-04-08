@@ -9,7 +9,15 @@
         "enabled": true,
         "actions": [
             {
-                "action": "composer cs-check"
+                "action": "vendor/bin/phpcs --colors -p {$STAGED_FILES|of-type:php}",
+                "conditions": [
+                    {
+                        "exec": "CaptainHook.FileStaged.OfType",
+                        "args": [
+                            "php"
+                        ]
+                    }
+                ]
             }
         ]
     },
