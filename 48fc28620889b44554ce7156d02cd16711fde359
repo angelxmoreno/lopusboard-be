@@ -1,0 +1,25 @@
+tests/client-test.php
+  5001504fa0f17a33 1-102
+plugins/IdentityBridge/src/Provider/AppwriteProvider.php
+  5001504fa0f17a33 22,40
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.5",
+  "base_commit_sha": "48fc28620889b44554ce7156d02cd16711fde359",
+  "prompts": {
+    "5001504fa0f17a33": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019d4176-4ce9-73d2-941e-617d4ffcb4ba",
+        "model": "gpt-5.4"
+      },
+      "human_author": "Angel S. Moreno",
+      "messages": [],
+      "total_additions": 294,
+      "total_deletions": 319,
+      "accepted_lines": 178,
+      "overriden_lines": 0
+    }
+  }
+}
