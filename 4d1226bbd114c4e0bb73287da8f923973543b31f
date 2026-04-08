@@ -1,0 +1,23 @@
+composer.json
+  684b81bbe541510c 70
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.6",
+  "base_commit_sha": "4d1226bbd114c4e0bb73287da8f923973543b31f",
+  "prompts": {
+    "684b81bbe541510c": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "82c9ef0d-17e0-4cda-bb89-1b7670687996",
+        "model": "gemini-3-flash-preview"
+      },
+      "human_author": "Angel S. Moreno",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    }
+  }
+}
