@@ -1,0 +1,25 @@
+README.md
+  684b81bbe541510c 148-168
+.github/workflows/ci.yml
+  684b81bbe541510c 79,82-85
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.6",
+  "base_commit_sha": "e8a24df2f2e7c0a2a6195709eed19bb117e8035b",
+  "prompts": {
+    "684b81bbe541510c": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "82c9ef0d-17e0-4cda-bb89-1b7670687996",
+        "model": "gemini-3-flash-preview"
+      },
+      "human_author": "Angel S. Moreno",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 26,
+      "overriden_lines": 0
+    }
+  }
+}
