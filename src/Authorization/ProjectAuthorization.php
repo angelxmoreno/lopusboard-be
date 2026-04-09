@@ -7,6 +7,7 @@ use App\Model\Entity\Project;
 use App\Model\Enum\ProjectMemberRole;
 use App\Model\Table\IssuesTable;
 use App\Model\Table\ProjectMembersTable;
+use App\Model\Table\WikiPagesTable;
 use Authorization\IdentityInterface;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\Query\SelectQuery;
@@ -147,6 +148,48 @@ class ProjectAuthorization
     }
 
     /**
+     * Returns whether the identity belongs to the resource's wiki-page project.
+     *
+     * @param \Authorization\IdentityInterface $user The authenticated identity.
+     * @param object $resource The wiki-page-scoped resource.
+     * @param string $wikiPageField The wiki page id field on the resource.
+     * @return bool
+     */
+    public function isWikiPageResourceProjectMember(
+        IdentityInterface $user,
+        object $resource,
+        string $wikiPageField = 'wiki_page_id',
+    ): bool {
+        $wikiPageId = $this->resourceWikiPageId($resource, $wikiPageField);
+        if ($wikiPageId === null) {
+            return $this->isAuthenticated($user);
+        }
+
+        return $this->isWikiPageProjectMember($user, $wikiPageId);
+    }
+
+    /**
+     * Returns whether the identity is an admin for the resource's wiki-page project.
+     *
+     * @param \Authorization\IdentityInterface $user The authenticated identity.
+     * @param object $resource The wiki-page-scoped resource.
+     * @param string $wikiPageField The wiki page id field on the resource.
+     * @return bool
+     */
+    public function isWikiPageResourceProjectAdmin(
+        IdentityInterface $user,
+        object $resource,
+        string $wikiPageField = 'wiki_page_id',
+    ): bool {
+        $wikiPageId = $this->resourceWikiPageId($resource, $wikiPageField);
+        if ($wikiPageId === null) {
+            return $this->isAuthenticated($user);
+        }
+
+        return $this->isWikiPageProjectAdmin($user, $wikiPageId);
+    }
+
+    /**
      * Returns the authenticated user id from the identity.
      *
      * @param \Authorization\IdentityInterface $user The authenticated identity.
@@ -227,6 +270,40 @@ class ProjectAuthorization
     }
 
     /**
+     * Returns whether the identity belongs to the given wiki page's project.
+     *
+     * @param \Authorization\IdentityInterface $user The authenticated identity.
+     * @param int $wikiPageId The wiki page id.
+     * @return bool
+     */
+    public function isWikiPageProjectMember(IdentityInterface $user, int $wikiPageId): bool
+    {
+        $projectId = $this->wikiPageProjectId($wikiPageId);
+        if ($projectId === null) {
+            return false;
+        }
+
+        return $this->isProjectMember($user, $projectId);
+    }
+
+    /**
+     * Returns whether the identity administers the given wiki page's project.
+     *
+     * @param \Authorization\IdentityInterface $user The authenticated identity.
+     * @param int $wikiPageId The wiki page id.
+     * @return bool
+     */
+    public function isWikiPageProjectAdmin(IdentityInterface $user, int $wikiPageId): bool
+    {
+        $projectId = $this->wikiPageProjectId($wikiPageId);
+        if ($projectId === null) {
+            return false;
+        }
+
+        return $this->isProjectAdmin($user, $projectId);
+    }
+
+    /**
      * Returns the project id from either an entity or an integer.
      *
      * @param \App\Model\Entity\Project|int $project The project entity or id.
@@ -279,6 +356,27 @@ class ProjectAuthorization
     }
 
     /**
+     * Returns the wiki page id from a wiki-page-scoped resource.
+     *
+     * @param object $resource The wiki-page-scoped resource.
+     * @param string $field The wiki page id field on the resource.
+     * @return int|null
+     */
+    private function resourceWikiPageId(object $resource, string $field): ?int
+    {
+        $wikiPageId = $resource->{$field} ?? null;
+
+        if (is_int($wikiPageId)) {
+            return $wikiPageId;
+        }
+        if (is_string($wikiPageId) && ctype_digit($wikiPageId)) {
+            return (int)$wikiPageId;
+        }
+
+        return null;
+    }
+
+    /**
      * Returns the project id for a given issue.
      *
      * @param int $issueId The issue id.
@@ -294,6 +392,24 @@ class ProjectAuthorization
             ->first();
 
         return $issue === null ? null : (int)$issue['project_id'];
+    }
+
+    /**
+     * Returns the project id for a given wiki page.
+     *
+     * @param int $wikiPageId The wiki page id.
+     * @return int|null
+     */
+    private function wikiPageProjectId(int $wikiPageId): ?int
+    {
+        $wikiPage = $this->wikiPages()
+            ->find()
+            ->select(['project_id'])
+            ->where(['WikiPages.id' => $wikiPageId])
+            ->disableHydration()
+            ->first();
+
+        return $wikiPage === null ? null : (int)$wikiPage['project_id'];
     }
 
     /**
@@ -371,5 +487,16 @@ class ProjectAuthorization
     {
         /** @var \App\Model\Table\IssuesTable */
         return $this->getTableLocator()->get(IssuesTable::class);
+    }
+
+    /**
+     * Returns the wiki pages table instance.
+     *
+     * @return \App\Model\Table\WikiPagesTable
+     */
+    private function wikiPages(): WikiPagesTable
+    {
+        /** @var \App\Model\Table\WikiPagesTable */
+        return $this->getTableLocator()->get(WikiPagesTable::class);
     }
 }

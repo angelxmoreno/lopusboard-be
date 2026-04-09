@@ -5,12 +5,47 @@ namespace App\Action;
 
 use Cake\Datasource\EntityInterface;
 use Cake\Datasource\QueryInterface;
+use IdentityBridge\ValueObject\AuthenticatedRequestIdentity;
 
 /**
  * Shared authorization helpers for custom Crud actions.
  */
 trait AuthorizedCrudActionTrait
 {
+    /**
+     * Adds the authenticated user id to request data when the action is configured
+     * with a `currentUserField` and the field is currently empty.
+     *
+     * @param array<string, mixed> $data The request data.
+     * @return array<string, mixed>
+     */
+    protected function requestDataWithCurrentUser(array $data): array
+    {
+        $field = $this->getConfig('currentUserField');
+        if (!is_string($field) || $field === '') {
+            return $data;
+        }
+
+        $identity = $this->_controller()->getRequest()->getAttribute('identityBridge.identity');
+        if (!$identity instanceof AuthenticatedRequestIdentity) {
+            return $data;
+        }
+
+        $user = $identity->user;
+        $userId = $user['id'] ?? null;
+        if (!is_int($userId) && !(is_string($userId) && ctype_digit($userId))) {
+            return $data;
+        }
+
+        if (array_key_exists($field, $data) && $data[$field] !== null && $data[$field] !== '') {
+            return $data;
+        }
+
+        $data[$field] = is_int($userId) ? $userId : (int)$userId;
+
+        return $data;
+    }
+
     /**
      * Authorizes the current table resource for the resolved action.
      *

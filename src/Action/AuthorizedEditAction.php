@@ -42,7 +42,7 @@ class AuthorizedEditAction extends EditAction
 
         $entity = $this->_model()->patchEntity(
             $entity,
-            $this->_request()->getData(),
+            $this->requestData(),
             $this->saveOptions(),
         );
 
@@ -56,5 +56,18 @@ class AuthorizedEditAction extends EditAction
         $this->_error($subject);
 
         return null;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function requestData(): array
+    {
+        $data = $this->_request()->getData();
+        if (!is_array($data)) {
+            return [];
+        }
+
+        return $this->requestDataWithCurrentUser($data);
     }
 }

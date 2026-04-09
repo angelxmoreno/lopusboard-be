@@ -86,6 +86,8 @@ return function (RouteBuilder $routes): void {
         $builder->resources('ProjectMembers');
         $builder->resources('Projects');
         $builder->resources('Statuses');
+        $builder->resources('WikiPageRevisions');
+        $builder->resources('WikiPages');
         $builder->fallbacks();
     });
 

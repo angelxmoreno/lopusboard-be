@@ -17,6 +17,7 @@ class ProjectAuthorizationTest extends TestCase
         'app.Users',
         'app.Projects',
         'app.ProjectMembers',
+        'app.WikiPages',
     ];
 
     public function testIsAuthenticatedReturnsTrueWhenIdentityHasId(): void
@@ -43,6 +44,20 @@ class ProjectAuthorizationTest extends TestCase
         $this->assertFalse($authorization->isProjectAdmin(
             new TestAuthorizationIdentity(['id' => 2]),
             new Project(['id' => 1]),
+        ));
+    }
+
+    public function testIsWikiPageProjectMemberReturnsTrueForProjectMember(): void
+    {
+        $authorization = new ProjectAuthorization();
+
+        $this->assertTrue($authorization->isWikiPageProjectMember(
+            new TestAuthorizationIdentity(['id' => 2]),
+            1,
+        ));
+        $this->assertFalse($authorization->isWikiPageProjectMember(
+            new TestAuthorizationIdentity(['id' => 1]),
+            2,
         ));
     }
 }
