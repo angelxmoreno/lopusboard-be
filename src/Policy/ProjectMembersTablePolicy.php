@@ -53,11 +53,10 @@ class ProjectMembersTablePolicy
      */
     public function scopeIndex(IdentityInterface $user, SelectQuery $query): SelectQuery
     {
-        return $this->authorization()->scopeToAccessibleProjects(
+        return $this->authorization()->scopeToAdminProjects(
             $user,
             $query,
             'ProjectMembers.project_id',
-            true,
         );
     }
 

@@ -21,29 +21,64 @@ trait AuthorizedCrudActionTrait
      */
     protected function requestDataWithCurrentUser(array $data): array
     {
-        $field = $this->getConfig('currentUserField');
-        if (!is_string($field) || $field === '') {
+        $field = $this->currentUserField();
+        if ($field === null) {
             return $data;
         }
 
-        $identity = $this->_controller()->getRequest()->getAttribute('identityBridge.identity');
-        if (!$identity instanceof AuthenticatedRequestIdentity) {
+        $userId = $this->authenticatedUserId();
+        if ($userId === null || !$this->shouldPopulateCurrentUserField($data, $field)) {
             return $data;
         }
 
-        $user = $identity->user;
-        $userId = $user['id'] ?? null;
-        if (!is_int($userId) && !(is_string($userId) && ctype_digit($userId))) {
-            return $data;
-        }
-
-        if (array_key_exists($field, $data) && $data[$field] !== null && $data[$field] !== '') {
-            return $data;
-        }
-
-        $data[$field] = is_int($userId) ? $userId : (int)$userId;
+        $data[$field] = $userId;
 
         return $data;
+    }
+
+    /**
+     * @return string|null
+     */
+    private function currentUserField(): ?string
+    {
+        $field = $this->getConfig('currentUserField');
+
+        return is_string($field) && $field !== '' ? $field : null;
+    }
+
+    /**
+     * @return int|null
+     */
+    private function authenticatedUserId(): ?int
+    {
+        $identity = $this->_controller()->getRequest()->getAttribute('identityBridge.identity');
+        if (!$identity instanceof AuthenticatedRequestIdentity) {
+            return null;
+        }
+
+        $userId = $identity->user['id'] ?? null;
+        if (is_int($userId)) {
+            return $userId;
+        }
+        if (is_string($userId) && ctype_digit($userId)) {
+            return (int)$userId;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     * @param string $field
+     * @return bool
+     */
+    private function shouldPopulateCurrentUserField(array $data, string $field): bool
+    {
+        if (!array_key_exists($field, $data)) {
+            return true;
+        }
+
+        return $data[$field] === null || $data[$field] === '';
     }
 
     /**

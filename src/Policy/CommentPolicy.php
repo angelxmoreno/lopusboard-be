@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Policy;
 
 use App\Authorization\ProjectAuthorization;
+use App\Authorization\RelatedProjectAuthorization;
 use App\Model\Entity\Comment;
 use Authorization\IdentityInterface;
 
@@ -14,9 +15,12 @@ class CommentPolicy
 {
     /**
      * @param \App\Authorization\ProjectAuthorization|null $authorization Shared project authorization helper.
+     * @param \App\Authorization\RelatedProjectAuthorization|null $relatedAuthorization Shared related-resource helper.
      */
-    public function __construct(private readonly ?ProjectAuthorization $authorization = null)
-    {
+    public function __construct(
+        private readonly ?ProjectAuthorization $authorization = null,
+        private readonly ?RelatedProjectAuthorization $relatedAuthorization = null,
+    ) {
     }
 
     /**
@@ -28,7 +32,7 @@ class CommentPolicy
      */
     public function canAdd(IdentityInterface $user, Comment $comment): bool
     {
-        return $this->authorization()->isIssueResourceProjectMember($user, $comment);
+        return $this->relatedAuthorization()->isIssueResourceProjectMember($user, $comment);
     }
 
     /**
@@ -40,7 +44,7 @@ class CommentPolicy
      */
     public function canView(IdentityInterface $user, Comment $comment): bool
     {
-        return $this->authorization()->isIssueResourceProjectMember($user, $comment);
+        return $this->relatedAuthorization()->isIssueResourceProjectMember($user, $comment);
     }
 
     /**
@@ -79,7 +83,7 @@ class CommentPolicy
             return true;
         }
 
-        return $this->authorization()->isIssueResourceProjectAdmin($user, $comment);
+        return $this->relatedAuthorization()->isIssueResourceProjectAdmin($user, $comment);
     }
 
     /**
@@ -88,5 +92,15 @@ class CommentPolicy
     private function authorization(): ProjectAuthorization
     {
         return $this->authorization ?? new ProjectAuthorization();
+    }
+
+    /**
+     * @return \App\Authorization\RelatedProjectAuthorization
+     */
+    private function relatedAuthorization(): RelatedProjectAuthorization
+    {
+        return $this->relatedAuthorization ?? new RelatedProjectAuthorization(
+            $this->authorization(),
+        );
     }
 }

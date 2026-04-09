@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Authorization;
 
 use App\Authorization\ProjectAuthorization;
+use App\Authorization\RelatedProjectAuthorization;
 use App\Model\Entity\Project;
 use App\Test\Support\Auth\TestAuthorizationIdentity;
 use Cake\TestSuite\TestCase;
@@ -47,9 +48,9 @@ class ProjectAuthorizationTest extends TestCase
         ));
     }
 
-    public function testIsWikiPageProjectMemberReturnsTrueForProjectMember(): void
+    public function testRelatedAuthorizationChecksWikiPageProjectMembership(): void
     {
-        $authorization = new ProjectAuthorization();
+        $authorization = new RelatedProjectAuthorization(new ProjectAuthorization());
 
         $this->assertTrue($authorization->isWikiPageProjectMember(
             new TestAuthorizationIdentity(['id' => 2]),

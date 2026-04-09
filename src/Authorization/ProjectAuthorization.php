@@ -5,9 +5,7 @@ namespace App\Authorization;
 
 use App\Model\Entity\Project;
 use App\Model\Enum\ProjectMemberRole;
-use App\Model\Table\IssuesTable;
 use App\Model\Table\ProjectMembersTable;
-use App\Model\Table\WikiPagesTable;
 use Authorization\IdentityInterface;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\Query\SelectQuery;
@@ -106,90 +104,6 @@ class ProjectAuthorization
     }
 
     /**
-     * Returns whether the identity belongs to the resource's issue project.
-     *
-     * @param \Authorization\IdentityInterface $user The authenticated identity.
-     * @param object $resource The issue-scoped resource.
-     * @param string $issueField The issue id field on the resource.
-     * @return bool
-     */
-    public function isIssueResourceProjectMember(
-        IdentityInterface $user,
-        object $resource,
-        string $issueField = 'issue_id',
-    ): bool {
-        $issueId = $this->resourceIssueId($resource, $issueField);
-        if ($issueId === null) {
-            return $this->isAuthenticated($user);
-        }
-
-        return $this->isIssueProjectMember($user, $issueId);
-    }
-
-    /**
-     * Returns whether the identity is an admin for the resource's issue project.
-     *
-     * @param \Authorization\IdentityInterface $user The authenticated identity.
-     * @param object $resource The issue-scoped resource.
-     * @param string $issueField The issue id field on the resource.
-     * @return bool
-     */
-    public function isIssueResourceProjectAdmin(
-        IdentityInterface $user,
-        object $resource,
-        string $issueField = 'issue_id',
-    ): bool {
-        $issueId = $this->resourceIssueId($resource, $issueField);
-        if ($issueId === null) {
-            return $this->isAuthenticated($user);
-        }
-
-        return $this->isIssueProjectAdmin($user, $issueId);
-    }
-
-    /**
-     * Returns whether the identity belongs to the resource's wiki-page project.
-     *
-     * @param \Authorization\IdentityInterface $user The authenticated identity.
-     * @param object $resource The wiki-page-scoped resource.
-     * @param string $wikiPageField The wiki page id field on the resource.
-     * @return bool
-     */
-    public function isWikiPageResourceProjectMember(
-        IdentityInterface $user,
-        object $resource,
-        string $wikiPageField = 'wiki_page_id',
-    ): bool {
-        $wikiPageId = $this->resourceWikiPageId($resource, $wikiPageField);
-        if ($wikiPageId === null) {
-            return $this->isAuthenticated($user);
-        }
-
-        return $this->isWikiPageProjectMember($user, $wikiPageId);
-    }
-
-    /**
-     * Returns whether the identity is an admin for the resource's wiki-page project.
-     *
-     * @param \Authorization\IdentityInterface $user The authenticated identity.
-     * @param object $resource The wiki-page-scoped resource.
-     * @param string $wikiPageField The wiki page id field on the resource.
-     * @return bool
-     */
-    public function isWikiPageResourceProjectAdmin(
-        IdentityInterface $user,
-        object $resource,
-        string $wikiPageField = 'wiki_page_id',
-    ): bool {
-        $wikiPageId = $this->resourceWikiPageId($resource, $wikiPageField);
-        if ($wikiPageId === null) {
-            return $this->isAuthenticated($user);
-        }
-
-        return $this->isWikiPageProjectAdmin($user, $wikiPageId);
-    }
-
-    /**
      * Returns the authenticated user id from the identity.
      *
      * @param \Authorization\IdentityInterface $user The authenticated identity.
@@ -215,92 +129,39 @@ class ProjectAuthorization
      * @template TSubject of \Cake\Datasource\EntityInterface
      * @param \Cake\ORM\Query\SelectQuery<TSubject> $query The query to scope.
      * @param string $projectField The project id field on the target query.
-     * @param bool $adminOnly Whether only admin memberships should match.
      * @return \Cake\ORM\Query\SelectQuery<TSubject>
      */
     public function scopeToAccessibleProjects(
         IdentityInterface $user,
         SelectQuery $query,
         string $projectField = 'project_id',
-        bool $adminOnly = false,
     ): SelectQuery {
-        $projectIds = $adminOnly
-            ? $this->adminProjectIds($user)
-            : $this->memberProjectIds($user);
-
-        if ($projectIds === []) {
-            return $query->where([$projectField . ' IS' => null]);
-        }
-
-        return $query->where([$projectField . ' IN' => $projectIds]);
+        return $this->scopeToProjectIds(
+            $query,
+            $this->memberProjectIds($user),
+            $projectField,
+        );
     }
 
     /**
-     * Returns whether the identity belongs to the given issue's project.
+     * Applies an admin-project scope to the provided query.
      *
      * @param \Authorization\IdentityInterface $user The authenticated identity.
-     * @param int $issueId The issue id.
-     * @return bool
+     * @template TSubject of \Cake\Datasource\EntityInterface
+     * @param \Cake\ORM\Query\SelectQuery<TSubject> $query The query to scope.
+     * @param string $projectField The project id field on the target query.
+     * @return \Cake\ORM\Query\SelectQuery<TSubject>
      */
-    public function isIssueProjectMember(IdentityInterface $user, int $issueId): bool
-    {
-        $projectId = $this->issueProjectId($issueId);
-        if ($projectId === null) {
-            return false;
-        }
-
-        return $this->isProjectMember($user, $projectId);
-    }
-
-    /**
-     * Returns whether the identity administers the given issue's project.
-     *
-     * @param \Authorization\IdentityInterface $user The authenticated identity.
-     * @param int $issueId The issue id.
-     * @return bool
-     */
-    public function isIssueProjectAdmin(IdentityInterface $user, int $issueId): bool
-    {
-        $projectId = $this->issueProjectId($issueId);
-        if ($projectId === null) {
-            return false;
-        }
-
-        return $this->isProjectAdmin($user, $projectId);
-    }
-
-    /**
-     * Returns whether the identity belongs to the given wiki page's project.
-     *
-     * @param \Authorization\IdentityInterface $user The authenticated identity.
-     * @param int $wikiPageId The wiki page id.
-     * @return bool
-     */
-    public function isWikiPageProjectMember(IdentityInterface $user, int $wikiPageId): bool
-    {
-        $projectId = $this->wikiPageProjectId($wikiPageId);
-        if ($projectId === null) {
-            return false;
-        }
-
-        return $this->isProjectMember($user, $projectId);
-    }
-
-    /**
-     * Returns whether the identity administers the given wiki page's project.
-     *
-     * @param \Authorization\IdentityInterface $user The authenticated identity.
-     * @param int $wikiPageId The wiki page id.
-     * @return bool
-     */
-    public function isWikiPageProjectAdmin(IdentityInterface $user, int $wikiPageId): bool
-    {
-        $projectId = $this->wikiPageProjectId($wikiPageId);
-        if ($projectId === null) {
-            return false;
-        }
-
-        return $this->isProjectAdmin($user, $projectId);
+    public function scopeToAdminProjects(
+        IdentityInterface $user,
+        SelectQuery $query,
+        string $projectField = 'project_id',
+    ): SelectQuery {
+        return $this->scopeToProjectIds(
+            $query,
+            $this->adminProjectIds($user),
+            $projectField,
+        );
     }
 
     /**
@@ -335,84 +196,6 @@ class ProjectAuthorization
     }
 
     /**
-     * Returns the issue id from an issue-scoped resource.
-     *
-     * @param object $resource The issue-scoped resource.
-     * @param string $field The issue id field on the resource.
-     * @return int|null
-     */
-    private function resourceIssueId(object $resource, string $field): ?int
-    {
-        $issueId = $resource->{$field} ?? null;
-
-        if (is_int($issueId)) {
-            return $issueId;
-        }
-        if (is_string($issueId) && ctype_digit($issueId)) {
-            return (int)$issueId;
-        }
-
-        return null;
-    }
-
-    /**
-     * Returns the wiki page id from a wiki-page-scoped resource.
-     *
-     * @param object $resource The wiki-page-scoped resource.
-     * @param string $field The wiki page id field on the resource.
-     * @return int|null
-     */
-    private function resourceWikiPageId(object $resource, string $field): ?int
-    {
-        $wikiPageId = $resource->{$field} ?? null;
-
-        if (is_int($wikiPageId)) {
-            return $wikiPageId;
-        }
-        if (is_string($wikiPageId) && ctype_digit($wikiPageId)) {
-            return (int)$wikiPageId;
-        }
-
-        return null;
-    }
-
-    /**
-     * Returns the project id for a given issue.
-     *
-     * @param int $issueId The issue id.
-     * @return int|null
-     */
-    private function issueProjectId(int $issueId): ?int
-    {
-        $issue = $this->issues()
-            ->find()
-            ->select(['project_id'])
-            ->where(['Issues.id' => $issueId])
-            ->disableHydration()
-            ->first();
-
-        return $issue === null ? null : (int)$issue['project_id'];
-    }
-
-    /**
-     * Returns the project id for a given wiki page.
-     *
-     * @param int $wikiPageId The wiki page id.
-     * @return int|null
-     */
-    private function wikiPageProjectId(int $wikiPageId): ?int
-    {
-        $wikiPage = $this->wikiPages()
-            ->find()
-            ->select(['project_id'])
-            ->where(['WikiPages.id' => $wikiPageId])
-            ->disableHydration()
-            ->first();
-
-        return $wikiPage === null ? null : (int)$wikiPage['project_id'];
-    }
-
-    /**
      * Returns project ids the user belongs to.
      *
      * @param \Authorization\IdentityInterface $user The authenticated identity.
@@ -432,6 +215,22 @@ class ProjectAuthorization
     private function adminProjectIds(IdentityInterface $user): array
     {
         return $this->projectIdsFor($user, ProjectMemberRole::Admin);
+    }
+
+    /**
+     * @template TSubject of \Cake\Datasource\EntityInterface
+     * @param \Cake\ORM\Query\SelectQuery<TSubject> $query
+     * @param list<int> $projectIds
+     * @param string $projectField
+     * @return \Cake\ORM\Query\SelectQuery<TSubject>
+     */
+    private function scopeToProjectIds(SelectQuery $query, array $projectIds, string $projectField): SelectQuery
+    {
+        if ($projectIds === []) {
+            return $query->where([$projectField . ' IS' => null]);
+        }
+
+        return $query->where([$projectField . ' IN' => $projectIds]);
     }
 
     /**
@@ -476,27 +275,5 @@ class ProjectAuthorization
     {
         /** @var \App\Model\Table\ProjectMembersTable */
         return $this->getTableLocator()->get(ProjectMembersTable::class);
-    }
-
-    /**
-     * Returns the issues table instance.
-     *
-     * @return \App\Model\Table\IssuesTable
-     */
-    private function issues(): IssuesTable
-    {
-        /** @var \App\Model\Table\IssuesTable */
-        return $this->getTableLocator()->get(IssuesTable::class);
-    }
-
-    /**
-     * Returns the wiki pages table instance.
-     *
-     * @return \App\Model\Table\WikiPagesTable
-     */
-    private function wikiPages(): WikiPagesTable
-    {
-        /** @var \App\Model\Table\WikiPagesTable */
-        return $this->getTableLocator()->get(WikiPagesTable::class);
     }
 }

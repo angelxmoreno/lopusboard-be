@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Policy;
 
-use App\Authorization\ProjectAuthorization;
+use App\Authorization\RelatedProjectAuthorization;
 use App\Model\Entity\WikiPageRevision;
 use Authorization\IdentityInterface;
 
@@ -13,9 +13,9 @@ use Authorization\IdentityInterface;
 class WikiPageRevisionPolicy
 {
     /**
-     * @param \App\Authorization\ProjectAuthorization|null $authorization Shared project authorization helper.
+     * @param \App\Authorization\RelatedProjectAuthorization|null $authorization Shared related-resource helper.
      */
-    public function __construct(private readonly ?ProjectAuthorization $authorization = null)
+    public function __construct(private readonly ?RelatedProjectAuthorization $authorization = null)
     {
     }
 
@@ -32,10 +32,10 @@ class WikiPageRevisionPolicy
     }
 
     /**
-     * @return \App\Authorization\ProjectAuthorization
+     * @return \App\Authorization\RelatedProjectAuthorization
      */
-    private function authorization(): ProjectAuthorization
+    private function authorization(): RelatedProjectAuthorization
     {
-        return $this->authorization ?? new ProjectAuthorization();
+        return $this->authorization ?? new RelatedProjectAuthorization();
     }
 }
