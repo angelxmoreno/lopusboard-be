@@ -32,6 +32,20 @@ class AttachmentsFixture extends TestFixture
                 'created' => '2026-03-31 05:06:15',
                 'modified' => '2026-03-31 05:06:15',
             ],
+            [
+                'id' => 2,
+                'project_id' => 2,
+                'storage_provider' => 'google_drive',
+                'filename' => 'project-two.pdf',
+                'mime_type' => 'application/pdf',
+                'file_size' => 2,
+                'storage_path' => 'drive://attachments/2',
+                'external_url' => 'https://drive.google.com/file/d/2/view',
+                'external_id' => 'drive-file-2',
+                'uploaded_by' => 2,
+                'created' => '2026-03-31 05:06:15',
+                'modified' => '2026-03-31 05:06:15',
+            ],
         ];
         parent::init();
     }
