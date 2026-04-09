@@ -1,53 +1,61 @@
 # What's Next
 
-The API rollout that was planned here is now complete:
-- project-scoped setup controllers and policies are in place
-- issue workflow controllers and policies are in place
-- wiki controllers and policies are in place
-- attachments and the read-only activity feed are in place
-- the shared authorized Crud action pattern is wired across the current API surface
+The CRUD and policy rollout is now in place for:
+- projects
+- project members
+- statuses
+- departments
+- issues
+- comments
+- issue relations
+- wiki pages
+- wiki page revisions
+- attachments
+- the read-only activity feed
 
-The next work should build on that completed foundation instead of adding more basic CRUD endpoints.
+The next phase should focus on client ergonomics and workflow-specific endpoints.
 
-## 1. Apply Policies To Non-CRUD Actions
+## 1. Create The Node HTTP Client For The Backend
 
-Add authorization checks for actions that do not map cleanly to the standard REST set:
-- issue move and reorder actions
-- wiki restore revision flow
-- any project membership or status transitions with custom behavior
+Create a small Node client package or module that wraps the current API surface:
+- authentication header handling
+- identity endpoint access
+- shared request/response typing
+- project, issue, wiki, attachment, and activity-feed calls
+
+Why first:
+- the backend surface is now broad enough to benefit from one typed client
+- frontend work will move faster once the API contract is centralized
+
+## 2. Add Issue Move/Reorder Endpoints
+
+Add custom workflow endpoints for issue movement:
+- kanban move
+- sibling reorder
+- any position-updating actions that should not be expressed as raw CRUD edits
 
 Why next:
-- the main CRUD surface is now protected
-- the remaining risk is custom workflow actions falling outside the current policy wiring
+- issue workflow is the highest-value custom behavior left
+- these actions need intentional authorization and tests
 
-## 2. Add Query Scoping And Policy Coverage For Remaining Read Models
+## 3. Add Wiki Revision Restore
 
-Tighten any read paths that still need explicit scoping or dedicated policies:
-- attachment links
-- wiki page links and backlinks
-- dashboard-style aggregated reads
+Add the wiki restore flow as an explicit endpoint:
+- choose a revision
+- restore its body into the live wiki page
+- ensure revision and activity logging behavior still works
 
 Why next:
-- these are the most likely places for accidental cross-project data leakage
-- the project authorization helper is already ready to support them
+- the revisions model and read endpoints already exist
+- restore is the main missing wiki workflow action
 
-## 3. Expand Integration Tests For Authorization Behavior
+## 4. Expand Authorization Integration Tests
 
-Add more endpoint-level tests that prove role differences, not just happy-path access:
-- member vs admin delete/edit behavior
+Add more endpoint-level authorization coverage:
+- member vs admin edit/delete differences
 - cross-project denial cases
-- read-only controller restrictions
+- custom workflow action checks once they exist
 
-Why next:
-- the policy layer is now broad enough that regressions are more likely to come from integration wiring than missing files
-
-## 4. Add Custom Workflow Endpoints Intentionally
-
-Once the policy layer is stable, add the next purpose-built API actions rather than more raw CRUD:
-- issue kanban move/reorder
-- wiki revision restore
-- attachment linking flows if they belong in the API
-
-Why after the policy/test pass:
-- those actions encode business rules directly
-- they should land on top of a proven authorization baseline
+Why after the new endpoints:
+- the basic CRUD authorization is already covered
+- the higher-risk gaps are now in workflow actions and role boundaries
