@@ -5,6 +5,7 @@ namespace App\Authorization;
 
 use App\Model\Entity\Project;
 use App\Model\Enum\ProjectMemberRole;
+use App\Model\Table\IssuesTable;
 use App\Model\Table\ProjectMembersTable;
 use Authorization\IdentityInterface;
 use Cake\ORM\Locator\LocatorAwareTrait;
@@ -104,6 +105,48 @@ class ProjectAuthorization
     }
 
     /**
+     * Returns whether the identity belongs to the resource's issue project.
+     *
+     * @param \Authorization\IdentityInterface $user The authenticated identity.
+     * @param object $resource The issue-scoped resource.
+     * @param string $issueField The issue id field on the resource.
+     * @return bool
+     */
+    public function isIssueResourceProjectMember(
+        IdentityInterface $user,
+        object $resource,
+        string $issueField = 'issue_id',
+    ): bool {
+        $issueId = $this->resourceIssueId($resource, $issueField);
+        if ($issueId === null) {
+            return $this->isAuthenticated($user);
+        }
+
+        return $this->isIssueProjectMember($user, $issueId);
+    }
+
+    /**
+     * Returns whether the identity is an admin for the resource's issue project.
+     *
+     * @param \Authorization\IdentityInterface $user The authenticated identity.
+     * @param object $resource The issue-scoped resource.
+     * @param string $issueField The issue id field on the resource.
+     * @return bool
+     */
+    public function isIssueResourceProjectAdmin(
+        IdentityInterface $user,
+        object $resource,
+        string $issueField = 'issue_id',
+    ): bool {
+        $issueId = $this->resourceIssueId($resource, $issueField);
+        if ($issueId === null) {
+            return $this->isAuthenticated($user);
+        }
+
+        return $this->isIssueProjectAdmin($user, $issueId);
+    }
+
+    /**
      * Returns the authenticated user id from the identity.
      *
      * @param \Authorization\IdentityInterface $user The authenticated identity.
@@ -150,6 +193,40 @@ class ProjectAuthorization
     }
 
     /**
+     * Returns whether the identity belongs to the given issue's project.
+     *
+     * @param \Authorization\IdentityInterface $user The authenticated identity.
+     * @param int $issueId The issue id.
+     * @return bool
+     */
+    public function isIssueProjectMember(IdentityInterface $user, int $issueId): bool
+    {
+        $projectId = $this->issueProjectId($issueId);
+        if ($projectId === null) {
+            return false;
+        }
+
+        return $this->isProjectMember($user, $projectId);
+    }
+
+    /**
+     * Returns whether the identity administers the given issue's project.
+     *
+     * @param \Authorization\IdentityInterface $user The authenticated identity.
+     * @param int $issueId The issue id.
+     * @return bool
+     */
+    public function isIssueProjectAdmin(IdentityInterface $user, int $issueId): bool
+    {
+        $projectId = $this->issueProjectId($issueId);
+        if ($projectId === null) {
+            return false;
+        }
+
+        return $this->isProjectAdmin($user, $projectId);
+    }
+
+    /**
      * Returns the project id from either an entity or an integer.
      *
      * @param \App\Model\Entity\Project|int $project The project entity or id.
@@ -178,6 +255,45 @@ class ProjectAuthorization
         }
 
         return null;
+    }
+
+    /**
+     * Returns the issue id from an issue-scoped resource.
+     *
+     * @param object $resource The issue-scoped resource.
+     * @param string $field The issue id field on the resource.
+     * @return int|null
+     */
+    private function resourceIssueId(object $resource, string $field): ?int
+    {
+        $issueId = $resource->{$field} ?? null;
+
+        if (is_int($issueId)) {
+            return $issueId;
+        }
+        if (is_string($issueId) && ctype_digit($issueId)) {
+            return (int)$issueId;
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the project id for a given issue.
+     *
+     * @param int $issueId The issue id.
+     * @return int|null
+     */
+    private function issueProjectId(int $issueId): ?int
+    {
+        $issue = $this->issues()
+            ->find()
+            ->select(['project_id'])
+            ->where(['Issues.id' => $issueId])
+            ->disableHydration()
+            ->first();
+
+        return $issue === null ? null : (int)$issue['project_id'];
     }
 
     /**
@@ -244,5 +360,16 @@ class ProjectAuthorization
     {
         /** @var \App\Model\Table\ProjectMembersTable */
         return $this->getTableLocator()->get(ProjectMembersTable::class);
+    }
+
+    /**
+     * Returns the issues table instance.
+     *
+     * @return \App\Model\Table\IssuesTable
+     */
+    private function issues(): IssuesTable
+    {
+        /** @var \App\Model\Table\IssuesTable */
+        return $this->getTableLocator()->get(IssuesTable::class);
     }
 }

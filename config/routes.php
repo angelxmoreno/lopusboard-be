@@ -79,7 +79,9 @@ return function (RouteBuilder $routes): void {
     });
 
     $routes->prefix('Api', ['path' => '/api'], function (RouteBuilder $builder): void {
+        $builder->resources('Comments');
         $builder->resources('Departments');
+        $builder->resources('IssueRelations');
         $builder->resources('Issues');
         $builder->resources('ProjectMembers');
         $builder->resources('Projects');
