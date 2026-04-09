@@ -1,0 +1,37 @@
+tests/TestCase/Controller/Api/CommentsControllerTest.php
+  5001504fa0f17a33 6,62,71,92-96
+src/Policy/CommentPolicy.php
+  5001504fa0f17a33 81-84
+src/Action/AuthorizedCrudActionTrait.php
+  5001504fa0f17a33 16-17,30
+src/Authorization/ProjectAuthorization.php
+  5001504fa0f17a33 100,230
+tests/TestCase/Controller/Api/IssuesControllerTest.php
+  5001504fa0f17a33 6,86,95-101
+tests/TestCase/Authorization/ProjectAuthorizationTest.php
+  5001504fa0f17a33 9,11,16-17,55-61,65-81,95-99
+tests/TestCase/Policy/CommentPolicyTest.php
+  5001504fa0f17a33 29,36
+src/Action/AuthorizedAddAction.php
+  5001504fa0f17a33 32,38
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.6",
+  "base_commit_sha": "8df1aa913aec01177c7743a9c27ca2794aa862f9",
+  "prompts": {
+    "5001504fa0f17a33": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019d4176-4ce9-73d2-941e-617d4ffcb4ba",
+        "model": "gpt-5.4"
+      },
+      "human_author": "Angel S. Moreno",
+      "messages": [],
+      "total_additions": 68,
+      "total_deletions": 21,
+      "accepted_lines": 68,
+      "overriden_lines": 0
+    }
+  }
+}
