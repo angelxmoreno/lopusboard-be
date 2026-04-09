@@ -13,8 +13,8 @@ use IdentityBridge\ValueObject\AuthenticatedRequestIdentity;
 trait AuthorizedCrudActionTrait
 {
     /**
-     * Adds the authenticated user id to request data when the action is configured
-     * with a `currentUserField` and the field is currently empty.
+     * Forces the authenticated user id into request data when the action is
+     * configured with a `currentUserField`.
      *
      * @param array<string, mixed> $data The request data.
      * @return array<string, mixed>
@@ -27,7 +27,7 @@ trait AuthorizedCrudActionTrait
         }
 
         $userId = $this->authenticatedUserId();
-        if ($userId === null || !$this->shouldPopulateCurrentUserField($data, $field)) {
+        if ($userId === null) {
             return $data;
         }
 
@@ -65,20 +65,6 @@ trait AuthorizedCrudActionTrait
         }
 
         return null;
-    }
-
-    /**
-     * @param array<string, mixed> $data
-     * @param string $field
-     * @return bool
-     */
-    private function shouldPopulateCurrentUserField(array $data, string $field): bool
-    {
-        if (!array_key_exists($field, $data)) {
-            return true;
-        }
-
-        return $data[$field] === null || $data[$field] === '';
     }
 
     /**

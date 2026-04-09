@@ -78,6 +78,10 @@ class CommentPolicy
      */
     private function canMutate(IdentityInterface $user, Comment $comment): bool
     {
+        if (!$this->relatedAuthorization()->isIssueResourceProjectMember($user, $comment)) {
+            return false;
+        }
+
         $userId = $this->authorization()->userId($user);
         if ($userId !== null && $userId === $comment->user_id) {
             return true;

@@ -29,15 +29,15 @@ class AuthorizedAddAction extends AddAction
     protected function _post(): ?Response
     {
         $this->authorizeTable('add');
+        $saveOptions = $this->saveOptions();
         $data = $this->_request()->getData();
         if (!is_array($data)) {
             $data = [];
         }
 
-        $entity = $this->_entity($this->requestDataWithCurrentUser($data), $this->saveOptions());
+        $entity = $this->_entity($this->requestDataWithCurrentUser($data), $saveOptions);
         $this->authorizeEntity($entity, 'add');
         $saveMethod = $this->saveMethod();
-        $saveOptions = $this->saveOptions();
         $subject = $this->_subject([
             'entity' => $entity,
             'saveMethod' => $saveMethod,

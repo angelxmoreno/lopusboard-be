@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Controller\Api;
 
+use App\Model\Table\CommentsTable;
 use App\Test\Support\Auth\TestIdentityProvider;
 use App\Test\Support\Auth\TestIdentityResolver;
 use Cake\TestSuite\IntegrationTestTrait;
@@ -58,6 +59,7 @@ class CommentsControllerTest extends TestCase
         $this->post('/api/comments', [
             'issue_id' => 1,
             'body' => 'Created through API',
+            'user_id' => 999,
         ]);
 
         $this->assertResponseCode(201);
@@ -66,6 +68,7 @@ class CommentsControllerTest extends TestCase
         $payload = json_decode($this->_getBodyAsString(), true, 512, JSON_THROW_ON_ERROR);
 
         $this->assertSame(2, $payload['data']['id']);
+        $this->assertSame(2, $this->comments()->get(2)->user_id);
     }
 
     public function testAddRejectsUsersOutsideTheIssueProject(): void
@@ -85,5 +88,11 @@ class CommentsControllerTest extends TestCase
         ]);
 
         $this->assertResponseCode(403);
+    }
+
+    private function comments(): CommentsTable
+    {
+        /** @var \App\Model\Table\CommentsTable */
+        return $this->getTableLocator()->get(CommentsTable::class);
     }
 }

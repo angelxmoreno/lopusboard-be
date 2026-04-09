@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Controller\Api;
 
+use App\Model\Table\IssuesTable;
 use App\Test\Support\Auth\TestIdentityProvider;
 use App\Test\Support\Auth\TestIdentityResolver;
 use Cake\TestSuite\IntegrationTestTrait;
@@ -82,6 +83,7 @@ class IssuesControllerTest extends TestCase
             'status_id' => 1,
             'priority' => 'medium',
             'position' => 4,
+            'created_by' => 999,
         ]);
 
         $this->assertResponseCode(201);
@@ -90,5 +92,12 @@ class IssuesControllerTest extends TestCase
         $payload = json_decode($this->_getBodyAsString(), true, 512, JSON_THROW_ON_ERROR);
 
         $this->assertSame(4, $payload['data']['id']);
+        $this->assertSame(2, $this->issues()->get(4)->created_by);
+    }
+
+    private function issues(): IssuesTable
+    {
+        /** @var \App\Model\Table\IssuesTable */
+        return $this->getTableLocator()->get(IssuesTable::class);
     }
 }

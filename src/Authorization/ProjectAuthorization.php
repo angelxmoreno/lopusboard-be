@@ -97,7 +97,7 @@ class ProjectAuthorization
     {
         $projectId = $this->resourceProjectId($resource);
         if ($projectId === null) {
-            return $this->isAuthenticated($user);
+            return false;
         }
 
         return $this->isProjectAdmin($user, $projectId);
@@ -227,7 +227,7 @@ class ProjectAuthorization
     private function scopeToProjectIds(SelectQuery $query, array $projectIds, string $projectField): SelectQuery
     {
         if ($projectIds === []) {
-            return $query->where([$projectField . ' IS' => null]);
+            return $query->where('1 = 0');
         }
 
         return $query->where([$projectField . ' IN' => $projectIds]);
