@@ -27,6 +27,15 @@ class WikiPageRevisionsFixture extends TestFixture
                 'created' => '2026-03-31 05:06:16',
                 'modified' => '2026-03-31 05:06:16',
             ],
+            [
+                'id' => 2,
+                'wiki_page_id' => 2,
+                'body' => 'Second project revision fixture.',
+                'revision_number' => 1,
+                'edited_by' => 2,
+                'created' => '2026-03-31 05:06:16',
+                'modified' => '2026-03-31 05:06:16',
+            ],
         ];
         parent::init();
     }

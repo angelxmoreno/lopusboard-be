@@ -29,8 +29,35 @@ class AuthorizedAddAction extends AddAction
     protected function _post(): ?Response
     {
         $this->authorizeTable('add');
+        $saveOptions = $this->saveOptions();
+        $data = $this->_request()->getData();
+        if (!is_array($data)) {
+            $data = [];
+        }
 
-        return parent::_post();
+        $entity = $this->_entity($this->requestDataWithCurrentUser($data), $saveOptions);
+        $this->authorizeEntity($entity, 'add');
+        $saveMethod = $this->saveMethod();
+        $subject = $this->_subject([
+            'entity' => $entity,
+            'saveMethod' => $saveMethod,
+            'saveOptions' => $saveOptions,
+        ]);
+
+        $event = $this->_trigger('beforeSave', $subject);
+        if ($event->isStopped()) {
+            return $this->_stopped($subject);
+        }
+
+        $saveCallback = [$this->_model(), $saveMethod];
+        /** @phpstan-ignore argument.type */
+        if (call_user_func($saveCallback, $entity, $saveOptions)) {
+            return $this->_success($subject);
+        }
+
+        $this->_error($subject);
+
+        return null;
     }
 
     /**
@@ -38,8 +65,6 @@ class AuthorizedAddAction extends AddAction
      */
     protected function _put(): ?Response
     {
-        $this->authorizeTable('add');
-
-        return parent::_put();
+        return $this->_post();
     }
 }

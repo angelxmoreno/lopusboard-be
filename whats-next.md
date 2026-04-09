@@ -1,77 +1,61 @@
 # What's Next
 
-The backend foundation is now in a stable place:
-- validation and integrity rules are in place
-- domain behaviors are wired into the relevant tables
-- activity logging is implemented for the current model mutations
-- model tests are no longer relying on incomplete placeholders
-- remote authentication is wired through IdentityBridge and Appwrite
-- the API layer has thin Crud-backed `Issues` and `Projects` controllers
-- the authenticated identity endpoint is working at `/api/identity/me`
-- project authorization helpers, policies, and authorized Crud actions now exist for the `Projects` slice
+The CRUD and policy rollout is now in place for:
+- projects
+- project members
+- statuses
+- departments
+- issues
+- comments
+- issue relations
+- wiki pages
+- wiki page revisions
+- attachments
+- the read-only activity feed
 
-The next work should keep expanding the API layer in dependency order, with controllers and policies created together.
+The next phase should focus on client ergonomics and workflow-specific endpoints.
 
-## 1. Finish The Project-Scoped Setup Slice
+## 1. Create The Node HTTP Client For The Backend
 
-Create the next project-scoped controllers and policies:
-- `ProjectMembersController`
-- `StatusesController`
-- `DepartmentsController`
-- `ProjectMembersTablePolicy` and `ProjectMemberPolicy`
-- `StatusesTablePolicy` and `StatusPolicy`
-- `DepartmentsTablePolicy` and `DepartmentPolicy`
+Create a small Node client package or module that wraps the current API surface:
+- authentication header handling
+- identity endpoint access
+- shared request/response typing
+- project, issue, wiki, attachment, and activity-feed calls
 
 Why first:
-- almost every other resource depends on project membership and project roles
-- this completes the project bootstrap surface around the `Projects` slice that is already wired
-- it lets the app establish a stable policy pattern before moving into issues and wiki
+- the backend surface is now broad enough to benefit from one typed client
+- frontend work will move faster once the API contract is centralized
 
-## 2. Build The Issue Workflow Slice
+## 2. Add Issue Move/Reorder Endpoints
 
-Create the issue controllers and policies together:
-- `IssuesController`
-- `CommentsController`
-- `IssueRelationsController`
-- `IssuesTablePolicy` and `IssuePolicy`
-- `CommentsTablePolicy` and `CommentPolicy`
-- `IssueRelationsTablePolicy` and `IssueRelationPolicy`
+Add custom workflow endpoints for issue movement:
+- kanban move
+- sibling reorder
+- any position-updating actions that should not be expressed as raw CRUD edits
 
 Why next:
-- issue access rules build directly on project membership
-- this is the main product workflow
-- it reuses the authorized Crud action pattern you already have
+- issue workflow is the highest-value custom behavior left
+- these actions need intentional authorization and tests
 
-## 3. Build The Wiki Slice
+## 3. Add Wiki Revision Restore
 
-Create the wiki controllers and policies together:
-- `WikiPagesController`
-- `WikiPageRevisionsController`
-- `WikiPagesTablePolicy` and `WikiPagePolicy`
-- `WikiPageRevisionsTablePolicy` and `WikiPageRevisionPolicy`
+Add the wiki restore flow as an explicit endpoint:
+- choose a revision
+- restore its body into the live wiki page
+- ensure revision and activity logging behavior still works
 
-Why after issues:
-- wiki still depends on the same project-scoped authorization rules
-- by this point the project and issue patterns should be settled enough to copy cleanly
+Why next:
+- the revisions model and read endpoints already exist
+- restore is the main missing wiki workflow action
 
-## 4. Finish Attachments And Activity Feed
+## 4. Expand Authorization Integration Tests
 
-Create the final supporting controllers and policies:
-- `AttachmentsController`
-- `ActivityLogController` as read-only
-- `AttachmentsTablePolicy` and `AttachmentPolicy`
-- `ActivityLogTablePolicy`
+Add more endpoint-level authorization coverage:
+- member vs admin edit/delete differences
+- cross-project denial cases
+- custom workflow action checks once they exist
 
-Why last:
-- attachments and audit feed rely on the earlier project, issue, and wiki workflows
-- the model-level audit logging is ready, so the API layer can expose it cleanly
-
-## 5. Delivery Pattern For Each Batch
-
-For each batch above:
-- create the controllers
-- create the matching policies
-- wire only the controllers whose policies are actually implemented
-- add integration tests for one or two representative endpoints before moving to the next batch
-
-This keeps velocity high without creating a large set of half-wired controllers and policies.
+Why after the new endpoints:
+- the basic CRUD authorization is already covered
+- the higher-risk gaps are now in workflow actions and role boundaries
