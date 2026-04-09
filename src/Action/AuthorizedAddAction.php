@@ -30,6 +30,9 @@ class AuthorizedAddAction extends AddAction
     {
         $this->authorizeTable('add');
 
+        $entity = $this->_entity($this->_request()->getData(), $this->saveOptions());
+        $this->authorizeEntity($entity, 'add');
+
         return parent::_post();
     }
 
@@ -39,6 +42,9 @@ class AuthorizedAddAction extends AddAction
     protected function _put(): ?Response
     {
         $this->authorizeTable('add');
+
+        $entity = $this->_entity($this->_request()->getData(), $this->saveOptions());
+        $this->authorizeEntity($entity, 'add');
 
         return parent::_put();
     }
