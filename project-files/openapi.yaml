@@ -1,0 +1,1584 @@
+openapi: 3.1.0
+info:
+  title: Lopusboard Backend API
+  version: 0.1.0
+  description: >
+    Current backend API representation based on the existing CakePHP routes,
+    controllers, tests, and schema. This document reflects the API as it exists
+    today, including its flat `/api/*` resource structure. Only verified
+    request shapes are documented here. Query parameters are intentionally
+    omitted unless they are part of the explicit current contract.
+servers:
+  - url: http://localhost:8765
+    description: Local development server
+security:
+  - bearerAuth: []
+tags:
+  - name: Identity
+  - name: Projects
+  - name: Project Members
+  - name: Statuses
+  - name: Departments
+  - name: Issues
+  - name: Comments
+  - name: Issue Relations
+  - name: Wiki Pages
+  - name: Wiki Page Revisions
+  - name: Attachments
+  - name: Activity Log
+paths:
+  /api/identity/me:
+    get:
+      tags: [Identity]
+      summary: Return the current authenticated identity
+      operationId: identityMe
+      responses:
+        '200':
+          description: Authenticated identity summary
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdentityMeResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/projects:
+    get:
+      tags: [Projects]
+      summary: List accessible projects
+      operationId: listProjects
+      responses:
+        '200':
+          $ref: '#/components/responses/ProjectsCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/projects/{id}:
+    parameters:
+      - $ref: '#/components/parameters/IdPath'
+    get:
+      tags: [Projects]
+      summary: View a project
+      operationId: getProject
+      responses:
+        '200':
+          $ref: '#/components/responses/ProjectSingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      tags: [Projects]
+      summary: Update a project
+      operationId: updateProject
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectUpdateInput'
+      responses:
+        '200':
+          $ref: '#/components/responses/ProjectSingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+    delete:
+      tags: [Projects]
+      summary: Delete a project
+      operationId: deleteProject
+      responses:
+        '204':
+          description: Project deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/project-members:
+    get:
+      tags: [Project Members]
+      summary: List accessible project memberships
+      operationId: listProjectMembers
+      responses:
+        '200':
+          $ref: '#/components/responses/ProjectMembersCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags: [Project Members]
+      summary: Create a project membership
+      operationId: createProjectMember
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectMemberCreateInput'
+      responses:
+        '201':
+          $ref: '#/components/responses/ProjectMemberSingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /api/project-members/{id}:
+    parameters:
+      - $ref: '#/components/parameters/IdPath'
+    get:
+      tags: [Project Members]
+      summary: View a project membership
+      operationId: getProjectMember
+      responses:
+        '200':
+          $ref: '#/components/responses/ProjectMemberSingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      tags: [Project Members]
+      summary: Update a project membership
+      operationId: updateProjectMember
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectMemberUpdateInput'
+      responses:
+        '200':
+          $ref: '#/components/responses/ProjectMemberSingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+    delete:
+      tags: [Project Members]
+      summary: Delete a project membership
+      operationId: deleteProjectMember
+      responses:
+        '204':
+          description: Membership deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/statuses:
+    get:
+      tags: [Statuses]
+      summary: List accessible statuses
+      operationId: listStatuses
+      responses:
+        '200':
+          $ref: '#/components/responses/StatusesCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags: [Statuses]
+      summary: Create a status
+      operationId: createStatus
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StatusCreateInput'
+      responses:
+        '201':
+          $ref: '#/components/responses/StatusSingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /api/statuses/{id}:
+    parameters:
+      - $ref: '#/components/parameters/IdPath'
+    get:
+      tags: [Statuses]
+      summary: View a status
+      operationId: getStatus
+      responses:
+        '200':
+          $ref: '#/components/responses/StatusSingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      tags: [Statuses]
+      summary: Update a status
+      operationId: updateStatus
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StatusUpdateInput'
+      responses:
+        '200':
+          $ref: '#/components/responses/StatusSingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+    delete:
+      tags: [Statuses]
+      summary: Delete a status
+      operationId: deleteStatus
+      responses:
+        '204':
+          description: Status deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/departments:
+    get:
+      tags: [Departments]
+      summary: List accessible departments
+      operationId: listDepartments
+      responses:
+        '200':
+          $ref: '#/components/responses/DepartmentsCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags: [Departments]
+      summary: Create a department
+      operationId: createDepartment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DepartmentCreateInput'
+      responses:
+        '201':
+          $ref: '#/components/responses/DepartmentSingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /api/departments/{id}:
+    parameters:
+      - $ref: '#/components/parameters/IdPath'
+    get:
+      tags: [Departments]
+      summary: View a department
+      operationId: getDepartment
+      responses:
+        '200':
+          $ref: '#/components/responses/DepartmentSingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      tags: [Departments]
+      summary: Update a department
+      operationId: updateDepartment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DepartmentUpdateInput'
+      responses:
+        '200':
+          $ref: '#/components/responses/DepartmentSingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+    delete:
+      tags: [Departments]
+      summary: Delete a department
+      operationId: deleteDepartment
+      responses:
+        '204':
+          description: Department deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/issues:
+    get:
+      tags: [Issues]
+      summary: List accessible issues and tasks
+      operationId: listIssues
+      responses:
+        '200':
+          $ref: '#/components/responses/IssuesCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags: [Issues]
+      summary: Create an issue or task
+      operationId: createIssue
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IssueCreateInput'
+      responses:
+        '201':
+          $ref: '#/components/responses/IssueSingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /api/issues/{id}:
+    parameters:
+      - $ref: '#/components/parameters/IdPath'
+    get:
+      tags: [Issues]
+      summary: View an issue or task
+      operationId: getIssue
+      responses:
+        '200':
+          $ref: '#/components/responses/IssueSingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      tags: [Issues]
+      summary: Update an issue or task
+      operationId: updateIssue
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IssueUpdateInput'
+      responses:
+        '200':
+          $ref: '#/components/responses/IssueSingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+    delete:
+      tags: [Issues]
+      summary: Delete an issue or task
+      operationId: deleteIssue
+      responses:
+        '204':
+          description: Issue deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/comments:
+    get:
+      tags: [Comments]
+      summary: List accessible comments
+      operationId: listComments
+      responses:
+        '200':
+          $ref: '#/components/responses/CommentsCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags: [Comments]
+      summary: Create a comment
+      operationId: createComment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentCreateInput'
+      responses:
+        '201':
+          $ref: '#/components/responses/CommentSingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /api/comments/{id}:
+    parameters:
+      - $ref: '#/components/parameters/IdPath'
+    get:
+      tags: [Comments]
+      summary: View a comment
+      operationId: getComment
+      responses:
+        '200':
+          $ref: '#/components/responses/CommentSingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      tags: [Comments]
+      summary: Update a comment
+      operationId: updateComment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentUpdateInput'
+      responses:
+        '200':
+          $ref: '#/components/responses/CommentSingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+    delete:
+      tags: [Comments]
+      summary: Delete a comment
+      operationId: deleteComment
+      responses:
+        '204':
+          description: Comment deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/issue-relations:
+    get:
+      tags: [Issue Relations]
+      summary: List accessible issue relations
+      operationId: listIssueRelations
+      responses:
+        '200':
+          $ref: '#/components/responses/IssueRelationsCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags: [Issue Relations]
+      summary: Create an issue relation
+      operationId: createIssueRelation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IssueRelationCreateInput'
+      responses:
+        '201':
+          $ref: '#/components/responses/IssueRelationSingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /api/issue-relations/{id}:
+    parameters:
+      - $ref: '#/components/parameters/IdPath'
+    get:
+      tags: [Issue Relations]
+      summary: View an issue relation
+      operationId: getIssueRelation
+      responses:
+        '200':
+          $ref: '#/components/responses/IssueRelationSingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      tags: [Issue Relations]
+      summary: Update an issue relation
+      operationId: updateIssueRelation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IssueRelationUpdateInput'
+      responses:
+        '200':
+          $ref: '#/components/responses/IssueRelationSingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+    delete:
+      tags: [Issue Relations]
+      summary: Delete an issue relation
+      operationId: deleteIssueRelation
+      responses:
+        '204':
+          description: Issue relation deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/wiki-pages:
+    get:
+      tags: [Wiki Pages]
+      summary: List accessible wiki pages
+      operationId: listWikiPages
+      responses:
+        '200':
+          $ref: '#/components/responses/WikiPagesCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags: [Wiki Pages]
+      summary: Create a wiki page
+      operationId: createWikiPage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WikiPageCreateInput'
+      responses:
+        '201':
+          $ref: '#/components/responses/WikiPageSingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /api/wiki-pages/{id}:
+    parameters:
+      - $ref: '#/components/parameters/IdPath'
+    get:
+      tags: [Wiki Pages]
+      summary: View a wiki page
+      operationId: getWikiPage
+      responses:
+        '200':
+          $ref: '#/components/responses/WikiPageSingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      tags: [Wiki Pages]
+      summary: Update a wiki page
+      operationId: updateWikiPage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WikiPageUpdateInput'
+      responses:
+        '200':
+          $ref: '#/components/responses/WikiPageSingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+    delete:
+      tags: [Wiki Pages]
+      summary: Delete a wiki page
+      operationId: deleteWikiPage
+      responses:
+        '204':
+          description: Wiki page deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/wiki-page-revisions:
+    get:
+      tags: [Wiki Page Revisions]
+      summary: List accessible wiki page revisions
+      operationId: listWikiPageRevisions
+      responses:
+        '200':
+          $ref: '#/components/responses/WikiPageRevisionsCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/wiki-page-revisions/{id}:
+    parameters:
+      - $ref: '#/components/parameters/IdPath'
+    get:
+      tags: [Wiki Page Revisions]
+      summary: View a wiki page revision
+      operationId: getWikiPageRevision
+      responses:
+        '200':
+          $ref: '#/components/responses/WikiPageRevisionSingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/attachments:
+    get:
+      tags: [Attachments]
+      summary: List accessible attachments
+      operationId: listAttachments
+      responses:
+        '200':
+          $ref: '#/components/responses/AttachmentsCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags: [Attachments]
+      summary: Create an attachment record
+      operationId: createAttachment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttachmentCreateInput'
+      responses:
+        '201':
+          $ref: '#/components/responses/AttachmentSingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /api/attachments/{id}:
+    parameters:
+      - $ref: '#/components/parameters/IdPath'
+    get:
+      tags: [Attachments]
+      summary: View an attachment
+      operationId: getAttachment
+      responses:
+        '200':
+          $ref: '#/components/responses/AttachmentSingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      tags: [Attachments]
+      summary: Update an attachment
+      operationId: updateAttachment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttachmentUpdateInput'
+      responses:
+        '200':
+          $ref: '#/components/responses/AttachmentSingle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+    delete:
+      tags: [Attachments]
+      summary: Delete an attachment
+      operationId: deleteAttachment
+      responses:
+        '204':
+          description: Attachment deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/activity-log:
+    get:
+      tags: [Activity Log]
+      summary: List accessible activity log entries
+      operationId: listActivityLog
+      responses:
+        '200':
+          $ref: '#/components/responses/ActivityLogCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    IdPath:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+  responses:
+    Unauthorized:
+      description: Authentication failed or no bearer token was provided
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Authenticated but not allowed to access the resource
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ValidationError:
+      description: Validation failed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ProjectsCollection:
+      description: Project list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProjectsCollectionResponse'
+    ProjectSingle:
+      description: Project payload
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProjectSingleResponse'
+    ProjectMembersCollection:
+      description: Project membership list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProjectMembersCollectionResponse'
+    ProjectMemberSingle:
+      description: Project membership payload
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProjectMemberSingleResponse'
+    StatusesCollection:
+      description: Status list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatusesCollectionResponse'
+    StatusSingle:
+      description: Status payload
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatusSingleResponse'
+    DepartmentsCollection:
+      description: Department list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DepartmentsCollectionResponse'
+    DepartmentSingle:
+      description: Department payload
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DepartmentSingleResponse'
+    IssuesCollection:
+      description: Issue list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/IssuesCollectionResponse'
+    IssueSingle:
+      description: Issue payload
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/IssueSingleResponse'
+    CommentsCollection:
+      description: Comment list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CommentsCollectionResponse'
+    CommentSingle:
+      description: Comment payload
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CommentSingleResponse'
+    IssueRelationsCollection:
+      description: Issue relation list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/IssueRelationsCollectionResponse'
+    IssueRelationSingle:
+      description: Issue relation payload
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/IssueRelationSingleResponse'
+    WikiPagesCollection:
+      description: Wiki page list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WikiPagesCollectionResponse'
+    WikiPageSingle:
+      description: Wiki page payload
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WikiPageSingleResponse'
+    WikiPageRevisionsCollection:
+      description: Wiki page revision list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WikiPageRevisionsCollectionResponse'
+    WikiPageRevisionSingle:
+      description: Wiki page revision payload
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WikiPageRevisionSingleResponse'
+    AttachmentsCollection:
+      description: Attachment list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AttachmentsCollectionResponse'
+    AttachmentSingle:
+      description: Attachment payload
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AttachmentSingleResponse'
+    ActivityLogCollection:
+      description: Activity log list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActivityLogCollectionResponse'
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        errors:
+          type: object
+          additionalProperties: true
+      additionalProperties: true
+    CollectionMeta:
+      type: object
+      description: Optional pagination or collection metadata
+      additionalProperties: true
+    RemoteIdentity:
+      type: object
+      required: [provider, providerUserId, emailVerified, claims]
+      properties:
+        provider:
+          type: string
+        providerUserId:
+          type: string
+        email:
+          type: string
+          nullable: true
+        emailVerified:
+          type: boolean
+        displayName:
+          type: string
+          nullable: true
+        avatarUrl:
+          type: string
+          nullable: true
+        claims:
+          type: object
+          additionalProperties: true
+    UserSummary:
+      type: object
+      required: [id, name, email]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        avatarUrl:
+          type: string
+          nullable: true
+    IdentityMeResponse:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: object
+          required: [remoteIdentity, user]
+          properties:
+            remoteIdentity:
+              $ref: '#/components/schemas/RemoteIdentity'
+            user:
+              $ref: '#/components/schemas/UserSummary'
+    Project:
+      type: object
+      required: [id, name, slug, created_by, created, modified]
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        slug: { type: string }
+        description:
+          type: string
+          nullable: true
+        created_by: { type: integer }
+        created: { type: string, format: date-time }
+        modified: { type: string, format: date-time }
+    ProjectUpdateInput:
+      type: object
+      properties:
+        name: { type: string }
+        slug: { type: string }
+        description:
+          type: string
+          nullable: true
+    ProjectMember:
+      type: object
+      required: [id, project_id, user_id, role, created, modified]
+      properties:
+        id: { type: integer }
+        project_id: { type: integer }
+        user_id: { type: integer }
+        role:
+          type: string
+          enum: [admin, member]
+        created: { type: string, format: date-time }
+        modified: { type: string, format: date-time }
+    ProjectMemberCreateInput:
+      type: object
+      required: [project_id, user_id, role]
+      properties:
+        project_id: { type: integer }
+        user_id: { type: integer }
+        role:
+          type: string
+          enum: [admin, member]
+    ProjectMemberUpdateInput:
+      type: object
+      properties:
+        role:
+          type: string
+          enum: [admin, member]
+    Status:
+      type: object
+      required: [id, project_id, name, color, position, is_default, is_done, created, modified]
+      properties:
+        id: { type: integer }
+        project_id: { type: integer }
+        name: { type: string }
+        color: { type: string }
+        position: { type: number }
+        is_default: { type: boolean }
+        is_done: { type: boolean }
+        created: { type: string, format: date-time }
+        modified: { type: string, format: date-time }
+    StatusCreateInput:
+      type: object
+      required: [project_id, name]
+      properties:
+        project_id: { type: integer }
+        name: { type: string }
+        color: { type: string }
+        position: { type: number }
+        is_default: { type: boolean }
+        is_done: { type: boolean }
+    StatusUpdateInput:
+      type: object
+      properties:
+        name: { type: string }
+        color: { type: string }
+        position: { type: number }
+        is_default: { type: boolean }
+        is_done: { type: boolean }
+    Department:
+      type: object
+      required: [id, project_id, name, position, created, modified]
+      properties:
+        id: { type: integer }
+        project_id: { type: integer }
+        name: { type: string }
+        color:
+          type: string
+          nullable: true
+        position: { type: number }
+        created: { type: string, format: date-time }
+        modified: { type: string, format: date-time }
+    DepartmentCreateInput:
+      type: object
+      required: [project_id, name]
+      properties:
+        project_id: { type: integer }
+        name: { type: string }
+        color:
+          type: string
+          nullable: true
+        position: { type: number }
+    DepartmentUpdateInput:
+      type: object
+      properties:
+        name: { type: string }
+        color:
+          type: string
+          nullable: true
+        position: { type: number }
+    Issue:
+      type: object
+      required: [id, project_id, type, title, status_id, priority, position, created_by, created, modified]
+      properties:
+        id: { type: integer }
+        project_id: { type: integer }
+        parent_id:
+          type: integer
+          nullable: true
+        type:
+          type: string
+          enum: [issue, task]
+        title: { type: string }
+        description:
+          type: string
+          nullable: true
+        status_id: { type: integer }
+        priority:
+          type: string
+          enum: [low, medium, high, critical]
+        assignee_id:
+          type: integer
+          nullable: true
+        department_id:
+          type: integer
+          nullable: true
+        due_date:
+          type: string
+          format: date
+          nullable: true
+        position: { type: number }
+        created_by: { type: integer }
+        created: { type: string, format: date-time }
+        modified: { type: string, format: date-time }
+    IssueCreateInput:
+      type: object
+      required: [project_id, type, title, status_id]
+      properties:
+        project_id: { type: integer }
+        parent_id:
+          type: integer
+          nullable: true
+        type:
+          type: string
+          enum: [issue, task]
+        title: { type: string }
+        description:
+          type: string
+          nullable: true
+        status_id: { type: integer }
+        priority:
+          type: string
+          enum: [low, medium, high, critical]
+        assignee_id:
+          type: integer
+          nullable: true
+        department_id:
+          type: integer
+          nullable: true
+        due_date:
+          type: string
+          format: date
+          nullable: true
+        position: { type: number }
+    IssueUpdateInput:
+      type: object
+      properties:
+        parent_id:
+          type: integer
+          nullable: true
+        type:
+          type: string
+          enum: [issue, task]
+        title: { type: string }
+        description:
+          type: string
+          nullable: true
+        status_id: { type: integer }
+        priority:
+          type: string
+          enum: [low, medium, high, critical]
+        assignee_id:
+          type: integer
+          nullable: true
+        department_id:
+          type: integer
+          nullable: true
+        due_date:
+          type: string
+          format: date
+          nullable: true
+        position: { type: number }
+    Comment:
+      type: object
+      required: [id, issue_id, user_id, body, created, modified]
+      properties:
+        id: { type: integer }
+        issue_id: { type: integer }
+        user_id: { type: integer }
+        body: { type: string }
+        created: { type: string, format: date-time }
+        modified: { type: string, format: date-time }
+    CommentCreateInput:
+      type: object
+      required: [issue_id, body]
+      properties:
+        issue_id: { type: integer }
+        body: { type: string }
+    CommentUpdateInput:
+      type: object
+      properties:
+        body: { type: string }
+    IssueRelation:
+      type: object
+      required: [id, issue_id, related_issue_id, type, created, modified]
+      properties:
+        id: { type: integer }
+        issue_id: { type: integer }
+        related_issue_id: { type: integer }
+        type:
+          type: string
+          enum: [blocks, depends_on, duplicates, relates_to]
+        created: { type: string, format: date-time }
+        modified: { type: string, format: date-time }
+    IssueRelationCreateInput:
+      type: object
+      required: [issue_id, related_issue_id, type]
+      properties:
+        issue_id: { type: integer }
+        related_issue_id: { type: integer }
+        type:
+          type: string
+          enum: [blocks, depends_on, duplicates, relates_to]
+    IssueRelationUpdateInput:
+      type: object
+      properties:
+        related_issue_id: { type: integer }
+        type:
+          type: string
+          enum: [blocks, depends_on, duplicates, relates_to]
+    WikiPage:
+      type: object
+      required: [id, project_id, title, slug, position, created_by, created, modified]
+      properties:
+        id: { type: integer }
+        project_id: { type: integer }
+        parent_id:
+          type: integer
+          nullable: true
+        title: { type: string }
+        slug: { type: string }
+        body:
+          type: string
+          nullable: true
+        position: { type: number }
+        created_by: { type: integer }
+        last_edited_by:
+          type: integer
+          nullable: true
+        created: { type: string, format: date-time }
+        modified: { type: string, format: date-time }
+    WikiPageCreateInput:
+      type: object
+      required: [project_id, title]
+      properties:
+        project_id: { type: integer }
+        parent_id:
+          type: integer
+          nullable: true
+        title: { type: string }
+        slug:
+          type: string
+          nullable: true
+        body:
+          type: string
+          nullable: true
+        position: { type: number }
+    WikiPageUpdateInput:
+      type: object
+      properties:
+        parent_id:
+          type: integer
+          nullable: true
+        title: { type: string }
+        slug: { type: string }
+        body:
+          type: string
+          nullable: true
+        position: { type: number }
+    WikiPageRevision:
+      type: object
+      required: [id, wiki_page_id, body, revision_number, edited_by, created, modified]
+      properties:
+        id: { type: integer }
+        wiki_page_id: { type: integer }
+        body: { type: string }
+        revision_number: { type: integer }
+        edited_by: { type: integer }
+        created: { type: string, format: date-time }
+        modified: { type: string, format: date-time }
+    Attachment:
+      type: object
+      required: [id, project_id, storage_provider, filename, uploaded_by, created, modified]
+      properties:
+        id: { type: integer }
+        project_id: { type: integer }
+        storage_provider:
+          type: string
+          enum: [google_drive, minio]
+        filename: { type: string }
+        mime_type:
+          type: string
+          nullable: true
+        file_size:
+          type: integer
+          nullable: true
+        storage_path:
+          type: string
+          nullable: true
+        external_url:
+          type: string
+          nullable: true
+        external_id:
+          type: string
+          nullable: true
+        uploaded_by: { type: integer }
+        created: { type: string, format: date-time }
+        modified: { type: string, format: date-time }
+    AttachmentCreateInput:
+      type: object
+      required: [project_id, filename]
+      properties:
+        project_id: { type: integer }
+        storage_provider:
+          type: string
+          enum: [google_drive, minio]
+        filename: { type: string }
+        mime_type:
+          type: string
+          nullable: true
+        file_size:
+          type: integer
+          nullable: true
+        storage_path:
+          type: string
+          nullable: true
+        external_url:
+          type: string
+          nullable: true
+        external_id:
+          type: string
+          nullable: true
+    AttachmentUpdateInput:
+      type: object
+      properties:
+        storage_provider:
+          type: string
+          enum: [google_drive, minio]
+        filename: { type: string }
+        mime_type:
+          type: string
+          nullable: true
+        file_size:
+          type: integer
+          nullable: true
+        storage_path:
+          type: string
+          nullable: true
+        external_url:
+          type: string
+          nullable: true
+        external_id:
+          type: string
+          nullable: true
+    ActivityLogEntry:
+      type: object
+      required: [id, project_id, actor_id, subject_type, subject_id, action, created, modified]
+      properties:
+        id: { type: integer }
+        project_id: { type: integer }
+        actor_id: { type: integer }
+        subject_type:
+          type: string
+          enum: [issue, task, wiki_page, comment, attachment, member]
+        subject_id: { type: integer }
+        action:
+          type: string
+          enum:
+            - created
+            - updated
+            - deleted
+            - status_changed
+            - assigned
+            - unassigned
+            - priority_changed
+            - relation_added
+            - relation_removed
+            - comment_added
+            - file_attached
+            - moved
+        old_value:
+          type: string
+          nullable: true
+        new_value:
+          type: string
+          nullable: true
+        created: { type: string, format: date-time }
+        modified: { type: string, format: date-time }
+    ProjectsCollectionResponse:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Project'
+        meta:
+          $ref: '#/components/schemas/CollectionMeta'
+    ProjectSingleResponse:
+      type: object
+      required: [data]
+      properties:
+        data:
+          $ref: '#/components/schemas/Project'
+    ProjectMembersCollectionResponse:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectMember'
+        meta:
+          $ref: '#/components/schemas/CollectionMeta'
+    ProjectMemberSingleResponse:
+      type: object
+      required: [data]
+      properties:
+        data:
+          $ref: '#/components/schemas/ProjectMember'
+    StatusesCollectionResponse:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Status'
+        meta:
+          $ref: '#/components/schemas/CollectionMeta'
+    StatusSingleResponse:
+      type: object
+      required: [data]
+      properties:
+        data:
+          $ref: '#/components/schemas/Status'
+    DepartmentsCollectionResponse:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Department'
+        meta:
+          $ref: '#/components/schemas/CollectionMeta'
+    DepartmentSingleResponse:
+      type: object
+      required: [data]
+      properties:
+        data:
+          $ref: '#/components/schemas/Department'
+    IssuesCollectionResponse:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Issue'
+        meta:
+          $ref: '#/components/schemas/CollectionMeta'
+    IssueSingleResponse:
+      type: object
+      required: [data]
+      properties:
+        data:
+          $ref: '#/components/schemas/Issue'
+    CommentsCollectionResponse:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+        meta:
+          $ref: '#/components/schemas/CollectionMeta'
+    CommentSingleResponse:
+      type: object
+      required: [data]
+      properties:
+        data:
+          $ref: '#/components/schemas/Comment'
+    IssueRelationsCollectionResponse:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/IssueRelation'
+        meta:
+          $ref: '#/components/schemas/CollectionMeta'
+    IssueRelationSingleResponse:
+      type: object
+      required: [data]
+      properties:
+        data:
+          $ref: '#/components/schemas/IssueRelation'
+    WikiPagesCollectionResponse:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/WikiPage'
+        meta:
+          $ref: '#/components/schemas/CollectionMeta'
+    WikiPageSingleResponse:
+      type: object
+      required: [data]
+      properties:
+        data:
+          $ref: '#/components/schemas/WikiPage'
+    WikiPageRevisionsCollectionResponse:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/WikiPageRevision'
+        meta:
+          $ref: '#/components/schemas/CollectionMeta'
+    WikiPageRevisionSingleResponse:
+      type: object
+      required: [data]
+      properties:
+        data:
+          $ref: '#/components/schemas/WikiPageRevision'
+    AttachmentsCollectionResponse:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attachment'
+        meta:
+          $ref: '#/components/schemas/CollectionMeta'
+    AttachmentSingleResponse:
+      type: object
+      required: [data]
+      properties:
+        data:
+          $ref: '#/components/schemas/Attachment'
+    ActivityLogCollectionResponse:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActivityLogEntry'
+        meta:
+          $ref: '#/components/schemas/CollectionMeta'
