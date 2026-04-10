@@ -1,0 +1,25 @@
+project-files/node-client.md
+  5001504fa0f17a33 1-259
+project-files/openapi.yaml
+  5001504fa0f17a33 1-1584
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.6",
+  "base_commit_sha": "fde565a23dd87590aa50d784e00d63f8ec002dbc",
+  "prompts": {
+    "5001504fa0f17a33": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019d4176-4ce9-73d2-941e-617d4ffcb4ba",
+        "model": "gpt-5.4"
+      },
+      "human_author": "Angel S. Moreno",
+      "messages": [],
+      "total_additions": 1873,
+      "total_deletions": 30,
+      "accepted_lines": 1843,
+      "overriden_lines": 0
+    }
+  }
+}
