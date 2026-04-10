@@ -1,61 +1,85 @@
-# {{PROJECT_NAME}}
+# LopusBoard Node Client (Internal)
 
-{{PROJECT_DESCRIPTION}}
+An internal TypeScript HTTP client for the LopusBoard Backend API, designed for use with **Bun**.
 
 ## Features
 
-- **🚀 Bun:** Fast all-in-one JavaScript runtime, package manager, and test runner.
-- **🛡️ TypeScript:** Strongly typed development.
-- **💎 Biome:** Fast formatter and linter.
-- **🪝 Lefthook:** Fast git hooks manager.
-- **🔍 Code Quality:** Integrated duplication checks with `jscpd` and `jsinspect`.
-- **✅ Commitlint:** Enforce conventional commits.
+- **🚀 Bun-Native:** Optimized for the Bun runtime using native `fetch`.
+- **🛡️ Type-Safe:** Full TypeScript support for all API resources and models.
+- **📦 Service-Style API:** Intuitive resource-based methods (e.g., `client.projects.list()`).
+- **⚡ ETag Support:** Auth-aware HTTP cache validation using `ETag` and `If-None-Match`.
+- **💎 Clean DX:** Normalized error handling via `ApiError`.
 
-## Getting Started
+## Installation
 
-### Prerequisites
-
-You need to have [Bun](https://bun.sh) installed.
-
-### Installation
-
-Clone this repository and install dependencies:
+This is an internal package. Ensure you have [Bun](https://bun.sh) installed.
 
 ```bash
 bun install
 ```
 
-### Git Hooks Setup
+## Usage
 
-To set up git hooks, run:
+### Basic Setup
 
-```bash
-bun run prepare
+```typescript
+import { LopusboardClient } from './src';
+
+const client = new LopusboardClient({
+  baseUrl: 'http://localhost:8080',
+  getToken: async () => 'your-appwrite-jwt'
+});
+
+// Use resources
+const projects = await client.projects.list();
 ```
 
-## Available Scripts
+### Authentication
 
-- `bun start`: Run the application.
-- `bun dev`: Run the application in watch mode.
-- `bun test`: Run tests using Bun's native test runner.
-- `bun test:coverage`: Run tests with coverage report.
+Supports static strings or dynamic providers (async supported):
+
+```typescript
+// Dynamic (recommended for refreshing JWTs)
+new LopusboardClient({
+  baseUrl,
+  getToken: async () => {
+    return await appwrite.account.createJWT();
+  }
+});
+```
+
+### Error Handling
+
+```typescript
+import { ApiError } from './src';
+
+try {
+  await client.projects.get(999);
+} catch (error) {
+  if (error instanceof ApiError) {
+    console.error(`Status: ${error.status}`);
+    console.error(`Message: ${error.message}`);
+  }
+}
+```
+
+## Development
+
+- `bun test`: Run the test suite (fully mocked).
 - `bun run check`: Run all quality checks (lint, types, duplication).
 - `bun run lint`: Run Biome linter.
-- `bun run lint:fix`: Run Biome linter and fix issues.
-- `bun run check:types`: Run TypeScript type checking.
-- `bun run check:dups`: Run code duplication checks.
 
 ## Project Structure
 
 ```text
-├── .github/          # CI/CD workflows
-├── src/              # Source code
-│   └── index.ts      # Entry point
-├── biome.json        # Biome configuration
-├── lefthook.yml      # Git hooks configuration
-└── package.json      # Project configuration
+├── src/
+│   ├── index.ts      # Main Client entry point
+│   ├── client.ts     # Base HTTP transport logic
+│   ├── types.ts      # API Type definitions
+│   └── resources/    # Resource-specific modules
+└── tests/            # Test suite
 ```
 
 ## License
 
-MIT
+Internal Project - All Rights Reserved
