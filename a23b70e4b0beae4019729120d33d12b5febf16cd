@@ -1,0 +1,31 @@
+resources/node-client/README.md
+  5001504fa0f17a33 46-47
+resources/node-client/tests/client.test.ts
+  5001504fa0f17a33 2,4-8,122-142
+resources/node-client/src/client.ts
+  5001504fa0f17a33 50,67
+resources/node-client/.gitignore
+  5001504fa0f17a33 15
+resources/node-client/.github/workflows/ci.yml
+  5001504fa0f17a33 13-14,16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.6",
+  "base_commit_sha": "a23b70e4b0beae4019729120d33d12b5febf16cd",
+  "prompts": {
+    "5001504fa0f17a33": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019d4176-4ce9-73d2-941e-617d4ffcb4ba",
+        "model": "gpt-5.4"
+      },
+      "human_author": "Angel S. Moreno",
+      "messages": [],
+      "total_additions": 37,
+      "total_deletions": 8,
+      "accepted_lines": 37,
+      "overriden_lines": 0
+    }
+  }
+}
