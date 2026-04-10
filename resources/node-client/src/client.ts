@@ -47,7 +47,7 @@ export class BaseClient {
             headers.set('Authorization', authHeader);
         }
 
-        if (body) {
+        if (body !== undefined) {
             headers.set('Content-Type', 'application/json');
         }
 
@@ -64,7 +64,7 @@ export class BaseClient {
         const response = await fetch(url, {
             method,
             headers,
-            body: body ? JSON.stringify(body) : undefined,
+            body: body !== undefined ? JSON.stringify(body) : undefined,
         });
 
         if (response.status === 304 && isGet) {

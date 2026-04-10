@@ -1,5 +1,11 @@
 import { afterEach, beforeEach, describe, expect, type Mock, mock, test } from 'bun:test';
-import { ApiError, LopusboardClient } from '../src';
+import { ApiError, BaseClient, LopusboardClient } from '../src';
+
+class TestClient extends BaseClient {
+    public post<T>(path: string, body?: unknown): Promise<T> {
+        return this._post<T>(path, body);
+    }
+}
 
 describe('LopusboardClient', () => {
     const baseUrl = 'http://api.test';
@@ -112,5 +118,27 @@ describe('LopusboardClient', () => {
             expect(apiError.status).toBe(404);
             expect(apiError.data?.message).toBe('Not Found');
         }
+    });
+
+    test('should serialize falsy request bodies', async () => {
+        global.fetch = mock(async (_url: string | URL | Request, init?: RequestInit) => {
+            return new Response(JSON.stringify({ ok: true, body: init?.body }), {
+                status: 200,
+                headers: { 'Content-Type': 'application/json' },
+            });
+        }) as unknown as typeof fetch;
+
+        const client = new TestClient({ baseUrl });
+        const response = await client.post<{ ok: boolean; body: string }>('/api/test', false);
+
+        expect(response.ok).toBe(true);
+
+        const mockedFetch = global.fetch as unknown as Mock<typeof fetch>;
+        const call = mockedFetch.mock.calls[0];
+        const headers = call?.[1]?.headers as Headers;
+
+        expect(headers.get('Content-Type')).toBe('application/json');
+        expect(call?.[1]?.body).toBe('false');
+        expect(response.body).toBe('false');
     });
 });

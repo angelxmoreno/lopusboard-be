@@ -43,7 +43,8 @@ Supports static strings or dynamic providers (async supported):
 new LopusboardClient({
   baseUrl,
   getToken: async () => {
-    return await appwrite.account.createJWT();
+    const session = await appwrite.account.createJWT();
+    return session.jwt;
   }
 });
 ```
