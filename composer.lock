@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5b75b9775f5b6785fec07cfa2c2e1706",
+    "content-hash": "7b3604854d4857a7bdde9dbb04004fd3",
     "packages": [
         {
             "name": "appwrite/appwrite",
-            "version": "22.0.0",
+            "version": "23.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/appwrite/sdk-for-php.git",
-                "reference": "38546dd7193c6cc3af26193fdb3da3f8677eaef5"
+                "reference": "d22b36167931294bec4259f0803aba14537030ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/appwrite/sdk-for-php/zipball/38546dd7193c6cc3af26193fdb3da3f8677eaef5",
-                "reference": "38546dd7193c6cc3af26193fdb3da3f8677eaef5",
+                "url": "https://api.github.com/repos/appwrite/sdk-for-php/zipball/d22b36167931294bec4259f0803aba14537030ec",
+                "reference": "d22b36167931294bec4259f0803aba14537030ec",
                 "shasum": ""
             },
             "require": {
@@ -43,10 +43,10 @@
             "support": {
                 "email": "team@appwrite.io",
                 "issues": "https://github.com/appwrite/sdk-for-php/issues",
-                "source": "https://github.com/appwrite/sdk-for-php/tree/22.0.0",
+                "source": "https://github.com/appwrite/sdk-for-php/tree/23.0.0",
                 "url": "https://appwrite.io/support"
             },
-            "time": "2026-04-03T16:21:08+00:00"
+            "time": "2026-04-16T12:38:44+00:00"
         },
         {
             "name": "cakephp/authorization",
@@ -7015,7 +7015,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=8.2"
+        "php": ">=8.5"
     },
     "platform-dev": {},
     "plugin-api-version": "2.9.0"
