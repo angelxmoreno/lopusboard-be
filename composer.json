@@ -6,7 +6,7 @@
     "homepage": "https://cakephp.org",
     "require": {
         "php": ">=8.5",
-        "appwrite/appwrite": "^22.0",
+        "appwrite/appwrite": "^30.0",
         "cakephp/authorization": "^3.5",
         "cakephp/cakephp": "^5.3.0",
         "cakephp/migrations": "^4.0.0",
